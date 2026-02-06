@@ -20,7 +20,7 @@ AI 기술을 활용하여 나와 닮은 포켓몬을 찾아보는 재미있는 �
 - **TypeScript**
 - **TensorFlow.js** (클라이언트 사이드 이미지 분석)
 - **PokeAPI** (포켓몬 데이터)
-- **Tailwind CSS** (스타일링)
+- **CSS** (표준 CSS)
 
 ## 주요 기능
 
