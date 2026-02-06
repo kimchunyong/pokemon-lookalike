@@ -1,17 +1,31 @@
+'use client'
+
 import { useRef, useState } from 'react'
+import { useLanguage } from '../contexts/LanguageContext'
 
-function ImageUpload({ onImageSelect }) {
-  const fileInputRef = useRef(null)
-  const [preview, setPreview] = useState(null)
-  const [error, setError] = useState(null)
+interface ImageUploadProps {
+  onImageSelect?: (imageUrl: string | null) => void
+}
 
-  const handleFileChange = (event) => {
+export default function ImageUpload({ onImageSelect }: ImageUploadProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [preview, setPreview] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const { t } = useLanguage()
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (!file) return
 
     // 이미지 파일 검증
     if (!file.type.startsWith('image/')) {
-      setError('이미지 파일만 업로드 가능합니다.')
+      setError(t.imageCompare.onlyImages)
+      return
+    }
+
+    // 파일 크기 제한 (10MB)
+    if (file.size > 10 * 1024 * 1024) {
+      setError(t.imageCompare.fileSizeError)
       return
     }
 
@@ -20,11 +34,12 @@ function ImageUpload({ onImageSelect }) {
     // 미리보기 생성
     const reader = new FileReader()
     reader.onload = (e) => {
-      setPreview(e.target.result)
-      onImageSelect?.(e.target.result)
+      const result = e.target?.result as string
+      setPreview(result)
+      onImageSelect?.(result)
     }
     reader.onerror = () => {
-      setError('이미지 읽기 중 오류가 발생했습니다.')
+      setError(t.imageCompare.imageReadError)
     }
     reader.readAsDataURL(file)
   }
@@ -54,18 +69,21 @@ function ImageUpload({ onImageSelect }) {
       
       {!preview ? (
         <div className="upload-area" onClick={handleClick}>
-          <p>이미지를 클릭하거나 드래그하여 업로드</p>
-          <button type="button">이미지 선택</button>
+          <p>{t.imageCompare.uploadPlaceholder}</p>
+          <p style={{ fontSize: '0.8em', color: '#888', marginTop: '0.5rem' }}>
+            {t.imageCompare.privacyNotice}
+          </p>
+          <button type="button">{t.imageCompare.selectImage}</button>
         </div>
       ) : (
         <div className="preview-area">
           <img src={preview} alt="업로드된 이미지" />
           <div className="preview-actions">
             <button type="button" onClick={handleClick}>
-              다른 이미지 선택
+              {t.imageCompare.changeImage}
             </button>
             <button type="button" onClick={handleReset}>
-              초기화
+              {t.imageCompare.reset}
             </button>
           </div>
         </div>
@@ -75,5 +93,3 @@ function ImageUpload({ onImageSelect }) {
     </div>
   )
 }
-
-export default ImageUpload

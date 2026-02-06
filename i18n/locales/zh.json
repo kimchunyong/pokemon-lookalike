@@ -1,0 +1,79 @@
+{
+  "common": {
+    "home": "首页",
+    "back": "返回",
+    "retry": "重试",
+    "loading": "加载中...",
+    "error": "错误",
+    "close": "关闭"
+  },
+  "home": {
+    "title": "找到与我相似的宝可梦",
+    "subtitle": "使用AI技术找到与你相似的宝可梦！",
+    "disclaimer": "仅供娱乐目的，不存储个人信息。",
+    "findByImage": "📷 通过图片查找"
+  },
+  "imageCompare": {
+    "title": "通过图片找到相似的宝可梦",
+    "description": "使用AI技术找到与您上传的图片相似的宝可梦。所有处理仅在浏览器中进行，不存储个人信息。",
+    "uploadPlaceholder": "点击或拖拽上传图片",
+    "privacyNotice": "不存储个人信息，处理仅在浏览器中进行。",
+    "selectImage": "选择图片",
+    "changeImage": "更换图片",
+    "reset": "重置",
+    "findPokemon": "找到相似的宝可梦",
+    "analyzing": "分析中...",
+    "processing": "正在分析图片，请稍候...",
+    "processingNotice": "所有处理仅在浏览器中进行，不会发送到服务器。",
+    "results": "相似的宝可梦结果",
+    "resultsNotice": "结果基于AI算法，仅供参考。",
+    "similarity": "相似度",
+    "type": "类型",
+    "viewDetails": "查看详情",
+    "uploadError": "请上传图片。",
+    "compareError": "图片比较时发生错误，请重试。",
+    "imageReadError": "读取图片时发生错误。",
+    "onlyImages": "只能上传图片文件。",
+    "fileSizeError": "图片大小必须小于10MB。"
+  },
+  "result": {
+    "title": "结果",
+    "found": "找到了与你相似的宝可梦！",
+    "reference": "注意：此结果基于AI算法，不保证实际的面部相似度。仅供娱乐目的。",
+    "findAgain": "再次查找",
+    "backHome": "首页"
+  },
+  "policy": {
+    "title": "⚠️ 重要提示",
+    "entertainment": {
+      "label": "娱乐目的：",
+      "text": "此服务仅供娱乐和娱乐目的。结果基于AI算法，不保证实际的面部相似度。"
+    },
+    "privacy": {
+      "label": "隐私保护：",
+      "text": "上传的图片仅在浏览器中处理，不会存储或传输到服务器。所有处理仅在客户端进行。"
+    },
+    "copyright": {
+      "label": "版权：",
+      "text": "宝可梦图片使用PokeAPI提供的公开数据。宝可梦是Pokémon Company的版权。此服务仅用于非商业教育目的。"
+    },
+    "disclaimer": {
+      "label": "免责声明：",
+      "text": "此服务的结果仅供参考，不保证实际的面部相似度或准确性。"
+    }
+  },
+  "share": {
+    "share": "分享",
+    "generating": "生成中...",
+    "download": "下载图片",
+    "copyImage": "复制图片",
+    "shareVia": "分享",
+    "copyLink": "复制链接",
+    "imageCopied": "图片已复制到剪贴板！",
+    "linkCopied": "链接已复制到剪贴板！",
+    "copyFailed": "复制失败。",
+    "error": "图片生成失败。",
+    "shareTitle": "与我相似的宝可梦",
+    "shareText": "相似度"
+  }
+}

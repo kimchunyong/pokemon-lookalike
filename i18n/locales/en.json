@@ -1,0 +1,79 @@
+{
+  "common": {
+    "home": "Home",
+    "back": "Back",
+    "retry": "Retry",
+    "loading": "Loading...",
+    "error": "Error",
+    "close": "Close"
+  },
+  "home": {
+    "title": "Find My Pokemon Lookalike",
+    "subtitle": "Find the Pokemon that looks like you using AI technology!",
+    "disclaimer": "For entertainment purposes only. No personal information is stored.",
+    "findByImage": "📷 Find by Image"
+  },
+  "imageCompare": {
+    "title": "Find Similar Pokemon by Image",
+    "description": "Find Pokemon similar to your uploaded image using AI technology. All processing is done in the browser only, and no personal information is stored.",
+    "uploadPlaceholder": "Click or drag to upload image",
+    "privacyNotice": "No personal information is stored, and processing is done only in the browser.",
+    "selectImage": "Select Image",
+    "changeImage": "Change Image",
+    "reset": "Reset",
+    "findPokemon": "Find Similar Pokemon",
+    "analyzing": "Analyzing...",
+    "processing": "Analyzing the image. Please wait...",
+    "processingNotice": "All processing is done in the browser only and is not sent to the server.",
+    "results": "Similar Pokemon Results",
+    "resultsNotice": "Results are based on AI algorithms and are for reference only.",
+    "similarity": "Similarity",
+    "type": "Type",
+    "viewDetails": "View Details",
+    "uploadError": "Please upload an image.",
+    "compareError": "An error occurred while comparing images. Please try again.",
+    "imageReadError": "An error occurred while reading the image.",
+    "onlyImages": "Only image files can be uploaded.",
+    "fileSizeError": "Image size must be 10MB or less."
+  },
+  "result": {
+    "title": "Result",
+    "found": "Found a Pokemon that looks like you!",
+    "reference": "Note: This result is based on AI algorithms and does not guarantee actual facial similarity. For entertainment purposes only.",
+    "findAgain": "Find Again",
+    "backHome": "Home"
+  },
+  "policy": {
+    "title": "⚠️ Important Notice",
+    "entertainment": {
+      "label": "Entertainment Purpose:",
+      "text": "This service is provided for entertainment and fun purposes only. Results are based on AI algorithms and do not guarantee actual facial similarity."
+    },
+    "privacy": {
+      "label": "Privacy Protection:",
+      "text": "Uploaded images are processed only in the browser and are not stored or transmitted to the server. All processing is done client-side only."
+    },
+    "copyright": {
+      "label": "Copyright:",
+      "text": "Pokemon images use public data provided by PokeAPI. Pokemon is copyrighted by Pokémon Company. This service is for non-commercial educational purposes only."
+    },
+    "disclaimer": {
+      "label": "Disclaimer:",
+      "text": "The results of this service are for reference only and do not guarantee actual facial similarity or accuracy."
+    }
+  },
+  "share": {
+    "share": "Share",
+    "generating": "Generating...",
+    "download": "Download Image",
+    "copyImage": "Copy Image",
+    "shareVia": "Share",
+    "copyLink": "Copy Link",
+    "imageCopied": "Image copied to clipboard!",
+    "linkCopied": "Link copied to clipboard!",
+    "copyFailed": "Failed to copy.",
+    "error": "Failed to generate image.",
+    "shareTitle": "My Pokemon Lookalike",
+    "shareText": "Similarity"
+  }
+}
