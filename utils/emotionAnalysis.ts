@@ -1,20 +1,23 @@
-import * as faceapi from '@vladmandic/face-api';
-
+let faceapi: any = null;
 let modelsLoaded = false;
 
 /**
  * face-api.js 모델을 로드합니다.
  */
 export async function loadEmotionModels() {
-  if (modelsLoaded) return;
+  if (modelsLoaded && faceapi) return;
 
   const MODEL_URL = '/models';
 
   try {
+    if (!faceapi) {
+      faceapi = await import('@vladmandic/face-api');
+    }
+
     // @ts-ignore
     await faceapi.tf.setBackend('webgl');
     // @ts-ignore
-    await faceapi.tf  .ready();
+    await faceapi.tf.ready();
 
     await Promise.all([
       faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
@@ -69,7 +72,7 @@ export async function analyzeEmotion(imageElement: HTMLImageElement): Promise<Em
     }
 
     // 가장 높은 확률의 표정 찾기
-    const expressions = detections.expressions;
+    const expressions = detections.expressions as Record<string, number>;
     console.log('Expressions:', expressions);
     const sortedExpressions = Object.entries(expressions).sort((a, b) => b[1] - a[1]);
     
