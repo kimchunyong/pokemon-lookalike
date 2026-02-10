@@ -11,8 +11,10 @@ export async function loadEmotionModels() {
   const MODEL_URL = '/models';
 
   try {
+    // @ts-ignore
     await faceapi.tf.setBackend('webgl');
-    await faceapi.tf.ready();
+    // @ts-ignore
+    await faceapi.tf  .ready();
 
     await Promise.all([
       faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),

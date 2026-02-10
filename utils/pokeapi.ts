@@ -69,6 +69,29 @@ export async function getPokemon(idOrName: number | string): Promise<Pokemon> {
 }
 
 /**
+ * 포켓몬 상세 정보와 한국어 이름 가져오기
+ */
+export async function getPokemonWithKoreanName(idOrName: number | string): Promise<Pokemon & { korean_name?: string }> {
+  const pokemon = await getPokemon(idOrName)
+  
+  // API에서 종(Species) 정보 가져오기
+  try {
+    const speciesResponse = await fetch(`${POKEAPI_BASE_URL}/pokemon-species/${pokemon.id}`)
+    if (speciesResponse.ok) {
+      const speciesData = await speciesResponse.json()
+      const koreanName = speciesData.names.find((n: any) => n.language.name === 'ko')?.name
+      if (koreanName) {
+        return { ...pokemon, korean_name: koreanName }
+      }
+    }
+  } catch (error) {
+    console.warn(`Failed to fetch species for ${pokemon.id}`, error)
+  }
+
+  return pokemon
+}
+
+/**
  * 포켓몬 이름으로 검색
  */
 export async function searchPokemon(query: string): Promise<Pokemon[]> {
