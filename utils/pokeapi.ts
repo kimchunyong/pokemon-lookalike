@@ -44,7 +44,7 @@ export interface Pokemon {
   base_experience: number
 }
 
-const POKEAPI_BASE_URL = 'https://pokeapi.co/api/v2'
+export const POKEAPI_BASE_URL = 'https://pokeapi.co/api/v2'
 
 /**
  * 포켓몬 목록 가져오기 (페이지네이션)

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import ImageUpload from '../../components/ImageUpload'
 import { findSimilarPokemon } from '../../utils/imageComparison'
+import { analyzeEmotion, getEmotionKorean, loadEmotionModels } from '../../utils/emotionAnalysis'
 import { POKEMON_LIST } from '../../data/pokemon'
 import PolicyNotice from '../../components/PolicyNotice'
 // import ShareButton from '../../components/ShareButton'
@@ -14,6 +15,7 @@ export default function ImageComparePage() {
   const [isProcessing, setIsProcessing] = useState(false)
   const [results, setResults] = useState<Array<any>>([])
   const [error, setError] = useState<string | null>(null)
+  const [detectedEmotion, setDetectedEmotion] = useState<{ expression: string; probability: number } | null>(null)
   const router = useRouter()
   const { t } = useLanguage()
 
@@ -21,6 +23,7 @@ export default function ImageComparePage() {
     setUploadedImage(imageUrl)
     setResults([])
     setError(null)
+    setDetectedEmotion(null)
   }
 
   const handleCompare = async () => {
@@ -33,12 +36,21 @@ export default function ImageComparePage() {
     setError(null)
 
     try {
-      const similarPokemon = await findSimilarPokemon(
-        uploadedImage,
-        POKEMON_LIST
-      )
+      // 이미지 엘리먼트 생성
+      const img = new Image()
+      img.src = uploadedImage
+      await new Promise((resolve) => {
+        img.onload = resolve
+      })
+
+      // 병렬 처리: 포켓몬 유사도 분석 및 감정 분석
+      const [similarPokemon, emotionResult] = await Promise.all([
+        findSimilarPokemon(uploadedImage, POKEMON_LIST),
+        analyzeEmotion(img)
+      ])
 
       setResults(similarPokemon)
+      setDetectedEmotion(emotionResult)
     } catch (err) {
       console.error('비교 중 오류:', err)
       setError(t.imageCompare.compareError)
@@ -51,11 +63,17 @@ export default function ImageComparePage() {
     if (uploadedImage) {
       sessionStorage.setItem('userImage', uploadedImage)
     }
-    router.push(`/result/${pokemon.id}?similarity=${pokemon.similarity}`)
+    
+    let url = `/result/${pokemon.id}?similarity=${pokemon.similarity}`
+    if (detectedEmotion) {
+      url += `&emotion=${detectedEmotion.expression}&emotionProb=${detectedEmotion.probability}`
+    }
+    
+    router.push(url)
   }
 
   return (
-    <main className="image-compare-page">
+    <main className="image-compare-page" style={{ marginTop: '90px' }}>
       <h1>{t.imageCompare.title}</h1>
       <p style={{ fontSize: '0.9em', color: '#888', marginBottom: '1rem' }}>
         {t.imageCompare.description}
@@ -91,6 +109,8 @@ export default function ImageComparePage() {
 
       {results && results.length > 0 && (
         <div className="results-section">
+          
+
           <h2>{t.imageCompare.results}</h2>
           <p style={{ fontSize: '0.9em', color: '#888', marginBottom: '1rem' }}>
             {t.imageCompare.resultsNotice}
@@ -108,7 +128,7 @@ export default function ImageComparePage() {
                     className="pokemon-image"
                   />
                 )}
-                <h3>{pokemon.name}</h3>
+                <h3>{detectedEmotion ? <span style={{ color: '#646cff', fontWeight: 'bold' }}>{getEmotionKorean(detectedEmotion.expression)}</span> : ''} {pokemon.name}</h3>
                 {pokemon.type && (
                   <p className="pokemon-type">{t.imageCompare.type}: {pokemon.type}</p>
                 )}
