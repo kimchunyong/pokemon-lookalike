@@ -133,7 +133,7 @@ export default function PostDetailPage() {
   if (!id || !post) return <div style={{ padding: '2rem' }}>글이 없습니다.</div>
 
   return (
-    <div
+    <main
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -143,6 +143,7 @@ export default function PostDetailPage() {
         minHeight: 'calc(100vh - 201px)',
       }}
     >
+      <article>
       <h1 style={{ marginBottom: '0.5rem' }}>{post.title}</h1>
       <p style={{ color: '#666', fontSize: 14, marginBottom: '0.5rem' }}>
         작성자: {post.author_display_name ?? authorDisplayName ?? '알 수 없음'}
@@ -237,11 +238,12 @@ export default function PostDetailPage() {
         </div>
       )}
 
-      <p style={{ fontSize: 14 }}>
+      </article>
+      <p style={{ fontSize: 14, marginTop: '1rem' }}>
         <Link href="/board" style={{ color: '#1976d2' }}>
           ← 목록
         </Link>
       </p>
-    </div>
+    </main>
   )
 }

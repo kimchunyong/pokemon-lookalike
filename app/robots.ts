@@ -1,13 +1,17 @@
 import { MetadataRoute } from 'next'
 
+const baseUrl =
+  process.env.NEXT_PUBLIC_APP_URL ?? 'https://pokemon-lookalike.shop'
+
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      // 관리자 페이지나 비공개 페이지가 있다면 여기에 추가
-      // disallow: '/private/',
-    },
-    sitemap: 'https://pokemon-lookalike.pages.dev/sitemap.xml',
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/auth/', '/profile', '/my/', '/board/new', '/board/edit'],
+      },
+    ],
+    sitemap: `${baseUrl}/sitemap.xml`,
   }
 }

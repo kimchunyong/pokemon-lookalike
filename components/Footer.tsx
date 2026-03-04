@@ -12,6 +12,7 @@ export default function Footer() {
       }}
     >
       <nav
+        aria-label="푸터 내비게이션"
         style={{
           display: 'flex',
           justifyContent: 'center',

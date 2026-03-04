@@ -1,9 +1,9 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://pokemon-lookalike.pages.dev'
+  const baseUrl = 'https://pokemon-lookalike.shop'
 
-  return [
+  const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: new Date(),
@@ -14,15 +14,45 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/image-compare`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
-      priority: 0.8,
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/pokedex`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/board`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
       priority: 0.8,
     },
-    // 동적 라우트(예: 포켓몬 상세)는 도감 목록에서 링크를 타고 들어가므로
-    // 필수적인 정적 페이지 위주로 먼저 구성합니다.
+    {
+      url: `${baseUrl}/login`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.5,
+    },
+    {
+      url: `${baseUrl}/terms`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.4,
+    },
+    {
+      url: `${baseUrl}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.4,
+    },
+    {
+      url: `${baseUrl}/contact`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.4,
+    },
   ]
+
+  return staticRoutes
 }

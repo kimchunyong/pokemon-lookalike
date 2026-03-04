@@ -238,7 +238,7 @@ export default function BoardPage() {
   }
 
   return (
-    <div
+    <main
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -264,6 +264,7 @@ export default function BoardPage() {
         </h1>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <select
+            aria-label="정렬 기준"
             value={sort}
             onChange={(e) => {
               setSort(e.target.value as SortValue)
@@ -287,6 +288,7 @@ export default function BoardPage() {
           <span style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
             <input
               type="search"
+              aria-label="게시글 검색"
               placeholder="Search"
               value={searchQuery}
               onChange={(e) => {
@@ -554,6 +556,6 @@ export default function BoardPage() {
           </button>
         </nav>
       )}
-    </div>
+    </main>
   )
 }
