@@ -22,9 +22,35 @@ export default function NewPostPage() {
     if (!user) router.replace('/login')
   }, [user, authLoading, router])
 
+  const TITLE_MIN = 1
+  const TITLE_MAX = 200
+  const CONTENT_MIN = 1
+  const CONTENT_MAX = 10000
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!user) return
+
+    const trimmedTitle = title.trim()
+    const trimmedContent = content.trim()
+
+    if (trimmedTitle.length < TITLE_MIN) {
+      setError('제목을 입력해 주세요.')
+      return
+    }
+    if (trimmedTitle.length > TITLE_MAX) {
+      setError(`제목은 ${TITLE_MAX}자 이하여야 합니다.`)
+      return
+    }
+    if (trimmedContent.length < CONTENT_MIN) {
+      setError('내용을 입력해 주세요.')
+      return
+    }
+    if (trimmedContent.length > CONTENT_MAX) {
+      setError(`내용은 ${CONTENT_MAX.toLocaleString()}자 이하여야 합니다.`)
+      return
+    }
+
     setSubmitting(true)
     setError('')
 
@@ -44,8 +70,8 @@ export default function NewPostPage() {
       .from('posts')
       .insert({
         user_id: user.id,
-        title: title.trim(),
-        content: content.trim(),
+        title: trimmedTitle,
+        content: trimmedContent,
         image_url: imageUrl,
       })
       .select('id')
@@ -79,7 +105,7 @@ export default function NewPostPage() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
-          maxLength={200}
+          maxLength={TITLE_MAX}
           disabled={submitting}
           style={{
             width: '100%',
@@ -115,6 +141,7 @@ export default function NewPostPage() {
           onChange={(e) => setContent(e.target.value)}
           required
           rows={10}
+          maxLength={CONTENT_MAX}
           disabled={submitting}
           style={{
             width: '100%',
