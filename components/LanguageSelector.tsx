@@ -14,20 +14,22 @@ export default function LanguageSelector() {
   const { locale, setLocale } = useLanguage()
 
   return (
-    <div style={{ 
-      position: 'fixed', 
-      top: '4rem', 
-      right: '1rem', 
-      zIndex: 1000,
-      display: 'flex',
-      gap: '0.5rem',
-      flexWrap: 'wrap',
-      justifyContent: 'flex-end',
-      background: 'rgba(0, 0, 0, 0.7)',
-      padding: '0.5rem',
-      borderRadius: '8px',
-      backdropFilter: 'blur(10px)',
-    }}>
+    <div
+      style={{
+        position: 'fixed',
+        top: '4rem',
+        right: '1rem',
+        zIndex: 1000,
+        display: 'flex',
+        gap: '0.5rem',
+        flexWrap: 'wrap',
+        justifyContent: 'flex-end',
+        background: 'rgba(0, 0, 0, 0.7)',
+        padding: '0.5rem',
+        borderRadius: '8px',
+        backdropFilter: 'blur(10px)',
+      }}
+    >
       {locales.map((loc) => (
         <button
           key={loc}

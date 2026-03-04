@@ -3,27 +3,52 @@
 
 import * as tf from '@tensorflow/tfjs'
 
-let model: tf.LayersModel | null = null
+let featureModel: tf.LayersModel | null = null
 
 /**
- * MobileNet 모델 로드
+ * MobileNet v2 모델을 로드하고, 최종 분류층 대신
+ * 중간 특징층(global_average_pooling2d)의 출력을 반환하는 모델을 생성한다.
+ * 이렇게 하면 1000-class softmax 확률이 아닌 1280차원 시각적 특징 벡터를 얻을 수 있어
+ * 사람 얼굴 ↔ 포켓몬 일러스트 간에도 의미 있는 유사도가 나온다.
  */
 async function loadModel(): Promise<tf.LayersModel | null> {
-  if (model) return model
+  if (featureModel) return featureModel
 
   try {
-    // MobileNet 모델 로드 (이미지 특징 추출용)
-    const modelUrl = 'https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_1.0_224/model.json'
-    model = await tf.loadLayersModel(modelUrl)
-    
-    if (!model) {
-      throw new Error('모델 로드 실패')
+    const modelUrl =
+      'https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v2_1.0_224/model.json'
+    const fullModel = await tf.loadLayersModel(modelUrl)
+
+    const featureLayer = fullModel.layers.find((l) => l.name === 'global_average_pooling2d_1')
+
+    if (featureLayer) {
+      featureModel = tf.model({
+        inputs: fullModel.input,
+        outputs: featureLayer.output as tf.SymbolicTensor,
+      })
+    } else {
+      const poolLayer = [...fullModel.layers]
+        .reverse()
+        .find((l) => l.name.includes('global_average_pooling') || l.name.includes('avg_pool'))
+
+      if (poolLayer) {
+        featureModel = tf.model({
+          inputs: fullModel.input,
+          outputs: poolLayer.output as tf.SymbolicTensor,
+        })
+      } else {
+        const secondToLast = fullModel.layers[fullModel.layers.length - 2]
+        featureModel = tf.model({
+          inputs: fullModel.input,
+          outputs: secondToLast.output as tf.SymbolicTensor,
+        })
+      }
     }
-    
-    return model
+
+    return featureModel
   } catch (error) {
     console.error('모델 로드 실패:', error)
-    console.warn('MobileNet 모델 로드 실패, 간단한 방법 사용')
+    console.warn('MobileNet v2 모델 로드 실패, 간단한 방법 사용')
     return null
   }
 }
@@ -42,27 +67,25 @@ function preprocessImage(imageElement: HTMLImageElement) {
 }
 
 /**
- * 이미지에서 특징 벡터 추출
+ * 이미지에서 특징 벡터 추출 (1280차원 시각적 특징)
  */
 async function extractFeatures(imageElement: HTMLImageElement) {
   const loadedModel = await loadModel()
-  
+
   return tf.tidy(() => {
     const preprocessed = preprocessImage(imageElement)
-    
+
     if (loadedModel) {
       try {
-        const predictions = loadedModel.predict(preprocessed) as tf.Tensor
-        const features = predictions.squeeze()
-        const normalized = features.div(features.norm())
-        return normalized
+        const output = loadedModel.predict(preprocessed) as tf.Tensor
+        const features = output.squeeze()
+        return features.div(features.norm())
       } catch (error) {
         console.warn('MobileNet 특징 추출 실패, 간단한 방법 사용:', error)
         return extractSimpleFeatures(preprocessed)
       }
-    } else {
-      return extractSimpleFeatures(preprocessed)
     }
+    return extractSimpleFeatures(preprocessed)
   })
 }
 
@@ -105,29 +128,32 @@ function loadImageFromUrl(url: string): Promise<HTMLImageElement> {
 }
 
 /**
+ * 코사인 유사도 원본값(보통 0.3~0.85)을 체감 유사도(0~1)로 변환.
+ * 최소 기준(floor) 이하는 0, 최대 기준(ceil) 이상은 1로 매핑한다.
+ */
+function scaleToPerceptual(raw: number, floor = 0.3, ceil = 0.85): number {
+  const clamped = Math.max(0, Math.min(1, (raw - floor) / (ceil - floor)))
+  return clamped
+}
+
+/**
  * 두 이미지 간의 유사도 계산
  */
-export async function compareImages(
-  imageUrl1: string,
-  imageUrl2: string
-): Promise<number> {
+export async function compareImages(imageUrl1: string, imageUrl2: string): Promise<number> {
   try {
     const [img1, img2] = await Promise.all([
       loadImageFromUrl(imageUrl1),
       loadImageFromUrl(imageUrl2),
     ])
 
-    const [features1, features2] = await Promise.all([
-      extractFeatures(img1),
-      extractFeatures(img2),
-    ])
+    const [features1, features2] = await Promise.all([extractFeatures(img1), extractFeatures(img2)])
 
-    const similarity = cosineSimilarity(features1, features2)
-    
+    const raw = cosineSimilarity(features1, features2)
+
     features1.dispose()
     features2.dispose()
 
-    return similarity
+    return scaleToPerceptual(raw)
   } catch (error) {
     console.error('이미지 비교 중 오류:', error)
     throw error

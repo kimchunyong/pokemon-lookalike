@@ -38,6 +38,22 @@ export default function AuthCallbackPage() {
 
     const finishLogin = async () => {
       const supabase = createClient()
+      const code = searchParams.get('code')
+
+      if (code) {
+        setMessage('로그인 완료 처리 중...')
+        const { data, error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
+        if (exchangeError) {
+          setIsError(true)
+          setMessage(exchangeError.message || '로그인 세션을 확인할 수 없습니다.')
+          return
+        }
+        if (data.session) {
+          router.replace('/')
+          return
+        }
+      }
+
       const {
         data: { session },
       } = await supabase.auth.getSession()

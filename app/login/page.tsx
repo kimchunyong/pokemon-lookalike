@@ -24,9 +24,7 @@ export default function LoginPage() {
   return (
     <div style={{ padding: '2rem', maxWidth: 400, margin: '0 auto' }}>
       <h1>로그인</h1>
-      <p style={{ color: '#666', marginBottom: '1.5rem' }}>
-        Google 계정으로 로그인합니다.
-      </p>
+      <p style={{ color: '#666', marginBottom: '1.5rem' }}>Google 계정으로 로그인합니다.</p>
 
       <button
         type="button"
@@ -69,9 +67,7 @@ export default function LoginPage() {
       </button>
 
       {errorMessage && (
-        <p style={{ color: '#c62828', marginTop: '1rem', fontSize: 14 }}>
-          {errorMessage}
-        </p>
+        <p style={{ color: '#c62828', marginTop: '1rem', fontSize: 14 }}>{errorMessage}</p>
       )}
 
       <p style={{ marginTop: '1.5rem', fontSize: 14 }}>

@@ -19,7 +19,7 @@ export async function generateShareImage(options: ShareImageOptions): Promise<st
   return new Promise((resolve, reject) => {
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
-    
+
     if (!ctx) {
       reject(new Error('Canvas context를 가져올 수 없습니다.'))
       return
@@ -39,7 +39,7 @@ export async function generateShareImage(options: ShareImageOptions): Promise<st
     // 이미지 로드
     const userImg = new Image()
     const pokemonImg = new Image()
-    
+
     userImg.crossOrigin = 'anonymous'
     pokemonImg.crossOrigin = 'anonymous'
 
@@ -54,7 +54,7 @@ export async function generateShareImage(options: ShareImageOptions): Promise<st
         const userImgSize = 280
         const userX = 100
         const userY = (canvas.height - userImgSize) / 2
-        
+
         // 원형 마스크를 위한 클리핑
         ctx.save()
         ctx.beginPath()
@@ -73,7 +73,7 @@ export async function generateShareImage(options: ShareImageOptions): Promise<st
         const pokemonImgSize = 300
         const pokemonX = canvas.width - pokemonImgSize - 100
         const pokemonY = (canvas.height - pokemonImgSize) / 2
-        
+
         ctx.drawImage(pokemonImg, pokemonX, pokemonY, pokemonImgSize, pokemonImgSize)
 
         // 포켓몬 이름
@@ -147,9 +147,7 @@ export async function copyImageToClipboard(dataUrl: string): Promise<boolean> {
   try {
     const response = await fetch(dataUrl)
     const blob = await response.blob()
-    await navigator.clipboard.write([
-      new ClipboardItem({ 'image/png': blob })
-    ])
+    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })])
     return true
   } catch (error) {
     console.error('클립보드 복사 실패:', error)
@@ -160,7 +158,12 @@ export async function copyImageToClipboard(dataUrl: string): Promise<boolean> {
 /**
  * Web Share API를 사용한 공유
  */
-export async function shareViaWebShare(title: string, text: string, url: string, imageUrl?: string): Promise<boolean> {
+export async function shareViaWebShare(
+  title: string,
+  text: string,
+  url: string,
+  imageUrl?: string
+): Promise<boolean> {
   if (navigator.share) {
     try {
       const shareData: ShareData = {
@@ -168,17 +171,17 @@ export async function shareViaWebShare(title: string, text: string, url: string,
         text,
         url,
       }
-      
+
       // files 속성은 일부 브라우저에서만 지원되므로 선택적으로 사용
       if (imageUrl && 'canShare' in navigator && navigator.canShare) {
         try {
-          const blob = await fetch(imageUrl).then(r => r.blob())
+          const blob = await fetch(imageUrl).then((r) => r.blob())
           const file = new File([blob], 'pokemon-lookalike.png', { type: 'image/png' })
           const shareDataWithFile: ShareData = {
             ...shareData,
             files: [file],
           }
-          
+
           if (navigator.canShare(shareDataWithFile)) {
             await navigator.share(shareDataWithFile)
             return true
@@ -188,7 +191,7 @@ export async function shareViaWebShare(title: string, text: string, url: string,
           console.log('Files sharing not supported, sharing URL only')
         }
       }
-      
+
       // files를 지원하지 않거나 제공되지 않은 경우 URL만 공유
       await navigator.share(shareData)
       return true

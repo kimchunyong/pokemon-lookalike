@@ -49,7 +49,10 @@ export const POKEAPI_BASE_URL = 'https://pokeapi.co/api/v2'
 /**
  * 포켓몬 목록 가져오기 (페이지네이션)
  */
-export async function getPokemonList(offset: number = 0, limit: number = 20): Promise<PokemonListResponse> {
+export async function getPokemonList(
+  offset: number = 0,
+  limit: number = 20
+): Promise<PokemonListResponse> {
   const response = await fetch(`${POKEAPI_BASE_URL}/pokemon?offset=${offset}&limit=${limit}`)
   if (!response.ok) {
     throw new Error('Failed to fetch Pokemon list')
@@ -71,9 +74,11 @@ export async function getPokemon(idOrName: number | string): Promise<Pokemon> {
 /**
  * 포켓몬 상세 정보와 한국어 이름 가져오기
  */
-export async function getPokemonWithKoreanName(idOrName: number | string): Promise<Pokemon & { korean_name?: string }> {
+export async function getPokemonWithKoreanName(
+  idOrName: number | string
+): Promise<Pokemon & { korean_name?: string }> {
   const pokemon = await getPokemon(idOrName)
-  
+
   // API에서 종(Species) 정보 가져오기
   try {
     const speciesResponse = await fetch(`${POKEAPI_BASE_URL}/pokemon-species/${pokemon.id}`)
@@ -101,18 +106,18 @@ export async function searchPokemon(query: string): Promise<Pokemon[]> {
     if (!response.ok) {
       throw new Error('Failed to fetch Pokemon list for search')
     }
-    
+
     const data: PokemonListResponse = await response.json()
-    const matchingPokemon = data.results.filter(pokemon =>
+    const matchingPokemon = data.results.filter((pokemon) =>
       pokemon.name.toLowerCase().includes(query.toLowerCase())
     )
-    
+
     // 매칭된 포켓몬들의 상세 정보 가져오기
-    const pokemonPromises = matchingPokemon.slice(0, 50).map(pokemon => {
+    const pokemonPromises = matchingPokemon.slice(0, 50).map((pokemon) => {
       const id = pokemon.url.split('/').filter(Boolean).pop()
       return getPokemon(id || pokemon.name)
     })
-    
+
     return Promise.all(pokemonPromises)
   } catch (error) {
     console.error('Search error:', error)

@@ -1,7 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { generateShareImage, downloadImage, copyImageToClipboard, shareViaWebShare, copyLinkToClipboard } from '../utils/shareImage'
+import {
+  generateShareImage,
+  downloadImage,
+  copyImageToClipboard,
+  shareViaWebShare,
+  copyLinkToClipboard,
+} from '../utils/shareImage'
 import { useLanguage } from '../contexts/LanguageContext'
 
 interface ShareButtonProps {
@@ -82,37 +88,21 @@ export default function ShareButton({ userImageUrl, pokemon }: ShareButtonProps)
         disabled={isGenerating}
         className="share-button"
       >
-        {isGenerating ? (t.share.generating || '생성 중...') : (t.share.share || '공유하기')}
+        {isGenerating ? t.share.generating || '생성 중...' : t.share.share || '공유하기'}
       </button>
 
       {shareMenuOpen && (
         <div className="share-menu">
-          <button
-            type="button"
-            onClick={() => handleShare('download')}
-            className="share-menu-item"
-          >
+          <button type="button" onClick={() => handleShare('download')} className="share-menu-item">
             📥 {t.share.download || '이미지 다운로드'}
           </button>
-          <button
-            type="button"
-            onClick={() => handleShare('copy')}
-            className="share-menu-item"
-          >
+          <button type="button" onClick={() => handleShare('copy')} className="share-menu-item">
             📋 {t.share.copyImage || '이미지 복사'}
           </button>
-          <button
-            type="button"
-            onClick={() => handleShare('share')}
-            className="share-menu-item"
-          >
+          <button type="button" onClick={() => handleShare('share')} className="share-menu-item">
             📤 {t.share.shareVia || '공유하기'}
           </button>
-          <button
-            type="button"
-            onClick={() => handleShare('link')}
-            className="share-menu-item"
-          >
+          <button type="button" onClick={() => handleShare('link')} className="share-menu-item">
             🔗 {t.share.copyLink || '링크 복사'}
           </button>
         </div>

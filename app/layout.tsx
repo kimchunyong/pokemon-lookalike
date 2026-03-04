@@ -1,17 +1,22 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import './globals.css'
-import { LanguageProvider } from '../contexts/LanguageContext'
-import { AuthProvider } from '../contexts/AuthContext'
-import LanguageSelector from '../components/LanguageSelector'
-import AuthHeader from '../components/AuthHeader'
+import Providers from '../components/Providers'
+
+const baseUrl =
+  process.env.NEXT_PUBLIC_APP_URL ??
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
 
 export const metadata: Metadata = {
+  metadataBase: new URL(baseUrl),
   title: '나와 닮은 포켓몬 찾기 - 재미있는 AI 매칭 서비스',
   description: 'AI 기술을 활용하여 나와 닮은 포켓몬을 찾아보는 재미있는 서비스입니다. 개인정보는 저장되지 않으며, 재미 목적으로만 제공됩니다.',
   keywords: ['포켓몬', 'AI', '이미지 비교', '재미'],
   authors: [{ name: 'Pokemon Lookalike' }],
   robots: 'index, follow',
+  icons: {
+    icon: '/images/favicon-16x16.png',
+  },
   openGraph: {
     title: '나와 닮은 포켓몬 찾기',
     description: 'AI 기술을 활용하여 나와 닮은 포켓몬을 찾아보세요',
@@ -36,13 +41,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <LanguageProvider>
-          <AuthProvider>
-            <AuthHeader />
-            <LanguageSelector />
-            {children}
-          </AuthProvider>
-        </LanguageProvider>
+        <Providers>{children}</Providers>
         <Script
           src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"
           strategy="lazyOnload"

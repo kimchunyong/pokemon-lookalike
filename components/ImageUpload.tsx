@@ -66,7 +66,7 @@ export default function ImageUpload({ onImageSelect }: ImageUploadProps) {
         onChange={handleFileChange}
         style={{ display: 'none' }}
       />
-      
+
       {!preview ? (
         <div className="upload-area" onClick={handleClick}>
           <p>{t.imageCompare.uploadPlaceholder}</p>
@@ -88,7 +88,7 @@ export default function ImageUpload({ onImageSelect }: ImageUploadProps) {
           </div>
         </div>
       )}
-      
+
       {error && <div className="error-message">{error}</div>}
     </div>
   )

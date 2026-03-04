@@ -15,7 +15,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const id = parseInt(params.id)
-  const pokemon = POKEMON_LIST.find(p => p.id === id)
+  const pokemon = POKEMON_LIST.find((p) => p.id === id)
 
   if (!pokemon) {
     return {
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default function ResultPage({ params }: Props) {
   const id = parseInt(params.id)
-  const pokemon = POKEMON_LIST.find(p => p.id === id)
+  const pokemon = POKEMON_LIST.find((p) => p.id === id)
 
   if (!pokemon) {
     notFound()

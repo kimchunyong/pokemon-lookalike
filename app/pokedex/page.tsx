@@ -25,20 +25,20 @@ export default function PokedexPage() {
   const fetchPokemonList = useCallback(async (page: number) => {
     setLoading(true)
     setError(null)
-    
+
     try {
       const offset = (page - 1) * POKEMON_PER_PAGE
       const listData: PokemonListResponse = await getPokemonList(offset, POKEMON_PER_PAGE)
-      
+
       setTotalCount(listData.count)
       setTotalPages(Math.ceil(listData.count / POKEMON_PER_PAGE))
-      
+
       // 각 포켓몬의 상세 정보 가져오기
-      const pokemonPromises = listData.results.map(pokemon => {
+      const pokemonPromises = listData.results.map((pokemon) => {
         const id = pokemon.url.split('/').filter(Boolean).pop()
-        return fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then(res => res.json())
+        return fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((res) => res.json())
       })
-      
+
       const pokemonData = await Promise.all(pokemonPromises)
       setPokemonList(pokemonData)
     } catch (err) {
@@ -50,30 +50,33 @@ export default function PokedexPage() {
   }, [])
 
   // 검색 실행
-  const handleSearch = useCallback(async (query: string) => {
-    if (!query.trim()) {
-      // 검색어가 비어있으면 일반 목록으로 복귀
-      fetchPokemonList(currentPage)
-      setIsSearching(false)
-      return
-    }
+  const handleSearch = useCallback(
+    async (query: string) => {
+      if (!query.trim()) {
+        // 검색어가 비어있으면 일반 목록으로 복귀
+        fetchPokemonList(currentPage)
+        setIsSearching(false)
+        return
+      }
 
-    setIsSearching(true)
-    setLoading(true)
-    setError(null)
+      setIsSearching(true)
+      setLoading(true)
+      setError(null)
 
-    try {
-      const results = await searchPokemon(query)
-      setPokemonList(results)
-      setTotalPages(1)
-      setTotalCount(results.length)
-    } catch (err) {
-      console.error('Search failed:', err)
-      setError('검색 중 오류가 발생했습니다.')
-    } finally {
-      setLoading(false)
-    }
-  }, [currentPage, fetchPokemonList])
+      try {
+        const results = await searchPokemon(query)
+        setPokemonList(results)
+        setTotalPages(1)
+        setTotalCount(results.length)
+      } catch (err) {
+        console.error('Search failed:', err)
+        setError('검색 중 오류가 발생했습니다.')
+      } finally {
+        setLoading(false)
+      }
+    },
+    [currentPage, fetchPokemonList]
+  )
 
   // 페이지 변경
   const handlePageChange = (page: number) => {
@@ -113,12 +116,10 @@ export default function PokedexPage() {
           ← {t.common.back}
         </button>
       </div>
-      
+
       <div className="pokedex-header">
         <h1>포켓몬 도감</h1>
-        <p className="pokedex-subtitle">
-          총 {totalCount.toLocaleString()}마리의 포켓몬
-        </p>
+        <p className="pokedex-subtitle">총 {totalCount.toLocaleString()}마리의 포켓몬</p>
       </div>
 
       <div className="pokedex-search">

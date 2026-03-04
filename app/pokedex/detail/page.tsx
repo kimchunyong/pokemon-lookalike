@@ -62,11 +62,12 @@ export default function PokemonDetailPage() {
     )
   }
 
-  const imageUrl = pokemon.sprites.other?.['official-artwork']?.front_default || 
-                   pokemon.sprites.front_default || 
-                   '/placeholder-pokemon.png'
-  
-  const types = pokemon.types.map(t => getTypeNameKorean(t.type.name))
+  const imageUrl =
+    pokemon.sprites.other?.['official-artwork']?.front_default ||
+    pokemon.sprites.front_default ||
+    '/placeholder-pokemon.png'
+
+  const types = pokemon.types.map((t) => getTypeNameKorean(t.type.name))
   const heightInMeters = (pokemon.height / 10).toFixed(1)
   const weightInKg = (pokemon.weight / 10).toFixed(1)
 
@@ -86,26 +87,20 @@ export default function PokemonDetailPage() {
         <div className="pokemon-detail-header">
           <div className="pokemon-detail-image-section">
             <div className="pokemon-detail-image-wrapper">
-              <img
-                src={imageUrl}
-                alt={pokemon.name}
-                className="pokemon-detail-image"
-              />
+              <img src={imageUrl} alt={pokemon.name} className="pokemon-detail-image" />
             </div>
           </div>
 
           <div className="pokemon-detail-info-section">
-            <div className="pokemon-detail-id">
-              #{String(pokemon.id).padStart(3, '0')}
-            </div>
+            <div className="pokemon-detail-id">#{String(pokemon.id).padStart(3, '0')}</div>
             <h1 className="pokemon-detail-name">
               {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
             </h1>
 
             <div className="pokemon-detail-types">
               {types.map((type, index) => (
-                <span 
-                  key={index} 
+                <span
+                  key={index}
                   className={`pokemon-type-badge type-${pokemon.types[index].type.name}`}
                 >
                   {type}

@@ -13,20 +13,16 @@ const nextConfig = {
     ignoreBuildErrors: false,
   },
   // TensorFlow.js는 클라이언트 사이드에서만 작동
-  webpack: (config, { isServer }) => {
-    // 서버 사이드 빌드 시
+  webpack: (config, { isServer, dev }) => {
     if (isServer) {
-      config.externals = [...(config.externals || []), '@tensorflow/tfjs', '@vladmandic/face-api'];
+      config.externals = [...(config.externals || []), '@tensorflow/tfjs', '@vladmandic/face-api']
     }
 
-    // 클라이언트 및 서버 공통 설정
-    // face-api가 node 환경을 감지하고 tfjs-node를 불러오려는 것을 방지
     config.resolve.alias = {
       ...config.resolve.alias,
       '@tensorflow/tfjs-node': false,
-    };
+    }
 
-    // fs, path 등 Node.js 모듈을 브라우저에서 사용할 수 없으므로 빈 객체로 대체
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
@@ -34,10 +30,19 @@ const nextConfig = {
         path: false,
         crypto: false,
         encoding: false,
-      };
+      }
     }
 
-    return config;
+    // dev 모드에서 chunk ID를 경로 기반으로 고정하여 HMR 캐시 불일치 방지
+    if (dev) {
+      config.optimization = {
+        ...config.optimization,
+        moduleIds: 'named',
+        chunkIds: 'named',
+      }
+    }
+
+    return config
   },
   // 이미지 최적화 설정
   images: {

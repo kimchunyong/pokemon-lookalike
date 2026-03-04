@@ -21,7 +21,6 @@ export default function KakaoShareButton({ pokemon }: KakaoShareButtonProps) {
     const key = process.env.NEXT_PUBLIC_KAKAO_JS_KEY
 
     if (typeof window !== 'undefined' && window.Kakao && !window.Kakao.isInitialized()) {
-      
       if (key) {
         window.Kakao.init(key)
         console.log('Kakao SDK 초기화 성공')
@@ -93,8 +92,8 @@ export default function KakaoShareButton({ pokemon }: KakaoShareButtonProps) {
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
         transition: 'transform 0.2s',
       }}
-      onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-      onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+      onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+      onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
     >
       <img
         src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_small.png"

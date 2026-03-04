@@ -9,22 +9,18 @@ interface PokemonCardProps {
 }
 
 export default function PokemonCard({ pokemon }: PokemonCardProps) {
-  const imageUrl = pokemon.sprites.other?.['official-artwork']?.front_default || 
-                   pokemon.sprites.front_default || 
-                   '/placeholder-pokemon.png'
-  
-  const types = pokemon.types.map(t => getTypeNameKorean(t.type.name))
+  const imageUrl =
+    pokemon.sprites.other?.['official-artwork']?.front_default ||
+    pokemon.sprites.front_default ||
+    '/placeholder-pokemon.png'
+
+  const types = pokemon.types.map((t) => getTypeNameKorean(t.type.name))
 
   return (
     <Link href={`/pokedex/detail?id=${pokemon.id}`}>
       <div className="pokemon-card-pokedex">
         <div className="pokemon-card-image-container">
-          <img
-            src={imageUrl}
-            alt={pokemon.name}
-            className="pokemon-card-image"
-            loading="lazy"
-          />
+          <img src={imageUrl} alt={pokemon.name} className="pokemon-card-image" loading="lazy" />
         </div>
         <div className="pokemon-card-info">
           <div className="pokemon-card-id">#{String(pokemon.id).padStart(3, '0')}</div>
@@ -33,7 +29,10 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
           </h3>
           <div className="pokemon-card-types">
             {types.map((type, index) => (
-              <span key={index} className={`pokemon-type-badge type-${pokemon.types[index].type.name}`}>
+              <span
+                key={index}
+                className={`pokemon-type-badge type-${pokemon.types[index].type.name}`}
+              >
                 {type}
               </span>
             ))}
