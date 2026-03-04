@@ -154,7 +154,7 @@ export default function MyResultsPage() {
     <main style={{ padding: '2rem', maxWidth: 700, margin: '90px auto 0' }}>
       <h1 style={{ marginBottom: '0.5rem' }}>내 닮은꼴 히스토리</h1>
       <p style={{ color: '#888', fontSize: '0.9em', marginBottom: '1.5rem' }}>
-        분석할 때마다 자동 저장됩니다. 최근 100건까지 표시됩니다.
+        최근 100건까지 표시됩니다.
       </p>
 
       {results.length === 0 ? (
@@ -195,7 +195,6 @@ export default function MyResultsPage() {
                     padding: '0.6rem 0.8rem',
                     border: '1px solid #eee',
                     borderRadius: 8,
-                    background: '#fafafa',
                   }}
                 >
                   <img

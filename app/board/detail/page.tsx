@@ -15,6 +15,8 @@ type Post = {
   author_display_name: string | null
   created_at: string
   updated_at: string
+  view_count?: number
+  like_count?: number
 }
 
 export default function PostDetailPage() {
@@ -26,6 +28,8 @@ export default function PostDetailPage() {
   const [authorDisplayName, setAuthorDisplayName] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [deleting, setDeleting] = useState(false)
+  const [liked, setLiked] = useState(false)
+  const [likeToggling, setLikeToggling] = useState(false)
 
   useEffect(() => {
     if (!id) {
@@ -36,7 +40,7 @@ export default function PostDetailPage() {
       const supabase = createClient()
       const { data, error } = await supabase
         .from('posts')
-        .select('id, user_id, title, content, image_url, author_display_name, created_at, updated_at')
+        .select('id, user_id, title, content, image_url, author_display_name, created_at, updated_at, view_count, like_count')
         .eq('id', id)
         .single()
       if (error) {
@@ -45,6 +49,14 @@ export default function PostDetailPage() {
       }
       const p = data as Post
       setPost(p)
+      const viewedKey = `board_viewed_${id}`
+      if (typeof sessionStorage !== 'undefined' && !sessionStorage.getItem(viewedKey)) {
+        sessionStorage.setItem(viewedKey, '1')
+        await supabase
+          .from('posts')
+          .update({ view_count: (p.view_count ?? 0) + 1 })
+          .eq('id', id)
+      }
       if (!p.author_display_name && p.user_id) {
         const { data: userData } = await supabase
           .from('users')
@@ -67,10 +79,19 @@ export default function PostDetailPage() {
       } else {
         setAuthorDisplayName(p.author_display_name)
       }
+      if (user) {
+        const { data: likeRow } = await supabase
+          .from('post_likes')
+          .select('id')
+          .eq('post_id', id)
+          .eq('user_id', user.id)
+          .maybeSingle()
+        setLiked(!!likeRow)
+      }
       setLoading(false)
     }
     fetchPost()
-  }, [id])
+  }, [id, user])
 
   const handleDelete = async () => {
     if (!id || !confirm('이 글을 삭제할까요?')) return
@@ -79,6 +100,22 @@ export default function PostDetailPage() {
     const { error } = await supabase.from('posts').delete().eq('id', id)
     setDeleting(false)
     if (!error) router.replace('/board')
+  }
+
+  const handleLikeToggle = async () => {
+    if (!user || !id || !post || likeToggling) return
+    const supabase = createClient()
+    setLikeToggling(true)
+    const nextLiked = !liked
+    const prevCount = post.like_count ?? 0
+    setLiked(nextLiked)
+    setPost((prev) => (prev ? { ...prev, like_count: prevCount + (nextLiked ? 1 : -1) } : prev))
+    if (nextLiked) {
+      await supabase.from('post_likes').insert({ post_id: id, user_id: user.id })
+    } else {
+      await supabase.from('post_likes').delete().eq('post_id', id).eq('user_id', user.id)
+    }
+    setLikeToggling(false)
   }
 
   const formatDate = (iso: string) =>
@@ -107,12 +144,37 @@ export default function PostDetailPage() {
       }}
     >
       <h1 style={{ marginBottom: '0.5rem' }}>{post.title}</h1>
-      <p style={{ color: '#666', fontSize: 14, marginBottom: '1rem' }}>
+      <p style={{ color: '#666', fontSize: 14, marginBottom: '0.5rem' }}>
         작성자: {post.author_display_name ?? authorDisplayName ?? '알 수 없음'}
         {' · '}
         {formatDate(post.updated_at !== post.created_at ? post.updated_at : post.created_at)}
         {isAuthor && ' · 본인 글'}
       </p>
+      {user && (
+        <div style={{ marginBottom: '1rem' }}>
+          <button
+            type="button"
+            onClick={handleLikeToggle}
+            disabled={likeToggling}
+            aria-pressed={liked}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.35rem',
+              padding: '0.4rem 0.75rem',
+              border: '1px solid rgba(255,255,255,0.25)',
+              borderRadius: 8,
+              background: liked ? 'rgba(233, 30, 99, 0.2)' : 'rgba(255,255,255,0.06)',
+              color: liked ? '#e91e63' : 'rgba(255,255,255,0.9)',
+              cursor: likeToggling ? 'not-allowed' : 'pointer',
+              fontSize: 14,
+            }}
+          >
+            <span aria-hidden>{liked ? '♥' : '♡'}</span>
+            <span>좋아요 {post.like_count ?? 0}</span>
+          </button>
+        </div>
+      )}
       {post.image_url && (
         <div style={{ marginBottom: '1rem' }}>
           <img
