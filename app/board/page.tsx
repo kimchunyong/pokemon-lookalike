@@ -233,11 +233,6 @@ export default function BoardPage() {
             로그인하기
           </Link>
         </div>
-        <p style={{ marginTop: '1.5rem', fontSize: 14 }}>
-          <Link href="/" style={{ color: '#1976d2' }}>
-            ← 홈으로
-          </Link>
-        </p>
       </div>
     )
   }
