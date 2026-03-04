@@ -12,12 +12,28 @@ type PostRow = {
   image_url: string | null
   created_at: string
   user_id: string
+  author_display_name: string | null
+}
+
+type UserRow = {
+  id: string
+  email: string | null
+  nickname: string | null
+  raw_user_meta_data: { full_name?: string; name?: string } | null
+}
+
+function getAuthorDisplayName(u: UserRow): string {
+  const nickname = (u.nickname ?? '').trim()
+  if (nickname) return nickname
+  const meta = u.raw_user_meta_data
+  return (meta?.full_name || meta?.name || u.email || '알 수 없음').trim() || '알 수 없음'
 }
 
 export default function BoardPage() {
   const router = useRouter()
   const { user, loading: authLoading } = useAuth()
   const [posts, setPosts] = useState<PostRow[]>([])
+  const [authorByUserId, setAuthorByUserId] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -26,9 +42,27 @@ export default function BoardPage() {
       const supabase = createClient()
       const { data, error } = await supabase
         .from('posts')
-        .select('id, title, image_url, user_id, created_at')
+        .select('id, title, image_url, user_id, created_at, author_display_name')
         .order('created_at', { ascending: false })
-      if (!error) setPosts((data as PostRow[]) ?? [])
+      if (error) {
+        setLoading(false)
+        return
+      }
+      const list = (data as PostRow[]) ?? []
+      setPosts(list)
+
+      const userIds = [...new Set(list.map((p) => p.user_id).filter(Boolean))]
+      if (userIds.length > 0) {
+        const { data: usersData } = await supabase
+          .from('users')
+          .select('id, email, nickname, raw_user_meta_data')
+          .in('id', userIds)
+        const map: Record<string, string> = {}
+        ;(usersData as UserRow[] | null)?.forEach((u) => {
+          map[u.id] = getAuthorDisplayName(u)
+        })
+        setAuthorByUserId(map)
+      }
       setLoading(false)
     }
     fetchPosts()
@@ -126,19 +160,21 @@ export default function BoardPage() {
         }}
       >
         <h1>커뮤니티</h1>
-        <Link
-          href="/board/new"
-          style={{
-            padding: '0.5rem 1rem',
-            background: '#1976d2',
-            color: '#fff',
-            borderRadius: 8,
-            textDecoration: 'none',
-            fontSize: 14,
-          }}
-        >
-          글쓰기
-        </Link>
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          <Link
+            href="/board/new"
+            style={{
+              padding: '0.5rem 1rem',
+              background: '#1976d2',
+              color: '#fff',
+              borderRadius: 8,
+              textDecoration: 'none',
+              fontSize: 14,
+            }}
+          >
+            글쓰기
+          </Link>
+        </div>
       </div>
 
       {loading ? (
@@ -187,9 +223,16 @@ export default function BoardPage() {
                     color: '#888',
                     fontSize: 13,
                     flexShrink: 0,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-end',
+                    gap: 2,
                   }}
                 >
-                  {formatDate(post.created_at)}
+                  <span>
+                    {post.author_display_name ?? authorByUserId[post.user_id] ?? '알 수 없음'}
+                  </span>
+                  <span>{formatDate(post.created_at)}</span>
                 </span>
               </Link>
             </li>

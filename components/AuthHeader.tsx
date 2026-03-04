@@ -17,12 +17,17 @@ export default function AuthHeader() {
   const { user, loading, signOut } = useAuth()
   const { locale, setLocale } = useLanguage()
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const userDropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setDropdownOpen(false)
+      }
+      if (userDropdownRef.current && !userDropdownRef.current.contains(e.target as Node)) {
+        setUserDropdownOpen(false)
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
@@ -57,23 +62,100 @@ export default function AuthHeader() {
       )}
 
       {user ? (
-        <>
-          <span title={user.email ?? undefined}>{user.email ?? '로그인됨'}</span>
+        <div ref={userDropdownRef} style={{ position: 'relative' }}>
           <button
             type="button"
-            onClick={() => signOut()}
+            onClick={() => setUserDropdownOpen((prev) => !prev)}
+            title={user.email ?? undefined}
+            aria-expanded={userDropdownOpen}
+            aria-haspopup="menu"
             style={{
-              padding: '0.25rem 0.5rem',
+              padding: '0.35rem 0.75rem',
               cursor: 'pointer',
-              background: 'transparent',
-              border: '1px solid rgba(255,255,255,0.5)',
-              borderRadius: 4,
+              background: 'rgba(255,255,255,0.08)',
+              border: '1px solid rgba(255,255,255,0.2)',
+              borderRadius: 6,
               color: '#fff',
+              fontSize: 14,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.35rem',
             }}
           >
-            로그아웃
+            {user.email ?? '로그인됨'}
+            <span style={{ fontSize: '0.65em', opacity: 0.8 }}>
+              {userDropdownOpen ? ' ▲' : ' ▼'}
+            </span>
           </button>
-        </>
+          {userDropdownOpen && (
+            <div
+              role="menu"
+              style={{
+                position: 'absolute',
+                top: '100%',
+                right: 0,
+                marginTop: 4,
+                minWidth: 140,
+                background: 'rgba(0, 0, 0, 0.9)',
+                padding: '0.25rem',
+                borderRadius: 8,
+                border: '1px solid rgba(255,255,255,0.12)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                zIndex: 1001,
+              }}
+            >
+              <Link
+                href="/profile"
+                role="menuitem"
+                onClick={() => setUserDropdownOpen(false)}
+                style={{
+                  display: 'block',
+                  padding: '0.5rem 0.75rem',
+                  borderRadius: 4,
+                  color: '#fff',
+                  textDecoration: 'none',
+                  fontSize: 14,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.1)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'transparent'
+                }}
+              >
+                프로필 설정
+              </Link>
+              <button
+                type="button"
+                role="menuitem"
+                onClick={() => {
+                  setUserDropdownOpen(false)
+                  signOut()
+                }}
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: 'none',
+                  borderRadius: 4,
+                  background: 'transparent',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  fontSize: 14,
+                  textAlign: 'left',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.1)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'transparent'
+                }}
+              >
+                로그아웃
+              </button>
+            </div>
+          )}
+        </div>
       ) : (
         <Link href="/login" style={{ color: '#fff' }}>
           로그인

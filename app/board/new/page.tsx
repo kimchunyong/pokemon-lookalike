@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
 import { uploadPostImage } from '@/lib/supabase/uploadPostImage'
+import { getAuthorDisplayNameFromUser } from '@/lib/getAuthorDisplayName'
 
 export default function NewPostPage() {
   const { user, loading: authLoading } = useAuth()
@@ -15,12 +16,28 @@ export default function NewPostPage() {
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
+  const [authorPreview, setAuthorPreview] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (authLoading) return
     if (!user) router.replace('/login')
   }, [user, authLoading, router])
+
+  useEffect(() => {
+    if (!user) return
+    const load = async () => {
+      const supabase = createClient()
+      const { data } = await supabase
+        .from('users')
+        .select('nickname')
+        .eq('id', user.id)
+        .single()
+      const nickname = (data as { nickname: string | null } | null)?.nickname?.trim()
+      setAuthorPreview(nickname || getAuthorDisplayNameFromUser(user))
+    }
+    load()
+  }, [user])
 
   const TITLE_MIN = 1
   const TITLE_MAX = 200
@@ -66,6 +83,13 @@ export default function NewPostPage() {
     }
 
     const supabase = createClient()
+    const { data: profile } = await supabase
+      .from('users')
+      .select('nickname')
+      .eq('id', user.id)
+      .single()
+    const nickname = (profile as { nickname: string | null } | null)?.nickname?.trim()
+    const authorDisplayName = nickname || getAuthorDisplayNameFromUser(user)
     const { data, error: err } = await supabase
       .from('posts')
       .insert({
@@ -73,6 +97,7 @@ export default function NewPostPage() {
         title: trimmedTitle,
         content: trimmedContent,
         image_url: imageUrl,
+        author_display_name: authorDisplayName,
       })
       .select('id')
       .single()
@@ -95,6 +120,15 @@ export default function NewPostPage() {
   return (
     <div style={{ padding: '1.5rem', maxWidth: 600, margin: '0 auto' }}>
       <h1>글쓰기</h1>
+      {authorPreview && (
+        <p style={{ color: '#888', fontSize: 14, marginTop: '0.25rem', marginBottom: '1rem' }}>
+          작성자: <strong style={{ color: 'inherit' }}>{authorPreview}</strong>
+          {' · '}
+          <Link href="/profile" style={{ color: '#1976d2', fontSize: 13 }}>
+            프로필에서 변경
+          </Link>
+        </p>
+      )}
       <form onSubmit={handleSubmit} style={{ marginTop: '1rem' }}>
         <label htmlFor="title" style={{ display: 'block', marginBottom: 4, fontWeight: 500 }}>
           제목

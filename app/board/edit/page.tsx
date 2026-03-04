@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
 import { uploadPostImage, deletePostImage } from '@/lib/supabase/uploadPostImage'
+import { getAuthorDisplayNameFromUser } from '@/lib/getAuthorDisplayName'
 
 type Post = {
   id: string
@@ -110,12 +111,20 @@ export default function EditPostPage() {
     }
 
     const supabase = createClient()
+    const { data: profile } = await supabase
+      .from('users')
+      .select('nickname')
+      .eq('id', user.id)
+      .single()
+    const nickname = (profile as { nickname: string | null } | null)?.nickname?.trim()
+    const authorDisplayName = nickname || getAuthorDisplayNameFromUser(user)
     const { error: err } = await supabase
       .from('posts')
       .update({
         title: trimmedTitle,
         content: trimmedContent,
         image_url: newImageUrl,
+        author_display_name: authorDisplayName,
         updated_at: new Date().toISOString(),
       })
       .eq('id', id)

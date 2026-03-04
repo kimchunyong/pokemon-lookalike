@@ -12,6 +12,7 @@ type Post = {
   title: string
   content: string
   image_url: string | null
+  author_display_name: string | null
   created_at: string
   updated_at: string
 }
@@ -22,6 +23,7 @@ export default function PostDetailPage() {
   const { user } = useAuth()
   const id = searchParams.get('id')
   const [post, setPost] = useState<Post | null>(null)
+  const [authorDisplayName, setAuthorDisplayName] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [deleting, setDeleting] = useState(false)
 
@@ -34,10 +36,37 @@ export default function PostDetailPage() {
       const supabase = createClient()
       const { data, error } = await supabase
         .from('posts')
-        .select('id, user_id, title, content, image_url, created_at, updated_at')
+        .select('id, user_id, title, content, image_url, author_display_name, created_at, updated_at')
         .eq('id', id)
         .single()
-      if (!error) setPost(data as Post)
+      if (error) {
+        setLoading(false)
+        return
+      }
+      const p = data as Post
+      setPost(p)
+      if (!p.author_display_name && p.user_id) {
+        const { data: userData } = await supabase
+          .from('users')
+          .select('nickname, email, raw_user_meta_data')
+          .eq('id', p.user_id)
+          .single()
+        const u = userData as {
+          nickname: string | null
+          email: string | null
+          raw_user_meta_data: { full_name?: string; name?: string } | null
+        } | null
+        const nickname = (u?.nickname ?? '').trim()
+        const displayName = nickname
+          ? nickname
+          : (u?.raw_user_meta_data?.full_name ||
+              u?.raw_user_meta_data?.name ||
+              u?.email ||
+              '').trim() || '알 수 없음'
+        setAuthorDisplayName(displayName)
+      } else {
+        setAuthorDisplayName(p.author_display_name)
+      }
       setLoading(false)
     }
     fetchPost()
@@ -79,6 +108,8 @@ export default function PostDetailPage() {
     >
       <h1 style={{ marginBottom: '0.5rem' }}>{post.title}</h1>
       <p style={{ color: '#666', fontSize: 14, marginBottom: '1rem' }}>
+        작성자: {post.author_display_name ?? authorDisplayName ?? '알 수 없음'}
+        {' · '}
         {formatDate(post.updated_at !== post.created_at ? post.updated_at : post.created_at)}
         {isAuthor && ' · 본인 글'}
       </p>
