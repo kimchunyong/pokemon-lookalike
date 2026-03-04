@@ -11,6 +11,7 @@ type Post = {
   user_id: string
   title: string
   content: string
+  image_url: string | null
   created_at: string
   updated_at: string
 }
@@ -33,7 +34,7 @@ export default function PostDetailPage() {
       const supabase = createClient()
       const { data, error } = await supabase
         .from('posts')
-        .select('id, user_id, title, content, created_at, updated_at')
+        .select('id, user_id, title, content, image_url, created_at, updated_at')
         .eq('id', id)
         .single()
       if (!error) setPost(data as Post)
@@ -81,6 +82,21 @@ export default function PostDetailPage() {
         {formatDate(post.updated_at !== post.created_at ? post.updated_at : post.created_at)}
         {isAuthor && ' · 본인 글'}
       </p>
+      {post.image_url && (
+        <div style={{ marginBottom: '1rem' }}>
+          <img
+            src={post.image_url}
+            alt="대표 이미지"
+            style={{
+              width: '100%',
+              maxHeight: 400,
+              objectFit: 'contain',
+              borderRadius: 8,
+              backgroundColor: '#f5f5f5',
+            }}
+          />
+        </div>
+      )}
       <div
         style={{
           flex: 1,

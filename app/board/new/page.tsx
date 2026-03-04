@@ -1,18 +1,21 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
+import { uploadPostImage } from '@/lib/supabase/uploadPostImage'
 
 export default function NewPostPage() {
   const { user, loading: authLoading } = useAuth()
   const router = useRouter()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [imageFile, setImageFile] = useState<File | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (authLoading) return
@@ -24,6 +27,18 @@ export default function NewPostPage() {
     if (!user) return
     setSubmitting(true)
     setError('')
+
+    let imageUrl: string | null = null
+    if (imageFile) {
+      const result = await uploadPostImage(user.id, imageFile)
+      if (result.error) {
+        setError(result.error)
+        setSubmitting(false)
+        return
+      }
+      imageUrl = result.url
+    }
+
     const supabase = createClient()
     const { data, error: err } = await supabase
       .from('posts')
@@ -31,6 +46,7 @@ export default function NewPostPage() {
         user_id: user.id,
         title: title.trim(),
         content: content.trim(),
+        image_url: imageUrl,
       })
       .select('id')
       .single()
@@ -74,6 +90,22 @@ export default function NewPostPage() {
             boxSizing: 'border-box',
           }}
         />
+        <label style={{ display: 'block', marginBottom: 4, fontWeight: 500 }}>
+          대표 이미지 (1장, 선택)
+        </label>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/jpeg,image/png,image/webp,image/gif"
+          onChange={(e) => setImageFile(e.target.files?.[0] ?? null)}
+          disabled={submitting}
+          style={{ marginBottom: '1rem', display: 'block' }}
+        />
+        {imageFile && (
+          <p style={{ fontSize: 14, color: '#666', marginBottom: '1rem' }}>
+            선택됨: {imageFile.name} ({(imageFile.size / 1024).toFixed(1)} KB)
+          </p>
+        )}
         <label htmlFor="content" style={{ display: 'block', marginBottom: 4, fontWeight: 500 }}>
           내용
         </label>
@@ -117,7 +149,7 @@ export default function NewPostPage() {
               border: '1px solid #ccc',
               borderRadius: 4,
               textDecoration: 'none',
-              color: '#333',
+              color: '#fff',
             }}
           >
             취소

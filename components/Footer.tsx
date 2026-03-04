@@ -19,15 +19,15 @@ export default function Footer() {
           marginBottom: '0.75rem',
         }}
       >
-        <Link href="/terms" style={{ color: '#666', textDecoration: 'none' }}>
+        <Link href="/terms" style={{ color: '#fff', textDecoration: 'none' }}>
           이용약관
         </Link>
         <span style={{ color: '#ddd' }}>|</span>
-        <Link href="/privacy" style={{ color: '#666', textDecoration: 'none' }}>
+        <Link href="/privacy" style={{ color: '#fff', textDecoration: 'none' }}>
           개인정보처리방침
         </Link>
         <span style={{ color: '#ddd' }}>|</span>
-        <Link href="/contact" style={{ color: '#666', textDecoration: 'none' }}>
+        <Link href="/contact" style={{ color: '#fff', textDecoration: 'none' }}>
           문의하기
         </Link>
       </nav>

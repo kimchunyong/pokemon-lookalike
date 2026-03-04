@@ -21,6 +21,20 @@ export const metadata: Metadata = {
     title: '나와 닮은 포켓몬 찾기',
     description: 'AI 기술을 활용하여 나와 닮은 포켓몬을 찾아보세요',
     type: 'website',
+    images: [
+      {
+        url: '/images/og.webp',
+        width: 1200,
+        height: 630,
+        alt: '나와 닮은 포켓몬 찾기',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '나와 닮은 포켓몬 찾기',
+    description: 'AI 기술을 활용하여 나와 닮은 포켓몬을 찾아보세요',
+    images: ['/images/og.webp'],
   },
 }
 

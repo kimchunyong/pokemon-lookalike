@@ -9,6 +9,7 @@ import { useAuth } from '@/contexts/AuthContext'
 type PostRow = {
   id: string
   title: string
+  image_url: string | null
   created_at: string
   user_id: string
 }
@@ -25,7 +26,7 @@ export default function BoardPage() {
       const supabase = createClient()
       const { data, error } = await supabase
         .from('posts')
-        .select('id, title, user_id, created_at')
+        .select('id, title, image_url, user_id, created_at')
         .order('created_at', { ascending: false })
       if (!error) setPosts((data as PostRow[]) ?? [])
       setLoading(false)
@@ -165,6 +166,19 @@ export default function BoardPage() {
                   gap: '1rem',
                 }}
               >
+                {post.image_url && (
+                  <img
+                    src={post.image_url}
+                    alt=""
+                    style={{
+                      width: 48,
+                      height: 48,
+                      objectFit: 'cover',
+                      borderRadius: 6,
+                      flexShrink: 0,
+                    }}
+                  />
+                )}
                 <span style={{ fontWeight: 500, flex: '1 1 auto', minWidth: 0 }}>
                   {post.title}
                 </span>
