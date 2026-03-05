@@ -54,15 +54,6 @@ function TopThreeCard({ row, rank }: { row: RankingRow; rank: number }) {
         <span style={{ fontSize: isFirst ? 28 : 22 }}>
           {rank === 0 ? '👑' : rank === 1 ? '🥈' : '🥉'}
         </span>
-        <span
-          style={{
-            fontWeight: 800,
-            fontSize: isFirst ? '1.3em' : '1.1em',
-            color: CROWN_COLORS[rank],
-          }}
-        >
-          {rank + 1}
-        </span>
       </div>
 
       <div
