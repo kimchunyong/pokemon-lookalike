@@ -104,7 +104,7 @@ export default function ImageUpload({ onImageSelect }: ImageUploadProps) {
           }}
         >
           <p>{dragging ? '여기에 놓으세요!' : t.imageCompare.uploadPlaceholder}</p>
-          <p style={{ fontSize: '0.8em', color: '#888', marginTop: '0.5rem' }}>
+          <p style={{ fontSize: '0.8em', color: '#888', marginTop: '0.5rem', marginBottom: '1.4rem' }}>
             {t.imageCompare.privacyNotice}
           </p>
           <button type="button">{t.imageCompare.selectImage}</button>

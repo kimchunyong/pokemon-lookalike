@@ -173,13 +173,6 @@ export default function ImageComparePage() {
       )}
 
       <PolicyNotice />
-
-
-      <div className="navigation-section">
-        <button type="button" onClick={() => router.push('/')}>
-          {t.common.home}
-        </button>
-      </div>
     </main>
   )
 }

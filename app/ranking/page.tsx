@@ -202,7 +202,7 @@ export default function RankingPage() {
   const rest = list.slice(3)
 
   return (
-    <main style={{ padding: '1.5rem', maxWidth: 520, margin: '90px auto 2rem' }}>
+    <main style={{ padding: '1.5rem', maxWidth: 520, margin: '90px auto 2rem', minHeight: 'calc(100vh - 314px)' }}>
       <h1 style={{ marginBottom: '0.25rem', color: '#fff', textAlign: 'center' }}>
         닮은꼴 랭킹
       </h1>
