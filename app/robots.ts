@@ -8,6 +8,13 @@ const baseUrl = rawBaseUrl.startsWith('http://')
   ? rawBaseUrl.replace('http://', 'https://')
   : rawBaseUrl
 
+/** sitemap URL은 항상 https로 노출 */
+function getSitemapUrl(): string {
+  const url = new URL('/sitemap.xml', baseUrl)
+  url.protocol = 'https:'
+  return url.toString()
+}
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
@@ -17,6 +24,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/auth/', '/profile', '/my/', '/board/new', '/board/edit'],
       },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: getSitemapUrl(),
   }
 }
