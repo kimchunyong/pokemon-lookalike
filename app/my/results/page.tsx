@@ -74,16 +74,26 @@ export default function MyResultsPage() {
   const [loading, setLoading] = useState(true)
   const [deleting, setDeleting] = useState<string | null>(null)
   const [rankingId, setRankingId] = useState<string | null>(null)
+  const [currentRanking, setCurrentRanking] = useState<{ pokemon_id: number; similarity: number } | null>(null)
 
   const fetchResults = useCallback(async () => {
     if (!user) return
     const supabase = createClient()
-    const { data } = await supabase
-      .from('user_results')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(100)
-    setResults((data as ResultRow[]) ?? [])
+    const [{ data: resultsData }, { data: rankingData }] = await Promise.all([
+      supabase
+        .from('user_results')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(100),
+      supabase
+        .from('lookalike_ranking')
+        .select('pokemon_id, similarity')
+        .eq('user_id', user.id)
+        .maybeSingle(),
+    ])
+    setResults((resultsData as ResultRow[]) ?? [])
+    const rd = rankingData as { pokemon_id: number; similarity: number } | null
+    setCurrentRanking(rd ? { pokemon_id: rd.pokemon_id, similarity: Number(rd.similarity) } : null)
     setLoading(false)
   }, [user])
 
@@ -169,6 +179,7 @@ export default function MyResultsPage() {
       if (error) {
         alert('랭킹 등록에 실패했습니다.')
       } else {
+        setCurrentRanking({ pokemon_id: r.pokemon_id, similarity: r.similarity })
         alert('랭킹전에 등록되었습니다!')
         router.push('/ranking')
       }
@@ -176,6 +187,14 @@ export default function MyResultsPage() {
     },
     [user, router]
   )
+
+  const isAlreadyRegistered = (r: ResultRow) =>
+    currentRanking != null &&
+    r.pokemon_id === currentRanking.pokemon_id &&
+    Math.round(r.similarity * 10000) === Math.round(currentRanking.similarity * 10000)
+
+  const isRankingDisabled = (r: ResultRow) =>
+    rankingId === r.id || isAlreadyRegistered(r)
 
   const handleDelete = async (id: string) => {
     if (!confirm('이 결과를 삭제하시겠습니까?')) return
@@ -295,19 +314,19 @@ export default function MyResultsPage() {
                     <button
                       type="button"
                       onClick={() => handleRankingRegister(r)}
-                      disabled={rankingId === r.id}
+                      disabled={isRankingDisabled(r)}
                       style={{
-                        background: 'rgba(255, 152, 0, 0.15)',
-                        border: '1px solid #ff9800',
+                        background: isRankingDisabled(r) ? 'rgba(255,255,255,0.06)' : 'rgba(255, 152, 0, 0.15)',
+                        border: `1px solid ${isRankingDisabled(r) ? '#555' : '#ff9800'}`,
                         borderRadius: 4,
                         padding: '0.25rem 0.5rem',
-                        cursor: rankingId === r.id ? 'default' : 'pointer',
+                        cursor: isRankingDisabled(r) ? 'default' : 'pointer',
                         fontSize: '0.75em',
-                        color: '#ff9800',
+                        color: isRankingDisabled(r) ? '#666' : '#ff9800',
                         fontWeight: 600,
                       }}
                     >
-                      {rankingId === r.id ? '등록 중...' : '랭킹 등록'}
+                      {rankingId === r.id ? '등록 중...' : isAlreadyRegistered(r) ? '등록 완료' : '랭킹 등록'}
                     </button>
                     <button
                       type="button"
