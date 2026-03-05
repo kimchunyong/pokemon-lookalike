@@ -16,28 +16,8 @@ export default function HomePage() {
         <div className="home-page-video-overlay" />
       </div>
 
+
       <div className="home-page">
-        <h1>{t.home.title}</h1>
-        <p>{t.home.subtitle}</p>
-        <p style={{ fontSize: '0.9em', color: 'rgba(255,255,255,0.85)', marginTop: '0.5rem' }}>
-          {t.home.disclaimer}
-        </p>
-
-        <div className="option-buttons">
-          <Link href="/image-compare">
-            <button type="button" className="primary-button">
-              {t.home.findByImage}
-            </button>
-          </Link>
-          <Link href="/pokedex">
-            <button type="button" className="primary-button">
-              📖 포켓몬 도감
-            </button>
-          </Link>
-        </div>
-
-        <PolicyNotice />
-
         <section
           className="home-seo-content"
           aria-label="포켓몬 닮은꼴 찾기 소개"
@@ -61,9 +41,30 @@ export default function HomePage() {
           <p style={{ marginTop: '0.75rem' }}>
             포켓몬 닮은꼴 찾기 결과를 바탕으로 <strong>포켓몬 도감</strong>에서 해당 포켓몬의 타입·능력치·진화 정보를 확인할 수 있고,
             로그인 후 <strong>닮은꼴 랭킹</strong>에 등록하거나 커뮤니티에서 다른 유저와 결과를 공유할 수 있습니다.
-            모든 이미지 처리는 브라우저에서만 이루어지며, 개인정보는 저장되지 않습니다.
           </p>
         </section>
+
+        <h1>{t.home.title}</h1>
+        <p>{t.home.subtitle}</p>
+        <p style={{ fontSize: '0.9em', color: 'rgba(255,255,255,0.85)', marginTop: '0.5rem' }}>
+          {t.home.disclaimer}
+        </p>
+
+        <div className="option-buttons">
+          <Link href="/image-compare">
+            <button type="button" className="primary-button">
+              {t.home.findByImage}
+            </button>
+          </Link>
+          <Link href="/pokedex">
+            <button type="button" className="primary-button">
+              📖 포켓몬 도감
+            </button>
+          </Link>
+        </div>
+
+        <PolicyNotice />
+
       </div>
     </main>
   )
