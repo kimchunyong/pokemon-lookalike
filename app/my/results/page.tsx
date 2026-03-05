@@ -73,6 +73,7 @@ export default function MyResultsPage() {
   const [results, setResults] = useState<ResultRow[]>([])
   const [loading, setLoading] = useState(true)
   const [deleting, setDeleting] = useState<string | null>(null)
+  const [rankingId, setRankingId] = useState<string | null>(null)
 
   const fetchResults = useCallback(async () => {
     if (!user) return
@@ -132,6 +133,49 @@ export default function MyResultsPage() {
       ],
     })
   }, [])
+
+  const handleRankingRegister = useCallback(
+    async (r: ResultRow) => {
+      if (!user) return
+      setRankingId(r.id)
+      const supabase = createClient()
+      let displayName = ''
+      try {
+        const { data: profile } = await supabase
+          .from('users')
+          .select('nickname, raw_user_meta_data, email')
+          .eq('id', user.id)
+          .single()
+        if (profile) {
+          const p = profile as { nickname?: string | null; raw_user_meta_data?: { full_name?: string; name?: string } | null; email?: string | null }
+          const nickname = p.nickname?.trim()
+          const meta = p.raw_user_meta_data
+          displayName = nickname || meta?.full_name || meta?.name || p.email || '알 수 없음'
+        }
+      } catch {
+        displayName = user.email ?? '알 수 없음'
+      }
+      const { error } = await supabase.from('lookalike_ranking').upsert(
+        {
+          user_id: user.id,
+          pokemon_id: r.pokemon_id,
+          pokemon_name: r.pokemon_name,
+          similarity: r.similarity,
+          display_name: displayName || null,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: 'user_id' }
+      )
+      if (error) {
+        alert('랭킹 등록에 실패했습니다.')
+      } else {
+        alert('랭킹전에 등록되었습니다!')
+        router.push('/ranking')
+      }
+      setRankingId(null)
+    },
+    [user, router]
+  )
 
   const handleDelete = async (id: string) => {
     if (!confirm('이 결과를 삭제하시겠습니까?')) return
@@ -250,6 +294,23 @@ export default function MyResultsPage() {
                     </button>
                     <button
                       type="button"
+                      onClick={() => handleRankingRegister(r)}
+                      disabled={rankingId === r.id}
+                      style={{
+                        background: 'rgba(255, 152, 0, 0.15)',
+                        border: '1px solid #ff9800',
+                        borderRadius: 4,
+                        padding: '0.25rem 0.5rem',
+                        cursor: rankingId === r.id ? 'default' : 'pointer',
+                        fontSize: '0.75em',
+                        color: '#ff9800',
+                        fontWeight: 600,
+                      }}
+                    >
+                      {rankingId === r.id ? '등록 중...' : '랭킹 등록'}
+                    </button>
+                    <button
+                      type="button"
                       onClick={() => handleDelete(r.id)}
                       disabled={deleting === r.id}
                       style={{
@@ -272,11 +333,6 @@ export default function MyResultsPage() {
         ))
       )}
 
-      <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
-        <Link href="/image-compare" style={{ color: '#1976d2', fontSize: '0.9em' }}>
-          ← 닮은꼴 분석하기
-        </Link>
-      </div>
     </main>
   )
 }

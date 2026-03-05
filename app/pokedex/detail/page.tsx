@@ -1,11 +1,23 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { getPokemon, Pokemon, getTypeNameKorean } from '../../../utils/pokeapi'
 import { useLanguage } from '../../../contexts/LanguageContext'
 
 export default function PokemonDetailPage() {
+  return (
+    <Suspense fallback={
+      <main className="pokemon-detail-page">
+        <div className="loading-container"><p>로딩 중...</p></div>
+      </main>
+    }>
+      <PokemonDetailContent />
+    </Suspense>
+  )
+}
+
+function PokemonDetailContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const { t } = useLanguage()

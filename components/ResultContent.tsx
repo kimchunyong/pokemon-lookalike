@@ -7,6 +7,7 @@ import PolicyNotice from './PolicyNotice'
 import { useLanguage } from '../contexts/LanguageContext'
 import { useAuth } from '../contexts/AuthContext'
 import { createClient } from '@/lib/supabase/client'
+import { getAuthorDisplayNameFromUser } from '@/lib/getAuthorDisplayName'
 import KakaoShareButton from './KakaoShareButton'
 import { getEvolutionChain, EvolutionStage } from '../utils/evolutionChain'
 import { getPokemonWithKoreanName } from '../utils/pokeapi'
@@ -22,6 +23,7 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
   const [userImage, setUserImage] = useState<string | null>(null)
   const [evolutionChain, setEvolutionChain] = useState<EvolutionStage[]>([])
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
+  const [rankingStatus, setRankingStatus] = useState<'idle' | 'registering' | 'registered' | 'error'>('idle')
   const { t } = useLanguage()
   const { user } = useAuth()
 
@@ -88,6 +90,51 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
     setSaveStatus(error ? 'error' : 'saved')
   }, [user, pokemon, similarity, emotionParam, emotionProb])
 
+  const handleRankingRegister = useCallback(async () => {
+    if (!user || !pokemon) return
+    setRankingStatus('registering')
+    const supabase = createClient()
+    let displayName = getAuthorDisplayNameFromUser(user)
+    try {
+      const { data: profile } = await supabase
+        .from('users')
+        .select('nickname, raw_user_meta_data, email')
+        .eq('id', user.id)
+        .single()
+      if (profile) {
+        const nickname = (profile as { nickname?: string | null; raw_user_meta_data?: { full_name?: string; name?: string } | null; email?: string | null }).nickname?.trim()
+        const meta = (profile as { raw_user_meta_data?: { full_name?: string; name?: string } | null }).raw_user_meta_data
+        const email = (profile as { email?: string | null }).email
+        if (nickname) displayName = nickname
+        else displayName = (meta?.full_name || meta?.name || email || '알 수 없음').trim() || '알 수 없음'
+      }
+    } catch {
+      // keep getAuthorDisplayNameFromUser fallback
+    }
+    const { data: existing } = await supabase
+      .from('lookalike_ranking')
+      .select('similarity')
+      .eq('user_id', user.id)
+      .single()
+    const existingSim = (existing as { similarity: number } | null)?.similarity ?? -1
+    if (similarity <= existingSim) {
+      setRankingStatus('registered')
+      return
+    }
+    const { error } = await supabase.from('lookalike_ranking').upsert(
+      {
+        user_id: user.id,
+        pokemon_id: pokemon.id,
+        pokemon_name: pokemon.name,
+        similarity,
+        display_name: displayName || null,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: 'user_id' }
+    )
+    setRankingStatus(error ? 'error' : 'registered')
+  }, [user, pokemon, similarity])
+
   if (!pokemon) {
     return (
       <main style={{ padding: '2rem', textAlign: 'center' }}>
@@ -137,63 +184,128 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
           >
             <KakaoShareButton pokemon={pokemon} />
             {user ? (
-              <button
-                type="button"
-                onClick={handleSave}
-                disabled={saveStatus === 'saving' || saveStatus === 'saved'}
-                style={{
-                  padding: '0.6rem 1.2rem',
-                  borderRadius: 8,
-                  border: saveStatus === 'saved' ? '1px solid #4caf50' : '1px solid #646cff',
-                  background:
-                    saveStatus === 'saved'
-                      ? 'rgba(76, 175, 80, 0.15)'
-                      : 'rgba(100, 108, 255, 0.15)',
-                  color: saveStatus === 'saved' ? '#4caf50' : '#646cff',
-                  cursor: saveStatus === 'saved' ? 'default' : 'pointer',
-                  fontWeight: 600,
-                  fontSize: '0.9em',
-                }}
-              >
-                {saveStatus === 'idle' && '내 결과 저장'}
-                {saveStatus === 'saving' && '저장 중...'}
-                {saveStatus === 'saved' && '저장 완료 ✓'}
-                {saveStatus === 'error' && '저장 실패 (재시도)'}
-              </button>
+              <>
+                <button
+                  type="button"
+                  onClick={handleSave}
+                  disabled={saveStatus === 'saving' || saveStatus === 'saved'}
+                  style={{
+                    padding: '0.6rem 1.2rem',
+                    borderRadius: 8,
+                    border: saveStatus === 'saved' ? '1px solid #4caf50' : '1px solid #646cff',
+                    background:
+                      saveStatus === 'saved'
+                        ? 'rgba(76, 175, 80, 0.15)'
+                        : 'rgba(100, 108, 255, 0.15)',
+                    color: saveStatus === 'saved' ? '#4caf50' : '#646cff',
+                    cursor: saveStatus === 'saved' ? 'default' : 'pointer',
+                    fontWeight: 600,
+                    fontSize: '0.9em',
+                  }}
+                >
+                  {saveStatus === 'idle' && '내 결과 저장'}
+                  {saveStatus === 'saving' && '저장 중...'}
+                  {saveStatus === 'saved' && '저장 완료 ✓'}
+                  {saveStatus === 'error' && '저장 실패 (재시도)'}
+                </button>
+                <button
+                  type="button"
+                  onClick={handleRankingRegister}
+                  disabled={rankingStatus === 'registering' || rankingStatus === 'registered'}
+                  style={{
+                    padding: '0.6rem 1.2rem',
+                    borderRadius: 8,
+                    border:
+                      rankingStatus === 'registered'
+                        ? '1px solid #ff9800'
+                        : '1px solid #ff9800',
+                    background:
+                      rankingStatus === 'registered'
+                        ? 'rgba(255, 152, 0, 0.2)'
+                        : 'rgba(255, 152, 0, 0.15)',
+                    color: '#ff9800',
+                    cursor:
+                      rankingStatus === 'registered' ? 'default' : 'pointer',
+                    fontWeight: 600,
+                    fontSize: '0.9em',
+                  }}
+                >
+                  {rankingStatus === 'idle' && '랭킹전 등록'}
+                  {rankingStatus === 'registering' && '등록 중...'}
+                  {rankingStatus === 'registered' && '랭킹 등록 완료 ✓'}
+                  {rankingStatus === 'error' && '등록 실패 (재시도)'}
+                </button>
+              </>
             ) : (
-              <button
-                type="button"
-                onClick={() => router.push('/login')}
-                style={{
-                  padding: '0.6rem 1.2rem',
-                  borderRadius: 8,
-                  border: '1px solid #888',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  color: '#aaa',
-                  cursor: 'pointer',
-                  fontSize: '0.9em',
-                }}
-              >
-                로그인하고 결과 저장
-              </button>
+              <>
+                <button
+                  type="button"
+                  onClick={() => router.push('/login')}
+                  style={{
+                    padding: '0.6rem 1.2rem',
+                    borderRadius: 8,
+                    border: '1px solid #888',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    color: '#aaa',
+                    cursor: 'pointer',
+                    fontSize: '0.9em',
+                  }}
+                >
+                  로그인하고 결과 저장
+                </button>
+                <button
+                  type="button"
+                  onClick={() => router.push('/login')}
+                  style={{
+                    padding: '0.6rem 1.2rem',
+                    borderRadius: 8,
+                    border: '1px solid #888',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    color: '#aaa',
+                    cursor: 'pointer',
+                    fontSize: '0.9em',
+                  }}
+                >
+                  로그인하고 랭킹전 등록
+                </button>
+              </>
             )}
           </div>
-          {saveStatus === 'saved' && (
+          {(saveStatus === 'saved' || rankingStatus === 'registered') && (
             <p style={{ textAlign: 'center', marginTop: '0.5rem', fontSize: '0.85em' }}>
-              <button
-                type="button"
-                onClick={() => router.push('/my/results')}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  color: '#1976d2',
-                  cursor: 'pointer',
-                  textDecoration: 'underline',
-                  fontSize: 'inherit',
-                }}
-              >
-                내 히스토리 보기 →
-              </button>
+              {saveStatus === 'saved' && (
+                <button
+                  type="button"
+                  onClick={() => router.push('/my/results')}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#1976d2',
+                    cursor: 'pointer',
+                    textDecoration: 'underline',
+                    fontSize: 'inherit',
+                  }}
+                >
+                  내 히스토리 보기 →
+                </button>
+              )}
+              {rankingStatus === 'registered' && (
+                <button
+                  type="button"
+                  onClick={() => router.push('/ranking')}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#ff9800',
+                    cursor: 'pointer',
+                    textDecoration: 'underline',
+                    fontSize: 'inherit',
+                    marginLeft: saveStatus === 'saved' ? '0.5rem' : 0,
+                  }}
+                >
+                  유사도 순위 보기 →
+                </button>
+              )}
             </p>
           )}
         </div>

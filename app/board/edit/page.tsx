@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
@@ -17,6 +17,14 @@ type Post = {
 }
 
 export default function EditPostPage() {
+  return (
+    <Suspense fallback={<div style={{ padding: '2rem' }}>불러오는 중...</div>}>
+      <EditPostContent />
+    </Suspense>
+  )
+}
+
+function EditPostContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const { user, loading: authLoading } = useAuth()

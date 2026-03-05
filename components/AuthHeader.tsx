@@ -61,6 +61,9 @@ export default function AuthHeader() {
         <Link href="/board" style={{ color: '#fff' }}>
           커뮤니티
         </Link>
+        <Link href="/ranking" style={{ color: '#fff' }}>
+          랭킹
+        </Link>
 
         {user && (
           <Link href="/my/results" style={{ color: '#fff' }}>

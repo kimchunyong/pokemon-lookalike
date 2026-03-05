@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next'
 
+export const dynamic = 'force-static'
+
 const baseUrl =
   process.env.NEXT_PUBLIC_APP_URL ?? 'https://pokemon-lookalike.shop'
 

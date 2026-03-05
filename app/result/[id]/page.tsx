@@ -1,10 +1,11 @@
 import { Metadata } from 'next'
+import { Suspense } from 'react'
 import { POKEMON_LIST } from '../../../data/pokemon'
 import ResultContent from '../../../components/ResultContent'
 import { notFound } from 'next/navigation'
 
 interface Props {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 export async function generateStaticParams() {
@@ -14,7 +15,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const id = parseInt(params.id)
+  const { id: rawId } = await params
+  const id = parseInt(rawId)
   const pokemon = POKEMON_LIST.find((p) => p.id === id)
 
   if (!pokemon) {
@@ -41,13 +43,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function ResultPage({ params }: Props) {
-  const id = parseInt(params.id)
+export default async function ResultPage({ params }: Props) {
+  const { id: rawId } = await params
+  const id = parseInt(rawId)
   const pokemon = POKEMON_LIST.find((p) => p.id === id)
 
   if (!pokemon) {
     notFound()
   }
 
-  return <ResultContent pokemon={pokemon} />
+  return (
+    <Suspense fallback={<div style={{ padding: '2rem', textAlign: 'center', marginTop: '90px' }}>불러오는 중...</div>}>
+      <ResultContent pokemon={pokemon} />
+    </Suspense>
+  )
 }
