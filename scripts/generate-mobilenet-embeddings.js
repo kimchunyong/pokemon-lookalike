@@ -1,5 +1,5 @@
 /**
- * MobileNet v2로 포켓몬 151마리의 이미지 임베딩을 사전 계산하여 JSON으로 저장한다.
+ * MobileNet v2로 포켓몬 1·2·3세대 386마리의 이미지 임베딩을 사전 계산하여 JSON으로 저장한다.
  * 클라이언트에서 사용하는 것과 동일한 모델/전처리를 사용하여 일관성을 보장한다.
  *
  * 사용법: node scripts/generate-mobilenet-embeddings.js
@@ -15,7 +15,7 @@ import { fileURLToPath } from 'url'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const OUTPUT_PATH = resolve(__dirname, '..', 'data', 'pokemon-mobilenet-embeddings.json')
 const MODEL_URL = 'https://storage.googleapis.com/tfjs-models/savedmodel/mobilenet_v2_1.0_224/model.json'
-const TOTAL = 151
+const TOTAL = 386
 
 const IMG_URL = (id) =>
   `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`

@@ -48,7 +48,16 @@ function cosineSimilarity(a: number[], b: number[]): number {
 }
 
 /**
- * 151마리 전체의 raw 유사도 분포를 기반으로 동적 스케일링.
+ * CLIP에서 특정 포켓몬이 과도하게 상위에 나올 때 raw 유사도에 적용하는 계수.
+ * 1보다 작을수록 순위가 내려감. (예: 남자 사진에서 피카츄가 자주 1위로 나오는 편향 완화)
+ */
+const OVER_REPRESENTED_PENALTY: Record<number, number> = {
+  25: 0.88,  // 피카츄: 남성 얼굴과 임베딩이 자주 비슷하게 나오는 경향 완화
+  172: 0.88, // 피츄: 동일 계열이라 같은 편향 완화
+}
+
+/**
+ * 386마리 전체의 raw 유사도 분포를 기반으로 동적 스케일링.
  * 매 비교마다 실제 min/max를 사용하므로 사진이 달라져도 항상 자연스러운 분포가 나온다.
  *
  * - 1위: 85~95% 범위
@@ -96,7 +105,9 @@ export async function findSimilarPokemon(
 
   const rawResults = pokemonList.map((pokemon) => {
     const pokemonEmb = pokemonEmbeddings[String(pokemon.id)]
-    const raw = pokemonEmb ? cosineSimilarity(userEmbedding, pokemonEmb) : -1
+    let raw = pokemonEmb ? cosineSimilarity(userEmbedding, pokemonEmb) : -1
+    const penalty = OVER_REPRESENTED_PENALTY[pokemon.id]
+    if (penalty != null && raw > -1) raw *= penalty
     return { ...pokemon, raw }
   })
 
@@ -111,8 +122,8 @@ export async function findSimilarPokemon(
   const sorted = results.sort((a, b) => b.similarity - a.similarity)
 
   console.log(
-    '[CLIP] top5:',
-    sorted.slice(0, 5).map((p) => `${p.name} raw=${p.raw.toFixed(4)} → ${(p.similarity * 100).toFixed(1)}%`),
+    '[CLIP] top8:',
+    sorted.slice(0, 8).map((p) => `${p.name} raw=${p.raw.toFixed(4)} → ${(p.similarity * 100).toFixed(1)}%`),
     'bottom5:',
     sorted.slice(-5).map((p) => `${p.name} raw=${p.raw.toFixed(4)} → ${(p.similarity * 100).toFixed(1)}%`)
   )

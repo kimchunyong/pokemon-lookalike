@@ -1,0 +1,947 @@
+[
+  {
+    "id": 252,
+    "name": "나무지기",
+    "type": "풀",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/252.png",
+    "description": "수직으로 된 벽도 쭉쭉 타고 올라간다. 꼬리로 공기 중의 습도를 감지해서 내일 날씨를 맞힌다."
+  },
+  {
+    "id": 253,
+    "name": "나무돌이",
+    "type": "풀",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/253.png",
+    "description": "발달한 넓적다리의 근육이 경이로운 순발력과 도약력을 만들어 낸다."
+  },
+  {
+    "id": 254,
+    "name": "나무킹",
+    "type": "풀",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/254.png",
+    "description": "팔에 자란 잎사귀는 큰 나무도 싹둑 베어 넘어뜨리는 정도다. 밀림의 싸움에서는 무적이다."
+  },
+  {
+    "id": 255,
+    "name": "아차모",
+    "type": "불꽃",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/255.png",
+    "description": "몸속에 불꽃 주머니를 지니고 있어서 껴안으면 따끈따끈하다. 살아 있는 한 계속 불타오른다."
+  },
+  {
+    "id": 256,
+    "name": "영치코",
+    "type": "불꽃/격투",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/256.png",
+    "description": "1초에 킥을 10번 날릴 정도로 발을 사용하는 기술에 능하다. 날카로운 울음소리로 위협한다."
+  },
+  {
+    "id": 257,
+    "name": "번치코",
+    "type": "불꽃/격투",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/257.png",
+    "description": "30층 빌딩을 점프로 넘는 점프력을 가졌다. 불꽃펀치가 상대를 태운다."
+  },
+  {
+    "id": 258,
+    "name": "물짱이",
+    "type": "물",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/258.png",
+    "description": "커다란 꼬리지느러미로 물을 헤치면 스피드가 쑥쑥 오른다. 작은 몸이지만 힘이 장사다."
+  },
+  {
+    "id": 259,
+    "name": "늪짱이",
+    "type": "물/땅",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/259.png",
+    "description": "발밑이 질퍽거려도 잘 걸을 수 있는 튼튼한 다리를 가졌다. 진흙에 몸을 묻고 잠잔다."
+  },
+  {
+    "id": 260,
+    "name": "대짱이",
+    "type": "물/땅",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/260.png",
+    "description": "돌처럼 딱딱한 팔을 한 번 휘두르는 것만으로 거대한 돌을 조각조각으로 부순다."
+  },
+  {
+    "id": 261,
+    "name": "포챠나",
+    "type": "악",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/261.png",
+    "description": "집요한 성격의 포켓몬이다. 점찍은 먹이가 기진맥진 지칠 때까지 뒤쫓아간다."
+  },
+  {
+    "id": 262,
+    "name": "그라에나",
+    "type": "악",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/262.png",
+    "description": "우수한 트레이너의 명령에는 절대복종한다. 먼 옛날 무리를 지어 행동했던 영향이다."
+  },
+  {
+    "id": 263,
+    "name": "지그제구리",
+    "type": "노말",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/263.png",
+    "description": "지그재그로 걸어서 풀숲이나 땅에 묻혀 있는 보물을 찾아내는 것이 특기인 포켓몬이다."
+  },
+  {
+    "id": 264,
+    "name": "직구리",
+    "type": "노말",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/264.png",
+    "description": "똑바로 달리는 스피드는 시속 100km를 가볍게 넘는다. 휘어진 길은 매우 서툴다."
+  },
+  {
+    "id": 265,
+    "name": "개무소",
+    "type": "벌레",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/265.png",
+    "description": "잎사귀를 매우 좋아한다. 찌르꼬에게 습격당했을 때는 엉덩이의 가시로 물리친다."
+  },
+  {
+    "id": 266,
+    "name": "실쿤",
+    "type": "벌레",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/266.png",
+    "description": "실을 나뭇가지에 휘감고 있다. 실에 묻은 빗물을 마시며 진화할 때를 기다리고 있다."
+  },
+  {
+    "id": 267,
+    "name": "뷰티플라이",
+    "type": "벌레/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/267.png",
+    "description": "색이 선명한 날개의 무늬가 특징이다. 가는 입을 뻗어 꽃의 달콤한 꿀을 흡수한다."
+  },
+  {
+    "id": 268,
+    "name": "카스쿤",
+    "type": "벌레",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/268.png",
+    "description": "부드러운 실로 된 몸은 시간이 지나면서 단단해진다. 진화가 임박하면 갈라지기 시작한다."
+  },
+  {
+    "id": 269,
+    "name": "독케일",
+    "type": "벌레/독",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/269.png",
+    "description": "야행성 포켓몬이다. 불빛에 이끌려나온 독케일이 가로수의 잎을 헤적거리며 먹어댄다."
+  },
+  {
+    "id": 270,
+    "name": "연꽃몬",
+    "type": "물/풀",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/270.png",
+    "description": "수초를 똑 닮은 포켓몬이다. 헤엄을 못 치는 포켓몬을 잎사귀에 태워 건너편 물가까지 운반한다."
+  },
+  {
+    "id": 271,
+    "name": "로토스",
+    "type": "물/풀",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/271.png",
+    "description": "햇볕이 잘 드는 물가에 산다. 낮에는 수초로 된 침대에서 자고 해가 지면 활동하기 시작한다."
+  },
+  {
+    "id": 272,
+    "name": "로파파",
+    "type": "물/풀",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/272.png",
+    "description": "경쾌한 음악을 들으면 몸속의 힘이 넘쳐흘러 춤추지 않고는 견딜 수 없게 된다."
+  },
+  {
+    "id": 273,
+    "name": "도토링",
+    "type": "풀",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/273.png",
+    "description": "머리끝을 가지에 붙여 매달린다. 강풍이 불어 떨어지기도 한다."
+  },
+  {
+    "id": 274,
+    "name": "잎새코",
+    "type": "풀/악",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/274.png",
+    "description": "잎새코가 연주하는 풀피리의 음색은 사람을 불안하게 만든다. 숲 속에서 살고 있다."
+  },
+  {
+    "id": 275,
+    "name": "다탱구",
+    "type": "풀/악",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/275.png",
+    "description": "숲의 신이라고 여겨져 두려움의 대상이 되고 있던 포켓몬. 상대의 생각을 읽고 앞지르는 능력을 지녔다."
+  },
+  {
+    "id": 276,
+    "name": "테일로",
+    "type": "노말/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/276.png",
+    "description": "강한 상대에게도 용감히 맞서는 근성의 소유자다. 따뜻한 땅을 찾아서 난다."
+  },
+  {
+    "id": 277,
+    "name": "스왈로",
+    "type": "노말/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/277.png",
+    "description": "2개의 꼬리날개가 꼿꼿하게 서 있으면 건강하다는 증거다. 우아하게 넓은 하늘을 날아다닌다."
+  },
+  {
+    "id": 278,
+    "name": "갈모매",
+    "type": "물/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/278.png",
+    "description": "긴 날개로 바닷바람을 받아서 글라이더처럼 활공한다. 쉴 때는 날개를 접는다."
+  },
+  {
+    "id": 279,
+    "name": "패리퍼",
+    "type": "물/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/279.png",
+    "description": "큰 부리를 바다에 넣고 먹이를 한 번에 많이 건져 올리려는 속셈이다."
+  },
+  {
+    "id": 280,
+    "name": "랄토스",
+    "type": "에스퍼/페어리",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/280.png",
+    "description": "빨간 뿔로 사람이나 포켓몬의 따뜻한 마음을 캐치하면 전신이 미약하게 뜨거워진다."
+  },
+  {
+    "id": 281,
+    "name": "킬리아",
+    "type": "에스퍼/페어리",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/281.png",
+    "description": "트레이너의 밝은 마음이 사이코 파워의 근원이다. 즐거워지면 빙글빙글 춤춘다."
+  },
+  {
+    "id": 282,
+    "name": "가디안",
+    "type": "에스퍼/페어리",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/282.png",
+    "description": "트레이너를 지키기 위해서라면 사이코 파워를 모두 써서 작은 블랙홀을 만들어 낸다."
+  },
+  {
+    "id": 283,
+    "name": "비구술",
+    "type": "벌레/물",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/283.png",
+    "description": "보통은 연못에서 살고 있지만 소나기가 온 뒤에는 마을 안의 물웅덩이에 모습을 드러낸다."
+  },
+  {
+    "id": 284,
+    "name": "비나방",
+    "type": "벌레/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/284.png",
+    "description": "눈알 모양의 더듬이를 가지고 있다. 4장의 날개로 떠올라 전후좌우로 움직일 수 있다."
+  },
+  {
+    "id": 285,
+    "name": "버섯꼬",
+    "type": "풀",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/285.png",
+    "description": "습한 장소를 좋아해서 낮에는 숲의 그늘에서 가만히 있다. 머리에서 독가루를 뿌린다."
+  },
+  {
+    "id": 286,
+    "name": "버섯모",
+    "type": "풀/격투",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/286.png",
+    "description": "짧은 팔은 펀치를 날릴 때 쑤-욱 늘어난다. 프로 복서를 압도하는 기술을 가지고 있다."
+  },
+  {
+    "id": 287,
+    "name": "게을로",
+    "type": "노말",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/287.png",
+    "description": "게을로의 게으른 모습은 보고 있는 사람의 게으른 마음을 충분히 자극한다."
+  },
+  {
+    "id": 288,
+    "name": "발바로",
+    "type": "노말",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/288.png",
+    "description": "심장 박동이 빨라 전신의 피가 끓어오르고 있기 때문에 1초도 가만히 있지 못한다."
+  },
+  {
+    "id": 289,
+    "name": "게을킹",
+    "type": "노말",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/289.png",
+    "description": "세계에서 제일 게으른 포켓몬이다. 손이 닿는 범위의 먹이를 다 먹으면 있는 거처를 바꾼다."
+  },
+  {
+    "id": 290,
+    "name": "토중몬",
+    "type": "벌레/땅",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/290.png",
+    "description": "긴 시간 동안 땅속에서 살고 있었기 때문에 눈은 거의 보이지 않는다. 더듬이로 주변 상황을 살핀다."
+  },
+  {
+    "id": 291,
+    "name": "아이스크",
+    "type": "벌레/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/291.png",
+    "description": "울음소리를 계속 들으면 두통이 낫지 않게 된다. 안 보일 정도의 스피드로 움직인다."
+  },
+  {
+    "id": 292,
+    "name": "껍질몬",
+    "type": "벌레/고스트",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/292.png",
+    "description": "허물 속으로 영혼이 들어갔다. 등에 난 틈새로 들여다보면 영혼을 빼앗겨버린다고 한다."
+  },
+  {
+    "id": 293,
+    "name": "소곤룡",
+    "type": "노말",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/293.png",
+    "description": "평소에는 속삭이는 듯한 목소리다. 위험을 감지하면 큰 소리로 울기 시작한다. 귀의 덮개를 닫으면 울음을 멈춘다."
+  },
+  {
+    "id": 294,
+    "name": "노공룡",
+    "type": "노말",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/294.png",
+    "description": "마음껏 들이마신 공기를 발달한 복근을 써서 토해내 큰 소리를 낸다."
+  },
+  {
+    "id": 295,
+    "name": "폭음룡",
+    "type": "노말",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/295.png",
+    "description": "폭음룡이 짖는 소리는 10km 전방까지 닿는다. 몸 곳곳의 구멍에서 갖가지 소리를 낸다."
+  },
+  {
+    "id": 296,
+    "name": "마크탕",
+    "type": "격투",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/296.png",
+    "description": "큰 나무에 몇 번이나 몸통박치기를 하며 강인한 몸과 굴하지 않는 마음을 단련한다."
+  },
+  {
+    "id": 297,
+    "name": "하리뭉",
+    "type": "격투",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/297.png",
+    "description": "두 다리로 땅을 힘껏 밟아서 파워를 모은다. 손바닥 치기 한 방으로 10톤 트럭을 날려버린다."
+  },
+  {
+    "id": 298,
+    "name": "루리리",
+    "type": "노말/페어리",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/298.png",
+    "description": "큰 꼬리에 타고 튀면 지상에서 빨리 이동할 수 있다. 물가에서 사는 포켓몬이다."
+  },
+  {
+    "id": 299,
+    "name": "코코파스",
+    "type": "바위",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/299.png",
+    "description": "항상 북쪽을 향한다. 자석의 코로 주변의 철을 끌어당겨 방어를 굳힌다."
+  },
+  {
+    "id": 300,
+    "name": "에나비",
+    "type": "노말",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/300.png",
+    "description": "움직이는 것을 무심코 쫓아간다. 자신의 꼬리를 쫓아서 똑같은 장소를 빙글빙글 돈다."
+  },
+  {
+    "id": 301,
+    "name": "델케티",
+    "type": "노말",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/301.png",
+    "description": "더러운 곳을 아주 싫어한다. 편안한 곳에서 늘 털을 다듬고 있다."
+  },
+  {
+    "id": 302,
+    "name": "깜까미",
+    "type": "악/고스트",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/302.png",
+    "description": "동굴의 어둠에 숨는다. 보석을 먹는 사이에 눈이 보석이 되어 버렸다."
+  },
+  {
+    "id": 303,
+    "name": "입치트",
+    "type": "강철/페어리",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/303.png",
+    "description": "얌전한 얼굴로 상대를 방심하게 만들고 큰 턱으로 덥석 문다. 한번 물면 절대로 놓지 않는다."
+  },
+  {
+    "id": 304,
+    "name": "가보리",
+    "type": "강철/바위",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/304.png",
+    "description": "평소에는 산속에서 살고 있지만 배가 고프면 산기슭에 나타나 선로나 차를 먹어 버린다."
+  },
+  {
+    "id": 305,
+    "name": "갱도라",
+    "type": "강철/바위",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/305.png",
+    "description": "철광석을 매우 좋아한다. 강철의 몸을 서로 부딪치며 영역 싸움을 한다."
+  },
+  {
+    "id": 306,
+    "name": "보스로라",
+    "type": "강철/바위",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/306.png",
+    "description": "산을 통째로 영역으로 한다. 상처가 많은 보스로라일수록 많이 싸웠다는 것이므로 얕볼 수 없다."
+  },
+  {
+    "id": 307,
+    "name": "요가랑",
+    "type": "격투/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/307.png",
+    "description": "평상시는 깊은 산속에서 수행한다. 명상을 하고 정신력을 높이면 몸이 떠오른다."
+  },
+  {
+    "id": 308,
+    "name": "요가램",
+    "type": "격투/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/308.png",
+    "description": "춤추는 듯한 우아한 움직임으로 공격을 피하며 상대에게 강력한 일격을 선사한다."
+  },
+  {
+    "id": 309,
+    "name": "썬더라이",
+    "type": "전기",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/309.png",
+    "description": "긴 털이 마찰하는 과정에서 전신에 정전기가 모인다. 스피드가 특기인 포켓몬이다."
+  },
+  {
+    "id": 310,
+    "name": "썬더볼트",
+    "type": "전기",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/310.png",
+    "description": "좀처럼 사람 앞에 모습을 드러내지 않는다. 번개가 떨어진 곳에 보금자리가 있다고 한다."
+  },
+  {
+    "id": 311,
+    "name": "플러시",
+    "type": "전기",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/311.png",
+    "description": "스파크를 톡톡 만들어 동료를 응원한다. 전신주에서 전기를 흡수한다."
+  },
+  {
+    "id": 312,
+    "name": "마이농",
+    "type": "전기",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/312.png",
+    "description": "마이농과 플러시의 전기는 혈액의 흐름을 좋게 하여 근육 결림을 푸는 효과가 있다."
+  },
+  {
+    "id": 313,
+    "name": "볼비트",
+    "type": "벌레",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/313.png",
+    "description": "밤이 되면 엉덩이를 빛나게 해 동료와 대화한다. 네오비트가 내는 달콤한 향기를 매우 좋아한다."
+  },
+  {
+    "id": 314,
+    "name": "네오비트",
+    "type": "벌레",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/314.png",
+    "description": "달콤한 향기로 볼비트를 유도해서 200개 이상의 모양을 밤하늘에 그린다."
+  },
+  {
+    "id": 315,
+    "name": "로젤리아",
+    "type": "풀/독",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/315.png",
+    "description": "오른손과 왼손으로 2종류의 독을 구별하여 공격한다. 향기가 강할수록 기운이 넘친다."
+  },
+  {
+    "id": 316,
+    "name": "꼴깍몬",
+    "type": "독",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/316.png",
+    "description": "심장과 뇌가 작고 몸 대부분이 위다. 무엇이든 녹이는 위액을 낸다."
+  },
+  {
+    "id": 317,
+    "name": "꿀꺽몬",
+    "type": "독",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/317.png",
+    "description": "무엇이든 통째로 삼켜 버린다. 모공에서 맹독의 체액을 분비하여 상대에게 끼얹는다."
+  },
+  {
+    "id": 318,
+    "name": "샤프니아",
+    "type": "물/악",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/318.png",
+    "description": "집단으로 배를 공격해 배의 밑바닥도 물어뜯어 가라앉힌다. 정글의 강에 서식한다."
+  },
+  {
+    "id": 319,
+    "name": "샤크니아",
+    "type": "물/악",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/319.png",
+    "description": "철판도 물어 찢는 이빨을 가지며 헤엄치는 속도는 시속 120km다. 별명은 바다의 건달이다."
+  },
+  {
+    "id": 320,
+    "name": "고래왕자",
+    "type": "물",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/320.png",
+    "description": "공처럼 튀면서 논다. 해수를 많이 마실수록 높이 튀게 된다."
+  },
+  {
+    "id": 321,
+    "name": "고래왕",
+    "type": "물",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/321.png",
+    "description": "커다란 몸을 파도 위에서 점프시켜 충격을 만들어 상대를 기절시킬 때가 있다."
+  },
+  {
+    "id": 322,
+    "name": "둔타",
+    "type": "불꽃/땅",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/322.png",
+    "description": "이글거리는 마그마를 등의 혹에 모으고 있다. 비를 맞으면 마그마가 식어 움직임이 둔해진다."
+  },
+  {
+    "id": 323,
+    "name": "폭타",
+    "type": "불꽃/땅",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/323.png",
+    "description": "등의 혹 모양 화산은 10년마다 대분화하나 심하게 화가 나도 분화한다."
+  },
+  {
+    "id": 324,
+    "name": "코터스",
+    "type": "불꽃",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/324.png",
+    "description": "사용할 수 없게 된 탄광에는 많은 코터스가 살며 석탄을 부지런히 캐고 있다."
+  },
+  {
+    "id": 325,
+    "name": "피그점프",
+    "type": "에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/325.png",
+    "description": "꼬리를 용수철 대용으로 써서 항상 뛰어오르고 있다. 뛰는 반동으로 심장을 고동시키고 있는 것이다."
+  },
+  {
+    "id": 326,
+    "name": "피그킹",
+    "type": "에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/326.png",
+    "description": "흑진주로 사이코 파워를 강하게 하여 기묘한 스텝으로 상대의 마음을 조종한다."
+  },
+  {
+    "id": 327,
+    "name": "얼루기",
+    "type": "노말",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/327.png",
+    "description": "똑같은 얼룩무늬의 얼루기는 없다. 휘청휘청거리는 걸음걸이로 상대의 노림수를 피한다."
+  },
+  {
+    "id": 328,
+    "name": "톱치",
+    "type": "땅",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/328.png",
+    "description": "건조한 사막에 서식한다. 원뿔형의 보금자리 속에서 조용히 먹잇감을 계속 기다린다."
+  },
+  {
+    "id": 329,
+    "name": "비브라바",
+    "type": "땅/드래곤",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/329.png",
+    "description": "2장의 날개를 고속으로 진동시켜서 내는 초음파는 격렬한 두통을 불러일으킨다."
+  },
+  {
+    "id": 330,
+    "name": "플라이곤",
+    "type": "땅/드래곤",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/330.png",
+    "description": "날갯짓으로 모래 폭풍을 일으켜 모습을 감춘다. 빨간 덮개가 모래로부터 눈을 보호한다."
+  },
+  {
+    "id": 331,
+    "name": "선인왕",
+    "type": "풀",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/331.png",
+    "description": "비가 적은 건조한 지역에 서식한다. 1년에 1번 노랑 꽃을 피운다."
+  },
+  {
+    "id": 332,
+    "name": "밤선인",
+    "type": "풀/악",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/332.png",
+    "description": "밤이 되면 활동을 시작한다. 사막의 뜨거움에 몹시 지친 먹이를 찾아내어 붙잡는다."
+  },
+  {
+    "id": 333,
+    "name": "파비코",
+    "type": "노말/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/333.png",
+    "description": "사람의 머리 위에 살짝 앉아 모자처럼 구는 것을 왠지 좋아한다."
+  },
+  {
+    "id": 334,
+    "name": "파비코리",
+    "type": "드래곤/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/334.png",
+    "description": "넓은 하늘을 느긋하게 난다. 파비코리의 아름다운 콧노래를 들으면 황홀한 꿈을 꾸는 기분이다."
+  },
+  {
+    "id": 335,
+    "name": "쟝고",
+    "type": "노말",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/335.png",
+    "description": "몇 대에 걸쳐서 세비퍼와 싸워왔다. 날카로운 발톱이 최대의 무기다."
+  },
+  {
+    "id": 336,
+    "name": "세비퍼",
+    "type": "독",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/336.png",
+    "description": "맹독이 배어 나오는 예리하고 잘 드는 꼬리로 재빠른 쟝고에게 맞선다."
+  },
+  {
+    "id": 337,
+    "name": "루나톤",
+    "type": "바위/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/337.png",
+    "description": "보름달의 밤이 되면 활발하게 활동하기 때문에 달의 변화와 관계 있다고 전해진다."
+  },
+  {
+    "id": 338,
+    "name": "솔록",
+    "type": "바위/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/338.png",
+    "description": "태양 에너지가 파워의 근원이라서 낮에는 강하다. 회전하면 몸이 빛난다."
+  },
+  {
+    "id": 339,
+    "name": "미꾸리",
+    "type": "물/땅",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/339.png",
+    "description": "전신이 미끈미끈한 체액으로 덮여있기 때문에 잡아도 미끈하게 빠져나갈 수 있다."
+  },
+  {
+    "id": 340,
+    "name": "메깅",
+    "type": "물/땅",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/340.png",
+    "description": "큰 늪을 영역으로 한다. 적이 가까이 오면 크게 난동 부려서 큰 지진을 일으킨다."
+  },
+  {
+    "id": 341,
+    "name": "가재군",
+    "type": "물",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/341.png",
+    "description": "아무리 물이 더러운 강이라도 적응해서 번식하는 터프한 생명력의 소유자."
+  },
+  {
+    "id": 342,
+    "name": "가재장군",
+    "type": "물/악",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/342.png",
+    "description": "연못에 사는 다른 포켓몬을 집게로 집어들어 연못 밖으로 내던져버리는 난동꾼이다."
+  },
+  {
+    "id": 343,
+    "name": "오뚝군",
+    "type": "땅/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/343.png",
+    "description": "한 다리로 회전하면서 이동한다. 거꾸로 회전하는 오뚝군도 발견된다."
+  },
+  {
+    "id": 344,
+    "name": "점토도리",
+    "type": "땅/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/344.png",
+    "description": "고대의 진흙인형이 괴이한 광선을 쬐어 생명이 깃들면서 포켓몬이 되었다."
+  },
+  {
+    "id": 345,
+    "name": "릴링",
+    "type": "바위/풀",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/345.png",
+    "description": "촉수를 꽃잎으로 보이게 하여 가까이 온 먹이를 잡는다. 1억 년 전에 멸종했다."
+  },
+  {
+    "id": 346,
+    "name": "릴리요",
+    "type": "바위/풀",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/346.png",
+    "description": "따뜻한 바다의 얕은 곳에 있다. 바닷물이 빠지면 모래 해변에 숨어 있는 먹이를 파내어 먹는다."
+  },
+  {
+    "id": 347,
+    "name": "아노딥스",
+    "type": "바위/벌레",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/347.png",
+    "description": "포켓몬의 조상 중 하나다. 해저의 바위 지대에 숨어 있는 먹잇감을 늘어나는 발톱으로 잡는다."
+  },
+  {
+    "id": 348,
+    "name": "아말도",
+    "type": "바위/벌레",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/348.png",
+    "description": "늘었다 줄었다 하는 거대한 손톱으로 먹이를 찔러서 잡는다. 튼튼한 갑옷을 몸에 두르고 있다."
+  },
+  {
+    "id": 349,
+    "name": "빈티나",
+    "type": "물",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/349.png",
+    "description": "무엇이든 먹기 때문에 더러운 강이나 호수에서도 살 수 있다. 누구도 주목하지 않는 포켓몬이다."
+  },
+  {
+    "id": 350,
+    "name": "밀로틱",
+    "type": "물",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/350.png",
+    "description": "밀로틱의 아름다운 모습을 본 이는 싸우려던 마음가짐을 잊어버린다고 한다."
+  },
+  {
+    "id": 351,
+    "name": "캐스퐁",
+    "type": "노말",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/351.png",
+    "description": "기온이나 습도의 변화가 몸의 세포에 영향을 주어 모습을 바꾸는 포켓몬이다."
+  },
+  {
+    "id": 352,
+    "name": "켈리몬",
+    "type": "노말",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/352.png",
+    "description": "몸의 색을 자유롭게 바꾸는 능력을 가지고 있다. 배에 있는 톱니무늬만은 바뀌지 않는다."
+  },
+  {
+    "id": 353,
+    "name": "어둠대신",
+    "type": "고스트",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/353.png",
+    "description": "머리의 뿔로 원한과 질투의 감정을 먹는다고 전해진다. 한밤중에 활발하게 활동한다."
+  },
+  {
+    "id": 354,
+    "name": "다크펫",
+    "type": "고스트",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/354.png",
+    "description": "버려진 인형에 원념이 깃들어 포켓몬이 되었다. 자신을 버린 아이를 찾고 있다."
+  },
+  {
+    "id": 355,
+    "name": "해골몽",
+    "type": "고스트",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/355.png",
+    "description": "어디까지라도 먹이를 쫓아가는 집념이 강한 성격이지만 아침 해가 떠오르면 포기한다."
+  },
+  {
+    "id": 356,
+    "name": "미라몽",
+    "type": "고스트",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/356.png",
+    "description": "몸 안에서 불타고 있는 도깨비불을 들여다보면 영혼을 빼앗겨버린다."
+  },
+  {
+    "id": 357,
+    "name": "트로피우스",
+    "type": "풀/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/357.png",
+    "description": "커다란 잎으로 하늘을 날며 아이들에게 인기가 많은 목에 생기는 달콤한 과일을 나눠준다."
+  },
+  {
+    "id": 358,
+    "name": "치렁",
+    "type": "에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/358.png",
+    "description": "머리의 빨판으로 나뭇가지나 집의 처마 밑에 매달린다. 7종류의 음색을 나누어 쓴다."
+  },
+  {
+    "id": 359,
+    "name": "앱솔",
+    "type": "악",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/359.png",
+    "description": "재해의 위험을 감지한다. 위험을 알리는 때에만 사람 앞에 나타난다고 한다."
+  },
+  {
+    "id": 360,
+    "name": "마자",
+    "type": "에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/360.png",
+    "description": "무리를 지어 행동하는 습성이 있다. 잠들 때는 동굴 안에서 동료들과 서로 몸을 붙인다."
+  },
+  {
+    "id": 361,
+    "name": "눈꼬마",
+    "type": "얼음",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/361.png",
+    "description": "커다란 잎사귀 아래서 여러 마리의 눈꼬마가 모여 사이좋게 살고 있다고 한다."
+  },
+  {
+    "id": 362,
+    "name": "얼음귀신",
+    "type": "얼음",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/362.png",
+    "description": "공기 중의 수분을 얼려서 얼음 갑옷으로 몸을 둘러싸 몸을 보호한다."
+  },
+  {
+    "id": 363,
+    "name": "대굴레오",
+    "type": "얼음/물",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/363.png",
+    "description": "아직 능숙하게 헤엄치지 못하고 구르는 쪽이 빨리 움직일 수 있다. 기쁘면 다 같이 손뼉을 친다."
+  },
+  {
+    "id": 364,
+    "name": "씨레오",
+    "type": "얼음/물",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/364.png",
+    "description": "코의 신경이 민감하다. 처음 보는 것은 코로 문질러서 기억한다."
+  },
+  {
+    "id": 365,
+    "name": "씨카이저",
+    "type": "얼음/물",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/365.png",
+    "description": "큰 얼음을 이빨로 부순다. 두꺼운 지방은 추위뿐만 아니라 상대의 공격도 이겨낸다."
+  },
+  {
+    "id": 366,
+    "name": "진주몽",
+    "type": "물",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/366.png",
+    "description": "일생에 한 번 진화할 때 사이코 파워를 증폭시키는 이상한 진주를 만든다."
+  },
+  {
+    "id": 367,
+    "name": "헌테일",
+    "type": "물",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/367.png",
+    "description": "빛이 닿지 않는 심해에 서식한다. 작은 생선처럼 생긴 꼬리를 빛내어 먹잇감을 유인한다."
+  },
+  {
+    "id": 368,
+    "name": "분홍장이",
+    "type": "물",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/368.png",
+    "description": "헤엄치는 모습이 굉장히 우아하다. 가는 입으로 바위 틈새에 나 있는 해초를 먹는다."
+  },
+  {
+    "id": 369,
+    "name": "시라칸",
+    "type": "물/바위",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/369.png",
+    "description": "1억 년 전부터 모습이 바뀌지 않은 포켓몬이다. 심해를 조사하던 중 발견되었다."
+  },
+  {
+    "id": 370,
+    "name": "사랑동이",
+    "type": "물",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/370.png",
+    "description": "따뜻한 바다에서 서식한다. 사랑동이를 발견한 커플은 영원한 사랑이 지속된다고 한다."
+  },
+  {
+    "id": 371,
+    "name": "아공이",
+    "type": "드래곤",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/371.png",
+    "description": "단련된 목 근육과 철과 같이 단단한 머리로 커다란 바위를 조각조각으로 부순다."
+  },
+  {
+    "id": 372,
+    "name": "쉘곤",
+    "type": "드래곤",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/372.png",
+    "description": "단단한 껍질 안은 세포가 변화를 시작하고 있다. 진화하는 순간에 껍질이 벗겨져 떨어진다."
+  },
+  {
+    "id": 373,
+    "name": "보만다",
+    "type": "드래곤/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/373.png",
+    "description": "화나게 하면 어쩔 도리가 없다. 모든 것을 발톱으로 갈기갈기 찢고 불꽃으로 태워서 파괴한다."
+  },
+  {
+    "id": 374,
+    "name": "메탕",
+    "type": "강철/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/374.png",
+    "description": "몸에서 나오는 자력과 지상의 자력을 충돌시켜 하늘에 떠오른다."
+  },
+  {
+    "id": 375,
+    "name": "메탕구",
+    "type": "강철/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/375.png",
+    "description": "2마리의 메탕이 합체했다. 강철의 몸은 제트기와 충돌해도 상처 입지 않는다."
+  },
+  {
+    "id": 376,
+    "name": "메타그로스",
+    "type": "강철/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/376.png",
+    "description": "4개의 뇌가 연결되어 슈퍼컴퓨터보다 대단한 계산으로 상대를 분석한다."
+  },
+  {
+    "id": 377,
+    "name": "레지락",
+    "type": "바위",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/377.png",
+    "description": "전신이 바위로 되어 있다. 싸움으로 몸이 깨어져도 바위를 붙여서 치료해 버린다."
+  },
+  {
+    "id": 378,
+    "name": "레지아이스",
+    "type": "얼음",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/378.png",
+    "description": "빙하 안에서 몇천 년이나 잠들어 있었다고 전해진다. 마그마로도 몸이 녹지 않는다."
+  },
+  {
+    "id": 379,
+    "name": "레지스틸",
+    "type": "강철",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/379.png",
+    "description": "몇만 년 동안 지하의 압력에 의해서 단련된 금속의 몸은 상처 하나 입지 않는다."
+  },
+  {
+    "id": 380,
+    "name": "라티아스",
+    "type": "드래곤/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/380.png",
+    "description": "텔레파시로 마음이 통한다. 빛을 굴절시키는 깃털로 몸을 둘러싸 모습을 지운다."
+  },
+  {
+    "id": 381,
+    "name": "라티오스",
+    "type": "드래곤/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/381.png",
+    "description": "높은 지능을 가진 포켓몬이다. 팔을 접어 날면 제트기를 추월할 만큼 빠르다."
+  },
+  {
+    "id": 382,
+    "name": "가이오가",
+    "type": "물",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/382.png",
+    "description": "많은 비와 큰 해일로 바다를 넓힌 신화의 포켓몬이다. 그란돈과 격하게 싸웠다."
+  },
+  {
+    "id": 383,
+    "name": "그란돈",
+    "type": "땅",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/383.png",
+    "description": "고열로 물을 증발시켜 대지를 넓혔다고 전해진다. 가이오가와 격하게 싸웠다."
+  },
+  {
+    "id": 384,
+    "name": "레쿠쟈",
+    "type": "드래곤/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/384.png",
+    "description": "구름보다 아득히 먼 위의 오존층에 서식하고 있기 때문에 지상에서 모습을 볼 수 없다."
+  },
+  {
+    "id": 385,
+    "name": "지라치",
+    "type": "강철/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/385.png",
+    "description": "깨어났을 때 머리의 종이에 쓴 소원을 이루어준다고 먼 옛날부터 구전되었다."
+  },
+  {
+    "id": 386,
+    "name": "테오키스",
+    "type": "에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/386.png",
+    "description": "운석에 붙어 있던 우주 바이러스의 DNA가 변이하여 생겨난 포켓몬이다."
+  }
+]

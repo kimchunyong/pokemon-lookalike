@@ -85,7 +85,7 @@ const jsonLd = {
   featureList: [
     '포켓몬 닮은꼴 찾기 (이미지 업로드)',
     '나와 닮은 포켓몬 유사도 결과',
-    '포켓몬 도감 (1세대 151마리)',
+    '포켓몬 도감 (1·2·3세대 386마리)',
     '닮은꼴 랭킹',
     '커뮤니티 게시판',
   ],
@@ -109,6 +109,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          suppressHydrationWarning
         />
       </head>
       <body>

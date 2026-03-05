@@ -94,6 +94,114 @@ export async function analyzeEmotion(
 }
 
 /**
+ * 얼굴이 감지된 경우 얼굴 영역을 패딩해서 잘라낸 이미지의 data URL을 반환합니다.
+ * 유사도 비교 시 배경·옷 등이 섞이지 않아 더 정확한 비교에 활용할 수 있습니다.
+ */
+export async function getFaceCroppedDataUrl(
+  imageElement: HTMLImageElement
+): Promise<string | null> {
+  try {
+    if (!modelsLoaded) await loadEmotionModels()
+
+    const detectorOptions = new faceapi.TinyFaceDetectorOptions({
+      inputSize: 320,
+      scoreThreshold: 0.3,
+    })
+    const detection = await faceapi.detectSingleFace(imageElement, detectorOptions)
+    if (!detection?.box) return null
+
+    const pad = 0.2
+    const { x, y, width, height } = detection.box
+    const w = width * (1 + pad * 2)
+    const h = height * (1 + pad * 2)
+    const sx = Math.max(0, x - width * pad)
+    const sy = Math.max(0, y - height * pad)
+    const sw = Math.min(w, imageElement.naturalWidth - sx)
+    const sh = Math.min(h, imageElement.naturalHeight - sy)
+
+    const minSize = 224
+    const dw = Math.max(Math.round(sw), minSize)
+    const dh = Math.max(Math.round(sh), minSize)
+    const canvas = document.createElement('canvas')
+    canvas.width = dw
+    canvas.height = dh
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return null
+    ctx.drawImage(
+      imageElement,
+      sx, sy, sw, sh,
+      0, 0, dw, dh
+    )
+    return canvas.toDataURL('image/png')
+  } catch (error) {
+    console.warn('Face crop failed:', error)
+    return null
+  }
+}
+
+/**
+ * 감정 분석과 얼굴 크롭을 한 번의 얼굴 검출로 수행합니다.
+ * 유사도 비교에는 faceCroppedDataUrl을 사용하면 더 정확합니다.
+ */
+export async function analyzeEmotionAndGetFaceCrop(
+  imageElement: HTMLImageElement
+): Promise<{ emotion: EmotionResult | null; faceCroppedDataUrl: string | null }> {
+  try {
+    if (!modelsLoaded) await loadEmotionModels()
+
+    const detectorOptions = new faceapi.TinyFaceDetectorOptions({
+      inputSize: 320,
+      scoreThreshold: 0.3,
+    })
+    const detections = await faceapi
+      .detectSingleFace(imageElement, detectorOptions)
+      .withFaceLandmarks()
+      .withFaceExpressions()
+
+    if (!detections) {
+      return { emotion: null, faceCroppedDataUrl: null }
+    }
+
+    const expressions = detections.expressions as Record<string, number>
+    const sorted = Object.entries(expressions).sort((a, b) => b[1] - a[1])
+    const emotion: EmotionResult | null =
+      sorted.length > 0
+        ? { expression: sorted[0][0], probability: sorted[0][1] }
+        : null
+
+    const pad = 0.2
+    const { x, y, width, height } = detections.detection.box
+    const w = width * (1 + pad * 2)
+    const h = height * (1 + pad * 2)
+    const sx = Math.max(0, x - width * pad)
+    const sy = Math.max(0, y - height * pad)
+    const sw = Math.min(w, imageElement.naturalWidth - sx)
+    const sh = Math.min(h, imageElement.naturalHeight - sy)
+    const minSize = 224
+    const dw = Math.max(Math.round(sw), minSize)
+    const dh = Math.max(Math.round(sh), minSize)
+    const canvas = document.createElement('canvas')
+    canvas.width = dw
+    canvas.height = dh
+    const ctx = canvas.getContext('2d')
+    let faceCroppedDataUrl: string | null = null
+    if (ctx) {
+      ctx.drawImage(
+        imageElement,
+        sx, sy, sw, sh,
+        0, 0, dw, dh
+      )
+      faceCroppedDataUrl = canvas.toDataURL('image/png')
+    }
+
+    return { emotion, faceCroppedDataUrl }
+  } catch (error) {
+    console.warn('Emotion/face crop failed:', error)
+    return { emotion: null, faceCroppedDataUrl: null }
+  }
+}
+
+/**
  * 감정을 한국어로 변환합니다.
  */
 export function getEmotionKorean(expression: string): string {

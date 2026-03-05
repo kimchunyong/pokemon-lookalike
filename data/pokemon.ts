@@ -1,5 +1,5 @@
 /**
- * 포켓몬 목록 데이터 (1세대 151마리)
+ * 포켓몬 목록 데이터 (1·2·3세대 386마리)
  * 각 포켓몬: { id, name, type, imageUrl, description }
  * 이미지 URL은 PokeAPI의 공식 아트워크를 사용합니다.
  *
@@ -8,10 +8,21 @@
  * 비상업적 교육 목적으로만 사용됩니다.
  */
 
+import pokemonGen2Json from './pokemon-gen2.json'
+import pokemonGen3Json from './pokemon-gen3.json'
+
 const IMG = (id: number) =>
   `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
 
-export const POKEMON_LIST = [
+export type PokemonEntry = {
+  id: number
+  name: string
+  type: string
+  imageUrl: string
+  description: string
+}
+
+const POKEMON_GEN1: PokemonEntry[] = [
   { id: 1, name: '이상해씨', type: '풀/독', imageUrl: IMG(1), description: '태어날 때부터 등에 식물의 씨앗을 지니고 자라는 신기한 포켓몬' },
   { id: 2, name: '이상해풀', type: '풀/독', imageUrl: IMG(2), description: '등의 꽃봉오리가 자라면서 냄새가 강해진다' },
   { id: 3, name: '이상해꽃', type: '풀/독', imageUrl: IMG(3), description: '등의 큰 꽃에서 달콤한 향기가 난다' },
@@ -164,3 +175,8 @@ export const POKEMON_LIST = [
   { id: 150, name: '뮤츠', type: '에스퍼', imageUrl: IMG(150), description: '유전자 조작으로 만들어진 포켓몬. 가장 강한 초능력의 소유자' },
   { id: 151, name: '뮤', type: '에스퍼', imageUrl: IMG(151), description: '모든 포켓몬의 유전자를 가지고 있다. 모든 기술을 배울 수 있다' },
 ]
+
+const POKEMON_GEN2 = pokemonGen2Json as PokemonEntry[]
+const POKEMON_GEN3 = pokemonGen3Json as PokemonEntry[]
+
+export const POKEMON_LIST: PokemonEntry[] = [...POKEMON_GEN1, ...POKEMON_GEN2, ...POKEMON_GEN3]
