@@ -64,6 +64,8 @@ a:hover {
 
 /* ===== Site Header ===== */
 .site-header {
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -71,6 +73,37 @@ a:hover {
   gap: 1rem;
   font-size: 14px;
   flex-wrap: wrap;
+  z-index: 1000;
+  transition: background-color 0.25s ease, backdrop-filter 0.25s ease;
+}
+
+.site-header.scrolled {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(10px);
+}
+
+.site-header.scrolled .header-desktop-nav .header-nav-link {
+  color: #1a1a1a !important;
+}
+
+.site-header.scrolled .header-desktop-nav .header-user-button {
+  color: #1a1a1a;
+  border-color: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.site-header.scrolled .header-desktop-nav .header-lang-button {
+  color: #1a1a1a;
+  border-color: rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.site-header.scrolled .hamburger-line {
+  background: #1a1a1a;
+}
+
+.site-header.scrolled .header-hamburger {
+  border-color: rgba(0, 0, 0, 0.2);
 }
 
 .header-desktop-nav {
@@ -929,6 +962,25 @@ a:hover {
   font-size: 0.9em;
 }
 
+/* 포켓몬 상세: 960px 이하에서 이미지 위·정보 아래로 세로 배치 */
+@media (max-width: 960px) {
+  .pokemon-detail-header {
+    grid-template-columns: 1fr !important;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .pokemon-detail-info-section {
+    align-items: center;
+    text-align: center;
+  }
+
+  .pokemon-detail-types {
+    justify-content: center;
+  }
+}
+
 @media (max-width: 768px) {
   .pokemon-grid {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -954,7 +1006,8 @@ a:hover {
   }
 
   .pokemon-detail-header {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 1rem;
   }
 
@@ -977,12 +1030,12 @@ a:hover {
   }
 
   .pokemon-detail-stats {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
 
   .stat-item {
-    padding: 0.6rem 0.4rem;
+    padding: 0.75rem 1rem;
   }
 
   .stat-label {

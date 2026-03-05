@@ -20,9 +20,17 @@ export default function AuthHeader() {
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [userDropdownOpen, setUserDropdownOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const userDropdownRef = useRef<HTMLDivElement>(null)
   const mobileMenuRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 10)
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const closeAll = useCallback(() => {
     setDropdownOpen(false)
@@ -174,7 +182,7 @@ export default function AuthHeader() {
   )
 
   return (
-    <header className="site-header">
+    <header className={`site-header${isScrolled ? ' scrolled' : ''}`}>
       <h1 style={{ marginLeft: 20 }}>
         <Link href="/">
           <Image src="/images/pokemon_logo.png" alt="나와 닮은 포켓몬 찾기" width={50} height={50} />
