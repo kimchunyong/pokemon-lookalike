@@ -56,15 +56,7 @@ export default function HomePage() {
               {t.home.findByImage}
             </button>
           </Link>
-          <Link href="/pokedex">
-            <button type="button" className="primary-button">
-              📖 포켓몬 도감
-            </button>
-          </Link>
         </div>
-
-        <PolicyNotice />
-
       </div>
     </main>
   )
