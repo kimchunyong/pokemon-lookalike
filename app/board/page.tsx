@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useMemo } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
 
@@ -22,6 +23,7 @@ type PostRow = {
   author_display_name: string | null
   view_count?: number
   like_count?: number
+  comment_count?: number
 }
 
 type UserRow = {
@@ -58,6 +60,7 @@ function formatRelativeOrDate(iso: string): string {
 }
 
 export default function BoardPage() {
+  const router = useRouter()
   const { user, loading: authLoading } = useAuth()
   const [posts, setPosts] = useState<PostRow[]>([])
   const [authorByUserId, setAuthorByUserId] = useState<Record<string, string>>({})
@@ -75,7 +78,7 @@ export default function BoardPage() {
       const orderBy = sort === 'likes' ? 'like_count' : 'created_at'
       const { data, error } = await supabase
         .from('posts')
-        .select('id, title, image_url, user_id, created_at, author_display_name, view_count, like_count')
+        .select('id, title, image_url, user_id, created_at, author_display_name, view_count, like_count, comment_count')
         .order(orderBy, { ascending: false })
       if (error) {
         setLoading(false)
@@ -380,6 +383,7 @@ export default function BoardPage() {
                 <th style={{ padding: '0.75rem 1rem', textAlign: 'left', fontWeight: 600, fontSize: 13 }}>글쓴이</th>
                 <th style={{ padding: '0.75rem 1rem', textAlign: 'left', fontWeight: 600, fontSize: 13 }}>작성시간</th>
                 <th style={{ padding: '0.75rem 1rem', textAlign: 'center', fontWeight: 600, fontSize: 13 }}>조회수</th>
+                <th style={{ padding: '0.75rem 1rem', textAlign: 'center', fontWeight: 600, fontSize: 13 }}>댓글</th>
                 <th style={{ padding: '0.75rem 1rem', textAlign: 'center', fontWeight: 600, fontSize: 13 }}>좋아요</th>
               </tr>
             </thead>
@@ -390,23 +394,22 @@ export default function BoardPage() {
                 return (
                   <tr
                     key={post.id}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => router.push(`/board/detail?id=${post.id}`)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        router.push(`/board/detail?id=${post.id}`)
+                      }
+                    }}
                     style={{
                       borderBottom: '1px solid rgba(255,255,255,0.08)',
+                      cursor: 'pointer',
                     }}
                   >
                     <td style={{ padding: '0.75rem 1rem', fontSize: 14, color: 'rgba(255,255,255,0.7)' }}>{no}</td>
-                    <td style={{ padding: '0.75rem 1rem' }}>
-                      <Link
-                        href={`/board/detail?id=${post.id}`}
-                        style={{
-                          textDecoration: 'none',
-                          color: 'inherit',
-                          fontWeight: 500,
-                        }}
-                      >
-                        {post.title}
-                      </Link>
-                    </td>
+                    <td style={{ padding: '0.75rem 1rem', fontWeight: 500 }}>{post.title}</td>
                     <td style={{ padding: '0.75rem 1rem', fontSize: 14, color: 'rgba(255,255,255,0.8)' }}>{author}</td>
                     <td style={{ padding: '0.75rem 1rem', fontSize: 14, color: 'rgba(255,255,255,0.6)' }}>
                       {formatRelativeOrDate(post.created_at)}
@@ -414,11 +417,15 @@ export default function BoardPage() {
                     <td style={{ padding: '0.75rem 1rem', fontSize: 14, textAlign: 'center', color: 'rgba(255,255,255,0.7)' }}>
                       {post.view_count ?? 0}
                     </td>
-                    <td style={{ padding: '0.75rem 1rem', fontSize: 14, textAlign: 'center' }}>
+                    <td style={{ padding: '0.75rem 1rem', fontSize: 14, textAlign: 'center', color: 'rgba(255,255,255,0.7)' }}>
+                      {post.comment_count ?? 0}
+                    </td>
+                    <td style={{ padding: '0.75rem 1rem', fontSize: 14, textAlign: 'center' }} onClick={(e) => e.stopPropagation()}>
                       <button
                         type="button"
                         onClick={(e) => {
                           e.preventDefault()
+                          e.stopPropagation()
                           handleLikeToggle(post.id)
                         }}
                         disabled={togglingPostId === post.id}

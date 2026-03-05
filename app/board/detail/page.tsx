@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useState, Suspense } from 'react'
+import { useEffect, useState, useCallback, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
+import { getAuthorDisplayNameFromUser, getAuthorDisplayNameFromUserRow } from '@/lib/getAuthorDisplayName'
 
 type Post = {
   id: string
@@ -17,6 +18,16 @@ type Post = {
   updated_at: string
   view_count?: number
   like_count?: number
+  comment_count?: number
+}
+
+type Comment = {
+  id: string
+  post_id: string
+  user_id: string
+  content: string
+  author_display_name: string | null
+  created_at: string
 }
 
 export default function PostDetailPage() {
@@ -39,20 +50,39 @@ function PostDetailContent() {
   const [liked, setLiked] = useState(false)
   const [likeToggling, setLikeToggling] = useState(false)
 
+  const [comments, setComments] = useState<Comment[]>([])
+  const [commentsLoading, setCommentsLoading] = useState(true)
+  const [commentText, setCommentText] = useState('')
+  const [commentSubmitting, setCommentSubmitting] = useState(false)
+  const [deletingCommentId, setDeletingCommentId] = useState<string | null>(null)
+
+  const fetchComments = useCallback(async (postId: string) => {
+    const supabase = createClient()
+    const { data } = await supabase
+      .from('post_comments')
+      .select('id, post_id, user_id, content, author_display_name, created_at')
+      .eq('post_id', postId)
+      .order('created_at', { ascending: true })
+    setComments((data as Comment[]) ?? [])
+    setCommentsLoading(false)
+  }, [])
+
   useEffect(() => {
     if (!id) {
       setLoading(false)
+      setCommentsLoading(false)
       return
     }
     const fetchPost = async () => {
       const supabase = createClient()
       const { data, error } = await supabase
         .from('posts')
-        .select('id, user_id, title, content, image_url, author_display_name, created_at, updated_at, view_count, like_count')
+        .select('id, user_id, title, content, image_url, author_display_name, created_at, updated_at, view_count, like_count, comment_count')
         .eq('id', id)
         .single()
       if (error) {
         setLoading(false)
+        setCommentsLoading(false)
         return
       }
       const p = data as Post
@@ -97,9 +127,10 @@ function PostDetailContent() {
         setLiked(!!likeRow)
       }
       setLoading(false)
+      fetchComments(id)
     }
     fetchPost()
-  }, [id, user])
+  }, [id, user, fetchComments])
 
   const handleDelete = async () => {
     if (!id || !confirm('이 글을 삭제할까요?')) return
@@ -124,6 +155,54 @@ function PostDetailContent() {
       await supabase.from('post_likes').delete().eq('post_id', id).eq('user_id', user.id)
     }
     setLikeToggling(false)
+  }
+
+  const handleCommentSubmit = async () => {
+    const trimmed = commentText.trim()
+    if (!user || !id || !trimmed || commentSubmitting) return
+    setCommentSubmitting(true)
+    const supabase = createClient()
+    const { data: userRow } = await supabase
+      .from('users')
+      .select('nickname, email, raw_user_meta_data')
+      .eq('id', user.id)
+      .maybeSingle()
+    const userRowTyped = userRow as { nickname: string | null; email: string | null; raw_user_meta_data: { full_name?: string; name?: string } | null } | null
+    const displayName = userRowTyped
+      ? getAuthorDisplayNameFromUserRow(userRowTyped)
+      : getAuthorDisplayNameFromUser(user)
+    const { data, error } = await supabase
+      .from('post_comments')
+      .insert({
+        post_id: id,
+        user_id: user.id,
+        content: trimmed,
+        author_display_name: displayName,
+      })
+      .select('id, post_id, user_id, content, author_display_name, created_at')
+      .single()
+    if (!error && data) {
+      setComments((prev) => [...prev, data as Comment])
+      setCommentText('')
+      const newCount = (post?.comment_count ?? 0) + 1
+      setPost((prev) => (prev ? { ...prev, comment_count: newCount } : prev))
+      await supabase.from('posts').update({ comment_count: newCount }).eq('id', id)
+    }
+    setCommentSubmitting(false)
+  }
+
+  const handleCommentDelete = async (commentId: string) => {
+    if (!id || !confirm('이 댓글을 삭제할까요?')) return
+    setDeletingCommentId(commentId)
+    const supabase = createClient()
+    const { error } = await supabase.from('post_comments').delete().eq('id', commentId)
+    if (!error) {
+      setComments((prev) => prev.filter((c) => c.id !== commentId))
+      const newCount = Math.max((post?.comment_count ?? 1) - 1, 0)
+      setPost((prev) => (prev ? { ...prev, comment_count: newCount } : prev))
+      await supabase.from('posts').update({ comment_count: newCount }).eq('id', id)
+    }
+    setDeletingCommentId(null)
   }
 
   const formatDate = (iso: string) =>
@@ -247,7 +326,141 @@ function PostDetailContent() {
       )}
 
       </article>
-      <p style={{ fontSize: 14, marginTop: '1rem' }}>
+
+      {/* 댓글 섹션 */}
+      <section
+        style={{
+          marginTop: '2rem',
+          paddingTop: '1.5rem',
+          borderTop: '1px solid rgba(255,255,255,0.12)',
+        }}
+      >
+        <h2 style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '1rem' }}>
+          댓글 {comments.length > 0 && <span style={{ color: '#1976d2' }}>{comments.length}</span>}
+        </h2>
+
+        {/* 댓글 작성 폼 */}
+        {user ? (
+          <div
+            style={{
+              display: 'flex',
+              gap: '0.5rem',
+              marginBottom: '1.5rem',
+              alignItems: 'flex-end',
+            }}
+          >
+            <textarea
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
+              placeholder="댓글을 입력하세요 (최대 1000자)"
+              maxLength={1000}
+              rows={3}
+              style={{
+                flex: 1,
+                padding: '0.75rem',
+                borderRadius: 8,
+                border: '1px solid rgba(255,255,255,0.2)',
+                background: 'rgba(255,255,255,0.06)',
+                color: 'inherit',
+                fontSize: 14,
+                resize: 'vertical',
+                fontFamily: 'inherit',
+                lineHeight: 1.5,
+                minHeight: 60,
+              }}
+            />
+            <button
+              type="button"
+              onClick={handleCommentSubmit}
+              disabled={commentSubmitting || !commentText.trim()}
+              style={{
+                padding: '0.6rem 1.25rem',
+                background: commentSubmitting || !commentText.trim() ? 'rgba(255,255,255,0.1)' : '#1976d2',
+                color: '#fff',
+                border: 'none',
+                borderRadius: 8,
+                cursor: commentSubmitting || !commentText.trim() ? 'not-allowed' : 'pointer',
+                fontSize: 14,
+                fontWeight: 500,
+                whiteSpace: 'nowrap',
+                alignSelf: 'flex-end',
+                height: 'fit-content',
+              }}
+            >
+              {commentSubmitting ? '등록 중...' : '등록'}
+            </button>
+          </div>
+        ) : (
+          <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', marginBottom: '1.5rem' }}>
+            댓글을 작성하려면{' '}
+            <Link href="/login" style={{ color: '#1976d2' }}>
+              로그인
+            </Link>
+            이 필요합니다.
+          </p>
+        )}
+
+        {/* 댓글 목록 */}
+        {commentsLoading ? (
+          <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)' }}>댓글 불러오는 중...</p>
+        ) : comments.length === 0 ? (
+          <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)', padding: '1rem 0' }}>
+            아직 댓글이 없습니다. 첫 댓글을 남겨보세요!
+          </p>
+        ) : (
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            {comments.map((comment) => {
+              const isCommentAuthor = user && comment.user_id === user.id
+              const isDeleting = deletingCommentId === comment.id
+              return (
+                <li
+                  key={comment.id}
+                  style={{
+                    padding: '0.75rem 1rem',
+                    background: 'rgba(255,255,255,0.04)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    borderRadius: 10,
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
+                    <span style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.9)' }}>
+                      {comment.author_display_name ?? '알 수 없음'}
+                    </span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>
+                        {formatDate(comment.created_at)}
+                      </span>
+                      {isCommentAuthor && (
+                        <button
+                          type="button"
+                          onClick={() => handleCommentDelete(comment.id)}
+                          disabled={isDeleting}
+                          style={{
+                            padding: '0.15rem 0.5rem',
+                            fontSize: 12,
+                            background: 'transparent',
+                            border: '1px solid rgba(255,255,255,0.15)',
+                            borderRadius: 4,
+                            color: isDeleting ? 'rgba(255,255,255,0.3)' : 'rgba(255,100,100,0.8)',
+                            cursor: isDeleting ? 'not-allowed' : 'pointer',
+                          }}
+                        >
+                          {isDeleting ? '삭제 중' : '삭제'}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  <p style={{ fontSize: 14, lineHeight: 1.6, whiteSpace: 'pre-wrap', color: 'rgba(255,255,255,0.85)', margin: 0 }}>
+                    {comment.content}
+                  </p>
+                </li>
+              )
+            })}
+          </ul>
+        )}
+      </section>
+
+      <p style={{ fontSize: 14, marginTop: '1.5rem' }}>
         <Link href="/board" style={{ color: '#1976d2' }}>
           ← 목록
         </Link>
