@@ -1,10 +1,12 @@
 import { MetadataRoute } from 'next'
+import { POKEMON_LIST } from '../data/pokemon'
 
 export const dynamic = 'force-static'
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://pokemon-lookalike.shop'
+const baseUrl =
+  process.env.NEXT_PUBLIC_APP_URL ?? 'https://pokemon-lookalike.shop'
 
+export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
@@ -62,5 +64,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  return staticRoutes
+  const resultRoutes: MetadataRoute.Sitemap = POKEMON_LIST.map((pokemon) => ({
+    url: `${baseUrl}/result/${pokemon.id}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }))
+
+  return [...staticRoutes, ...resultRoutes]
 }

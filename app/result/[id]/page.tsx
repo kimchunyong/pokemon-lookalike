@@ -25,18 +25,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
+  const description = `포켓몬 닮은꼴 찾기 결과: 나와 닮은 포켓몬 ${pokemon.name}. ${pokemon.description} 포켓몬 닮은꼴 찾기 서비스에서 확인하세요.`
   return {
-    title: `나는 ${pokemon.name}를 닮았어요! | 나와 닮은 포켓몬 찾기`,
-    description: `${pokemon.description}`,
+    title: `나는 ${pokemon.name}를 닮았어요! | 포켓몬 닮은꼴 찾기`,
+    description,
     openGraph: {
-      title: `나는 ${pokemon.name}를 닮았어요!`,
-      description: pokemon.description,
+      title: `나와 닮은 포켓몬 ${pokemon.name} | 포켓몬 닮은꼴 찾기`,
+      description: `포켓몬 닮은꼴 찾기 결과 - ${pokemon.name}. ${pokemon.description}`,
       images: [
         {
           url: pokemon.imageUrl,
           width: 800,
           height: 800,
-          alt: pokemon.name,
+          alt: `${pokemon.name} - 포켓몬 닮은꼴 찾기`,
         },
       ],
     },

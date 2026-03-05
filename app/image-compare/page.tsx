@@ -161,6 +161,28 @@ export default function ImageComparePage() {
 
       <PolicyNotice />
 
+      <section
+        aria-label="포켓몬 닮은꼴 찾기 방법"
+        style={{
+          marginTop: '2rem',
+          padding: '1.25rem',
+          maxWidth: 600,
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          fontSize: '0.9em',
+          lineHeight: 1.65,
+          color: 'rgba(255,255,255,0.75)',
+        }}
+      >
+        <h2 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: 'rgba(255,255,255,0.9)' }}>
+          포켓몬 닮은꼴 찾기 이용 방법
+        </h2>
+        <p>
+          포켓몬 닮은꼴 찾기는 이미지를 업로드한 뒤 &quot;닮은 포켓몬 찾기&quot; 버튼을 누르면 됩니다.
+          AI가 나와 닮은 포켓몬을 유사도 순으로 보여주며, 자세히 보기에서 포켓몬 도감 정보와 공유 기능을 이용할 수 있습니다.
+        </p>
+      </section>
+
       <div className="navigation-section">
         <button type="button" onClick={() => router.push('/')}>
           {t.common.home}

@@ -10,11 +10,23 @@ const baseUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: '나와 닮은 포켓몬 찾기 - AI 닮은꼴 매칭 서비스',
-    template: '%s | 나와 닮은 포켓몬 찾기',
+    default: '포켓몬 닮은꼴 찾기 | 나와 닮은 포켓몬 AI 매칭',
+    template: '%s | 포켓몬 닮은꼴 찾기',
   },
-  description: 'AI 기술로 나와 닮은 포켓몬을 찾아보세요. 포켓몬 도감, 커뮤니티 게시판도 함께 즐길 수 있습니다. 개인정보는 저장되지 않으며, 재미 목적으로만 제공됩니다.',
-  keywords: ['포켓몬', '닮은꼴', 'AI', '이미지 비교', '포켓몬 도감', '커뮤니티', '재미'],
+  description:
+    '포켓몬 닮은꼴 찾기로 나와 닮은 포켓몬을 AI로 확인하세요. 사진 한 장으로 닮은꼴 포켓몬을 찾고, 포켓몬 도감·닮은꼴 랭킹·커뮤니티까지. 무료·개인정보 미저장.',
+  keywords: [
+    '포켓몬 닮은꼴 찾기',
+    '나와 닮은 포켓몬',
+    '포켓몬 유사도',
+    '닮은꼴 포켓몬',
+    'AI 포켓몬',
+    '이미지로 포켓몬 찾기',
+    '포켓몬 도감',
+    '닮은꼴 테스트',
+    '포켓몬 얼굴 비교',
+    '커뮤니티',
+  ],
   authors: [{ name: 'Pocketmon Face' }],
   creator: 'Pocketmon Face',
   publisher: 'Pocketmon Face',
@@ -36,24 +48,24 @@ export const metadata: Metadata = {
     canonical: baseUrl,
   },
   openGraph: {
-    title: '나와 닮은 포켓몬 찾기 - AI 닮은꼴 매칭',
-    description: 'AI 기술로 나와 닮은 포켓몬을 찾아보세요. 포켓몬 도감과 커뮤니티도 함께!',
+    title: '포켓몬 닮은꼴 찾기 | 나와 닮은 포켓몬 AI',
+    description: '사진 한 장으로 포켓몬 닮은꼴 찾기. AI가 나와 닮은 포켓몬을 찾아드려요. 무료·개인정보 미저장.',
     type: 'website',
-    siteName: 'Pocketmon Face',
+    siteName: '포켓몬 닮은꼴 찾기',
     locale: 'ko_KR',
     images: [
       {
         url: '/images/og.webp',
         width: 1200,
         height: 630,
-        alt: '나와 닮은 포켓몬 찾기 - AI 닮은꼴 매칭 서비스',
+        alt: '포켓몬 닮은꼴 찾기 - 나와 닮은 포켓몬 AI 매칭',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: '나와 닮은 포켓몬 찾기 - AI 닮은꼴 매칭',
-    description: 'AI 기술로 나와 닮은 포켓몬을 찾아보세요. 포켓몬 도감과 커뮤니티도 함께!',
+    title: '포켓몬 닮은꼴 찾기 | 나와 닮은 포켓몬 AI',
+    description: '사진 한 장으로 포켓몬 닮은꼴 찾기. AI가 나와 닮은 포켓몬을 찾아드려요.',
     images: ['/images/og.webp'],
   },
 }
@@ -61,14 +73,22 @@ export const metadata: Metadata = {
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: '나와 닮은 포켓몬 찾기',
-  alternateName: 'Pocketmon Face',
-  description: 'AI 기술로 나와 닮은 포켓몬을 찾아보는 서비스',
+  name: '포켓몬 닮은꼴 찾기',
+  alternateName: ['나와 닮은 포켓몬 찾기', 'Pocketmon Face'],
+  description:
+    '포켓몬 닮은꼴 찾기 서비스. 사진을 올리면 AI가 나와 닮은 포켓몬을 찾아줍니다. 포켓몬 도감, 닮은꼴 랭킹, 커뮤니티 제공. 무료이며 개인정보는 저장하지 않습니다.',
   url: baseUrl,
   applicationCategory: 'EntertainmentApplication',
   operatingSystem: 'Web',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'KRW' },
   inLanguage: 'ko',
+  featureList: [
+    '포켓몬 닮은꼴 찾기 (이미지 업로드)',
+    '나와 닮은 포켓몬 유사도 결과',
+    '포켓몬 도감 (1세대 151마리)',
+    '닮은꼴 랭킹',
+    '커뮤니티 게시판',
+  ],
 }
 
 export default function RootLayout({

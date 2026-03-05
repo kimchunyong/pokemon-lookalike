@@ -37,6 +37,33 @@ export default function HomePage() {
         </div>
 
         <PolicyNotice />
+
+        <section
+          className="home-seo-content"
+          aria-label="포켓몬 닮은꼴 찾기 소개"
+          style={{
+            marginTop: '2.5rem',
+            padding: '1.5rem',
+            maxWidth: 640,
+            textAlign: 'left',
+            fontSize: '0.95em',
+            lineHeight: 1.7,
+            color: 'rgba(255,255,255,0.8)',
+          }}
+        >
+          <h2 style={{ fontSize: '1.25rem', marginBottom: '0.75rem', color: 'rgba(255,255,255,0.95)' }}>
+            포켓몬 닮은꼴 찾기란?
+          </h2>
+          <p>
+            포켓몬 닮은꼴 찾기는 사진 한 장으로 <strong>나와 닮은 포켓몬</strong>을 AI가 찾아주는 서비스입니다.
+            이미지를 업로드하면 1세대 포켓몬 151마리 중에서 얼굴 유사도가 높은 포켓몬을 순서대로 보여드립니다.
+          </p>
+          <p style={{ marginTop: '0.75rem' }}>
+            포켓몬 닮은꼴 찾기 결과를 바탕으로 <strong>포켓몬 도감</strong>에서 해당 포켓몬의 타입·능력치·진화 정보를 확인할 수 있고,
+            로그인 후 <strong>닮은꼴 랭킹</strong>에 등록하거나 커뮤니티에서 다른 유저와 결과를 공유할 수 있습니다.
+            모든 이미지 처리는 브라우저에서만 이루어지며, 개인정보는 저장되지 않습니다.
+          </p>
+        </section>
       </div>
     </main>
   )
