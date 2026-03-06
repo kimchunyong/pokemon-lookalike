@@ -985,6 +985,55 @@ a:hover {
   font-size: 0.9em;
 }
 
+/* 도감 FAQ·AI 원리 (SEO·체류 시간) */
+.pokedex-faq-section {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.pokedex-faq-section h2 {
+  font-size: 1.5em;
+  margin-bottom: 0.75rem;
+}
+
+.pokedex-faq-section h3 {
+  font-size: 1.2em;
+  margin: 1.5rem 0 0.5rem;
+  color: #aaa;
+}
+
+.pokedex-faq-lead {
+  color: #bbb;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+.pokedex-faq-section p {
+  color: #bbb;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+.pokedex-faq-list {
+  margin: 0.5rem 0;
+}
+
+.pokedex-faq-list dt {
+  font-weight: 600;
+  color: #ddd;
+  margin-top: 1rem;
+}
+
+.pokedex-faq-list dd {
+  margin: 0.25rem 0 0 0;
+  padding-left: 0.5rem;
+  color: #999;
+  line-height: 1.5;
+}
+
 /* 포켓몬 상세: 960px 이하에서 이미지 위·정보 아래로 세로 배치 */
 @media (max-width: 960px) {
   .pokemon-detail-header {
@@ -1197,6 +1246,27 @@ a:hover {
   font-size: 1.3em;
   font-weight: bold;
   color: #646cff;
+}
+
+.pokemon-detail-lookalike {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, rgba(100, 108, 255, 0.12), rgba(100, 108, 255, 0.04));
+  border-radius: 12px;
+  border: 1px solid rgba(100, 108, 255, 0.2);
+}
+
+.pokemon-detail-lookalike h2 {
+  font-size: 1.25em;
+  margin-bottom: 0.5rem;
+  color: #c8ccff;
+}
+
+.lookalike-sentence {
+  font-size: 1.05em;
+  line-height: 1.6;
+  color: #e0e4ff;
+  margin: 0;
 }
 
 .pokemon-detail-description {

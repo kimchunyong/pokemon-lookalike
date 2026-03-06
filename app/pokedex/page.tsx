@@ -2,10 +2,11 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import { getPokemonList, searchPokemon, Pokemon, PokemonListResponse } from '../../utils/pokeapi'
+import { getPokemonList, searchPokemon, getPokemon, Pokemon, PokemonListResponse } from '../../utils/pokeapi'
 import PokemonCard from '../../components/PokemonCard'
 import Pagination from '../../components/Pagination'
 import { useLanguage } from '../../contexts/LanguageContext'
+import { POKEMON_LIST } from '../../data/pokemon'
 
 const POKEMON_PER_PAGE = 20
 
@@ -49,11 +50,10 @@ export default function PokedexPage() {
     }
   }, [])
 
-  // 검색 실행
+  // 검색 실행 (한국어 이름 우선, 없으면 영어로 PokeAPI 검색)
   const handleSearch = useCallback(
     async (query: string) => {
       if (!query.trim()) {
-        // 검색어가 비어있으면 일반 목록으로 복귀
         fetchPokemonList(currentPage)
         setIsSearching(false)
         return
@@ -64,10 +64,22 @@ export default function PokedexPage() {
       setError(null)
 
       try {
-        const results = await searchPokemon(query)
-        setPokemonList(results)
+        const trimmed = query.trim()
+        const koreanMatches = POKEMON_LIST.filter((p) =>
+          p.name.toLowerCase().includes(trimmed.toLowerCase())
+        )
+        if (koreanMatches.length > 0) {
+          const pokemonData = await Promise.all(
+            koreanMatches.slice(0, 50).map((p) => getPokemon(p.id))
+          )
+          setPokemonList(pokemonData)
+          setTotalCount(pokemonData.length)
+        } else {
+          const results = await searchPokemon(trimmed)
+          setPokemonList(results)
+          setTotalCount(results.length)
+        }
         setTotalPages(1)
-        setTotalCount(results.length)
       } catch (err) {
         console.error('Search failed:', err)
         setError('검색 중 오류가 발생했습니다.')
@@ -125,7 +137,7 @@ export default function PokedexPage() {
       <div className="pokedex-search">
         <input
           type="text"
-          placeholder="포켓몬 이름으로 검색..."
+          placeholder="포켓몬 이름으로 검색 (한국어·영어)"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="pokedex-search-input"
@@ -185,6 +197,35 @@ export default function PokedexPage() {
           )}
         </>
       )}
+
+      <section className="pokedex-faq-section" aria-labelledby="pokedex-faq-heading">
+        <h2 id="pokedex-faq-heading">어떻게 나의 닮은꼴 포켓몬을 찾나요?</h2>
+        <p className="pokedex-faq-lead">
+          포켓몬 닮은꼴 테스트는 사진 한 장으로 AI가 나와 닮은 포켓몬을 찾아드립니다. 위 도감에서 결과로 나온 포켓몬의 타입·능력치·진화 정보를 확인할 수 있어요.
+        </p>
+
+        <h3>자주 묻는 질문</h3>
+        <dl className="pokedex-faq-list">
+          <dt>닮은꼴은 어떻게 정해지나요?</dt>
+          <dd>
+            업로드한 사진을 AI가 분석해, 1·2·3·4세대와 메가진화 포켓몬 공식 이미지와 비교합니다. 얼굴·인상·색감 등이 비슷한 순서대로 유사도(%)로 보여줍니다.
+          </dd>
+          <dt>사진은 어디에 저장되나요?</dt>
+          <dd>
+            개인정보를 저장하지 않습니다. 분석은 브라우저와 서버에서 처리되며, 원하시면 결과만 저장할 수 있습니다.
+          </dd>
+          <dt>도감과 닮은꼴 테스트의 관계는?</dt>
+          <dd>
+            테스트 결과로 나온 포켓몬을 이 도감에서 검색해 타입, 키, 몸무게, 진화 정보, 닮은꼴 한줄 설명까지 확인할 수 있습니다.
+          </dd>
+        </dl>
+
+        <h3>AI 분석 원리 (쉽게 설명)</h3>
+        <p>
+          이미지 인식 AI가 사진에서 특징을 추출한 뒤, 각 포켓몬 이미지의 특징과 비교해 &quot;얼마나 비슷한지&quot; 점수를 냅니다. 
+          전기 타입·불꽃 타입 같은 분위기와 색감도 반영해, 단순한 얼굴 형태가 아니라 전체적인 인상으로 매칭합니다.
+        </p>
+      </section>
     </main>
   )
 }

@@ -190,3 +190,11 @@ export const POKEMON_LIST: PokemonEntry[] = [
   ...POKEMON_GEN4,
   ...POKEMON_MEGA,
 ]
+
+/** 포켓몬 ID로 한국어 이름 반환 (도감 표시용) */
+export function getKoreanNameById(id: number): string | null {
+  const entry = POKEMON_LIST.find((p) => p.id === id)
+  return entry?.name ?? null
+}
+
+export { POKEMON_LOOKALIKE_DESCRIPTIONS } from './pokemonLookalikeDescriptions'

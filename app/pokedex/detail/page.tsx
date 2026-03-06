@@ -4,6 +4,7 @@ import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { getPokemon, Pokemon, getTypeNameKorean } from '../../../utils/pokeapi'
 import { useLanguage } from '../../../contexts/LanguageContext'
+import { getKoreanNameById, POKEMON_LOOKALIKE_DESCRIPTIONS } from '../../../data/pokemon'
 
 export default function PokemonDetailPage() {
   return (
@@ -82,6 +83,8 @@ function PokemonDetailContent() {
   const types = pokemon.types.map((t) => getTypeNameKorean(t.type.name))
   const heightInMeters = (pokemon.height / 10).toFixed(1)
   const weightInKg = (pokemon.weight / 10).toFixed(1)
+  const displayName = getKoreanNameById(pokemon.id) ?? pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
+  const lookalikeDesc = POKEMON_LOOKALIKE_DESCRIPTIONS[pokemon.id]
 
   return (
     <main className="pokemon-detail-page">
@@ -99,14 +102,14 @@ function PokemonDetailContent() {
         <div className="pokemon-detail-header">
           <div className="pokemon-detail-image-section">
             <div className="pokemon-detail-image-wrapper">
-              <img src={imageUrl} alt={pokemon.name} className="pokemon-detail-image" />
+              <img src={imageUrl} alt={displayName} className="pokemon-detail-image" />
             </div>
           </div>
 
           <div className="pokemon-detail-info-section">
             <div className="pokemon-detail-id">#{String(pokemon.id).padStart(3, '0')}</div>
             <h1 className="pokemon-detail-name">
-              {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+              {displayName}
             </h1>
 
             <div className="pokemon-detail-types">
@@ -137,6 +140,13 @@ function PokemonDetailContent() {
           </div>
         </div>
 
+        {lookalikeDesc && (
+          <section className="pokemon-detail-lookalike" aria-labelledby="lookalike-heading">
+            <h2 id="lookalike-heading">닮은꼴 테스트 한줄 설명</h2>
+            <p className="lookalike-sentence">{lookalikeDesc}</p>
+          </section>
+        )}
+
         <div className="pokemon-detail-description">
           <h2>상세 정보</h2>
           <div className="description-content">
@@ -144,7 +154,7 @@ function PokemonDetailContent() {
               <strong>포켓몬 ID:</strong> #{String(pokemon.id).padStart(3, '0')}
             </p>
             <p>
-              <strong>이름:</strong> {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+              <strong>이름:</strong> {displayName}
             </p>
             <p>
               <strong>타입:</strong> {types.join(', ')}
@@ -168,7 +178,7 @@ function PokemonDetailContent() {
               <div className="shiny-image-item">
                 <img
                   src={pokemon.sprites.front_shiny}
-                  alt={`${pokemon.name} shiny`}
+                  alt={`${displayName} 색이 다른 모습`}
                   className="shiny-image"
                 />
                 <p>앞면</p>
@@ -177,7 +187,7 @@ function PokemonDetailContent() {
                 <div className="shiny-image-item">
                   <img
                     src={pokemon.sprites.other['official-artwork'].front_shiny}
-                    alt={`${pokemon.name} shiny artwork`}
+                    alt={`${displayName} 색이 다른 모습 공식 아트`}
                     className="shiny-image"
                   />
                   <p>공식 아트워크</p>
