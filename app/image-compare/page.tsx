@@ -47,7 +47,9 @@ export default function ImageComparePage() {
       // 얼굴이 있으면 크롭 이미지로 유사도 비교(더 정확), 없으면 원본 사용
       const imageForSimilarity = faceCroppedDataUrl ?? uploadedImage
 
-      const similarPokemon = await findSimilarPokemon(imageForSimilarity, POKEMON_LIST)
+      const similarPokemon = await findSimilarPokemon(imageForSimilarity, POKEMON_LIST, {
+        emotion: emotionResult?.expression ?? null,
+      })
 
       setResults(similarPokemon)
       setDetectedEmotion(emotionResult)

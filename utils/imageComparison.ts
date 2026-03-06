@@ -1,8 +1,31 @@
 'use client'
 
 import pokemonEmbeddingsRaw from '../data/pokemon-embeddings.json'
+import {
+  extractDominantColorsFromImageUrl,
+  getPokemonTypeColor,
+  colorSimilarity,
+} from './colorFeatures'
 
 const pokemonEmbeddings: Record<string, number[]> = pokemonEmbeddingsRaw as Record<string, number[]>
+
+/** 다중 특징 가중치: CLIP, 색상 */
+const W_CLIP = 0.7
+const W_COLOR = 0.3
+
+/** 감정(face-api expression) → 보너스를 줄 포켓몬 타입 목록. 해당 타입이 있으면 raw에 곱함 */
+const EMOTION_TYPE_BOOST: Record<string, string[]> = {
+  happy: ['노말', '페어리'],
+  angry: ['불꽃', '격투'],
+  sad: ['물', '얼음'],
+  surprised: ['전기', '에스퍼'],
+  fearful: ['고스트', '에스퍼'],
+  disgusted: ['독', '땅'],
+  neutral: [],
+}
+
+/** 3위 이하 순위 변동용 스코어 노이즈 (±NOISE_SCALE/2) */
+const NOISE_SCALE = 0.02
 
 const MODEL_ID = 'Xenova/clip-vit-base-patch16'
 
@@ -97,15 +120,39 @@ export async function compareImages(imageUrl1: string, imageUrl2: string): Promi
   }
 }
 
+export type FindSimilarPokemonOptions = {
+  emotion?: string | null
+}
+
 export async function findSimilarPokemon(
   userImageUrl: string,
-  pokemonList: Array<{ id: number; name: string; imageUrl: string; [key: string]: any }>
+  pokemonList: Array<{ id: number; name: string; type?: string; imageUrl: string; [key: string]: any }>,
+  options?: FindSimilarPokemonOptions
 ) {
-  const userEmbedding = await extractCLIPEmbedding(userImageUrl)
+  const emotion = options?.emotion ?? null
+  const boostTypes = emotion ? EMOTION_TYPE_BOOST[emotion] ?? [] : []
+
+  const [userEmbedding, userColors] = await Promise.all([
+    extractCLIPEmbedding(userImageUrl),
+    extractDominantColorsFromImageUrl(userImageUrl, 3).catch(() => [] as number[][]),
+  ])
 
   const rawResults = pokemonList.map((pokemon) => {
     const pokemonEmb = pokemonEmbeddings[String(pokemon.id)]
-    let raw = pokemonEmb ? cosineSimilarity(userEmbedding, pokemonEmb) : -1
+    const clipSim = pokemonEmb ? cosineSimilarity(userEmbedding, pokemonEmb) : -1
+    const typeStr = pokemon.type ?? '노말'
+    const pokemonColor = getPokemonTypeColor(typeStr)
+    const colorSim = userColors.length > 0 ? colorSimilarity(userColors, pokemonColor) : 0.5
+    let raw =
+      clipSim >= 0
+        ? W_CLIP * clipSim + W_COLOR * colorSim
+        : W_COLOR * colorSim
+    const emotionMult =
+      boostTypes.length > 0 && typeStr.split('/').some((t) => boostTypes.includes(t.trim()))
+        ? 1.05
+        : 1.0
+    raw *= emotionMult
+    raw += (Math.random() - 0.5) * NOISE_SCALE
     const penalty = OVER_REPRESENTED_PENALTY[pokemon.id]
     if (penalty != null && raw > -1) raw *= penalty
     return { ...pokemon, raw }
@@ -122,7 +169,7 @@ export async function findSimilarPokemon(
   const sorted = results.sort((a, b) => b.similarity - a.similarity)
 
   console.log(
-    '[CLIP] top8:',
+    '[multi-feature] top8:',
     sorted.slice(0, 8).map((p) => `${p.name} raw=${p.raw.toFixed(4)} → ${(p.similarity * 100).toFixed(1)}%`),
     'bottom5:',
     sorted.slice(-5).map((p) => `${p.name} raw=${p.raw.toFixed(4)} → ${(p.similarity * 100).toFixed(1)}%`)
