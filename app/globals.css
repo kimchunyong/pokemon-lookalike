@@ -269,10 +269,12 @@ a:hover {
     display: flex;
   }
   .header-mobile-menu {
+    display: none;
     visibility: hidden;
     pointer-events: none;
   }
   .header-mobile-menu.open {
+    display: block;
     visibility: visible;
     pointer-events: auto;
   }
