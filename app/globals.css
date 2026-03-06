@@ -218,22 +218,24 @@ a:hover {
   display: none;
 }
 
-/* 모바일 슬라이드 메뉴 */
+/* 모바일 슬라이드 메뉴 (transform 사용으로 가로 스크롤 방지) */
 .header-mobile-menu {
   position: fixed;
   top: 0;
-  right: -280px;
+  right: 0;
   width: 280px;
+  max-width: 85vw;
   height: 100vh;
   background: rgba(20, 20, 30, 0.98);
   backdrop-filter: blur(20px);
   z-index: 2000;
-  transition: right 0.3s ease;
+  transition: transform 0.3s ease;
+  transform: translateX(100%);
   overflow-y: auto;
 }
 
 .header-mobile-menu.open {
-  right: 0;
+  transform: translateX(0);
 }
 
 .header-mobile-nav {
@@ -255,13 +257,24 @@ a:hover {
   margin: 0.75rem 0;
 }
 
-/* 640px 이하: 햄버거 표시, 데스크톱 네비 숨김 */
+/* 640px 이하: 햄버거 표시, 데스크톱 네비 숨김, 모바일 메뉴는 클릭(open) 시에만 표시, 가로 스크롤 방지 */
 @media (max-width: 640px) {
+  body {
+    overflow-x: hidden;
+  }
   .header-desktop-nav {
     display: none;
   }
   .header-hamburger {
     display: flex;
+  }
+  .header-mobile-menu {
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .header-mobile-menu.open {
+    visibility: visible;
+    pointer-events: auto;
   }
   .header-mobile-overlay {
     display: block;
@@ -269,6 +282,14 @@ a:hover {
     inset: 0;
     background: rgba(0,0,0,0.5);
     z-index: 1999;
+  }
+}
+
+/* 641px 이상: 모바일 메뉴·오버레이 비표시 (데스크톱에서는 절대 안 보이게) */
+@media (min-width: 641px) {
+  .header-mobile-menu,
+  .header-mobile-overlay {
+    display: none !important;
   }
 }
 
