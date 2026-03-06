@@ -101,6 +101,11 @@ export default function ImageComparePage() {
           포켓몬 닮은꼴 찾기는 이미지를 업로드한 뒤 &quot;닮은 포켓몬 찾기&quot; 버튼을 누르면 됩니다.
           AI가 나와 닮은 포켓몬을 유사도 순으로 보여주며, 자세히 보기에서 포켓몬 도감 정보와 공유 기능을 이용할 수 있습니다.
         </p>
+        <p style={{ marginTop: '0.75rem' }}>
+          <strong style={{ color: 'rgba(255,255,255,0.95)' }}>표정에 따른 결과 다양성</strong>
+          — 사진에서 감지된 표정(웃는 얼굴, 화난 표정, 슬픈 표정 등)에 따라 어울리는 포켓몬 타입에 살짝 가산이 적용됩니다.
+          같은 사진이라도 표정이 다르면 3위 이후 순위가 달라질 수 있어, 다양한 포켓몬을 만나볼 수 있습니다.
+        </p>
       </section>
       
       <div className="upload-section">
