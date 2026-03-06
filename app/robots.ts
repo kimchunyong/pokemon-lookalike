@@ -15,6 +15,10 @@ function getSitemapUrl(): string {
   return url.toString()
 }
 
+/**
+ * 표준 지시어만 사용 (User-agent, Allow, Disallow, Sitemap).
+ * Content-Signal 등 비표준 지시어는 Googlebot이 무시하므로 사용하지 않음.
+ */
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
