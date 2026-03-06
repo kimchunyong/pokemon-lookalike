@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/images/favicon-32x32.png',
+    icon: '/images/pokemon_favicon.ico',
   },
   alternates: {
     canonical: baseUrl,
