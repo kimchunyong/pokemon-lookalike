@@ -97,7 +97,7 @@ export default function KakaoShareButton({ pokemon }: KakaoShareButtonProps) {
     >
       <img
         src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_small.png"
-        alt="KakaoTalk"
+        alt={t.share.kakaoAlt ?? '카카오톡으로 공유하기'}
         style={{ width: '20px', height: '20px' }}
       />
       카카오톡으로 공유하기

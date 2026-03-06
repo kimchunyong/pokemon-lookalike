@@ -274,7 +274,7 @@ function PostDetailContent() {
         <div style={{ marginBottom: '1rem' }}>
           <img
             src={post.image_url}
-            alt="대표 이미지"
+            alt="게시글 대표 이미지"
             style={{
               width: '100%',
               maxHeight: 400,

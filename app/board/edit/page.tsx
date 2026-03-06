@@ -186,7 +186,7 @@ function EditPostContent() {
           <div style={{ marginBottom: '0.5rem' }}>
             <img
               src={imageUrl}
-              alt=""
+              alt="게시글 대표 이미지"
               style={{ maxWidth: 200, maxHeight: 200, objectFit: 'cover', borderRadius: 8 }}
             />
             <button

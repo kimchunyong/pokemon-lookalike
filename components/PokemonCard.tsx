@@ -26,7 +26,7 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
     <Link href={`/pokedex/detail?id=${pokemon.id}`}>
       <div className="pokemon-card-pokedex">
         <div className="pokemon-card-image-container">
-          <img src={imageUrl} alt={name} className="pokemon-card-image" loading="lazy" />
+          <img src={imageUrl} alt={`포켓몬 도감: ${name}`} className="pokemon-card-image" loading="lazy" />
         </div>
         <div className="pokemon-card-info">
           <div className="pokemon-card-id">#{String(pokemon.id).padStart(3, '0')}</div>

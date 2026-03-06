@@ -79,7 +79,8 @@
     "copyFailed": "复制失败。",
     "error": "图片生成失败。",
     "shareTitle": "与我相似的宝可梦",
-    "shareText": "相似度"
+    "shareText": "相似度",
+    "kakaoAlt": "通过 KakaoTalk 分享"
   },
   "header": {
     "navHome": "首页",
@@ -95,7 +96,8 @@
     "logout": "退出",
     "languageSelect": "语言",
     "menuOpen": "打开菜单",
-    "siteTitleAlt": "找到与我相似的宝可梦"
+    "siteTitleAlt": "找到与我相似的宝可梦",
+    "logoAlt": "开始宝可梦相似度测试"
   },
   "footer": {
     "terms": "使用条款",
@@ -252,7 +254,7 @@
     "backHome": "← 首页"
   },
   "imageUpload": {
-    "altUploaded": "已上传图片"
+    "altUploaded": "宝可梦相似度测试上传的照片"
   },
   "pagination": {
     "ariaPrev": "上一页",

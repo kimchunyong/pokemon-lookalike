@@ -159,7 +159,7 @@ export default function ImageComparePage() {
                 {pokemon.imageUrl && (
                   <img
                     src={pokemon.imageUrl}
-                    alt={pokemon.name}
+                    alt={`포켓몬 닮은꼴 테스트 결과: ${pokemon.name}`}
                     className="pokemon-image"
                   />
                 )}

@@ -182,7 +182,7 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
             {t.imageCompare.similarity}: {similarity ? (similarity * 100).toFixed(1) : 'N/A'}%
           </div>
           {pokemon.imageUrl && (
-            <img src={pokemon.imageUrl} alt={pokemon.name} className="pokemon-image" />
+            <img src={pokemon.imageUrl} alt={`포켓몬 닮은꼴 테스트 결과: ${pokemon.name}`} className="pokemon-image" />
           )}
           <h2>
             {emotionParam ? (
@@ -410,7 +410,7 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
                   >
                     <img
                       src={stage.imageUrl}
-                      alt={stage.koreanName}
+                      alt={`진화 과정: ${stage.koreanName}`}
                       style={{ width: '80%', height: '80%', objectFit: 'contain' }}
                     />
                   </div>

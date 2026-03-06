@@ -79,7 +79,8 @@
     "copyFailed": "コピーに失敗しました。",
     "error": "画像の生成に失敗しました。",
     "shareTitle": "似ているポケモン",
-    "shareText": "類似度"
+    "shareText": "類似度",
+    "kakaoAlt": "カカオトークで共有"
   },
   "header": {
     "navHome": "ホーム",
@@ -95,7 +96,8 @@
     "logout": "ログアウト",
     "languageSelect": "言語",
     "menuOpen": "メニューを開く",
-    "siteTitleAlt": "似ているポケモンを見つける"
+    "siteTitleAlt": "似ているポケモンを見つける",
+    "logoAlt": "ポケモン似ているテストを始める"
   },
   "footer": {
     "terms": "利用規約",
@@ -252,7 +254,7 @@
     "backHome": "← ホーム"
   },
   "imageUpload": {
-    "altUploaded": "アップロードした画像"
+    "altUploaded": "ポケモン似ているテスト用にアップロードした写真"
   },
   "pagination": {
     "ariaPrev": "前のページ",

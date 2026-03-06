@@ -192,7 +192,7 @@ export default function AuthHeader() {
     <header className={`site-header${isScrolled ? ' scrolled' : ''}`}>
       <h1 style={{ marginLeft: 20 }}>
         <Link href="/">
-          <Image src="/images/pokemon_logo.png" alt={t.header.siteTitleAlt} width={50} height={50} />
+          <Image src="/images/pokemon_logo.png" alt={t.header.logoAlt ?? t.header.siteTitleAlt} width={50} height={50} />
         </Link>
       </h1>
 

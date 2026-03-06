@@ -79,7 +79,8 @@
     "copyFailed": "복사에 실패했습니다.",
     "error": "이미지 생성에 실패했습니다.",
     "shareTitle": "나와 닮은 포켓몬",
-    "shareText": "유사도"
+    "shareText": "유사도",
+    "kakaoAlt": "카카오톡으로 공유하기"
   },
   "header": {
     "navHome": "홈",
@@ -95,7 +96,8 @@
     "logout": "로그아웃",
     "languageSelect": "언어 선택",
     "menuOpen": "메뉴 열기",
-    "siteTitleAlt": "나와 닮은 포켓몬 찾기"
+    "siteTitleAlt": "나와 닮은 포켓몬 찾기",
+    "logoAlt": "포켓몬 닮은꼴 테스트 시작하기"
   },
   "footer": {
     "terms": "이용약관",
@@ -252,7 +254,7 @@
     "backHome": "← 홈"
   },
   "imageUpload": {
-    "altUploaded": "업로드된 이미지"
+    "altUploaded": "포켓몬 닮은꼴 테스트용 업로드한 사진"
   },
   "pagination": {
     "ariaPrev": "이전 페이지",

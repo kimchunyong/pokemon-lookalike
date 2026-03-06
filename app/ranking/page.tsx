@@ -82,7 +82,7 @@ function TopThreeCard({
       >
         <img
           src={ARTWORK_URL(row.pokemon_id)}
-          alt={row.pokemon_name}
+          alt={`닮은꼴 랭킹: ${row.pokemon_name}`}
           width={isFirst ? 80 : 64}
           height={isFirst ? 80 : 64}
           style={{ objectFit: 'contain', marginBottom: 8 }}
@@ -157,7 +157,7 @@ function RankingListItem({
       </div>
       <img
         src={ARTWORK_URL(row.pokemon_id)}
-        alt={row.pokemon_name}
+        alt={`닮은꼴 랭킹: ${row.pokemon_name}`}
         width={40}
         height={40}
         style={{

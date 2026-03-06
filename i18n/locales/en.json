@@ -79,7 +79,8 @@
     "copyFailed": "Failed to copy.",
     "error": "Failed to generate image.",
     "shareTitle": "My Pokemon Lookalike",
-    "shareText": "Similarity"
+    "shareText": "Similarity",
+    "kakaoAlt": "Share via KakaoTalk"
   },
   "header": {
     "navHome": "Home",
@@ -95,7 +96,8 @@
     "logout": "Log out",
     "languageSelect": "Language",
     "menuOpen": "Open menu",
-    "siteTitleAlt": "Find my Pokemon lookalike"
+    "siteTitleAlt": "Find my Pokemon lookalike",
+    "logoAlt": "Start Pokemon lookalike test"
   },
   "footer": {
     "terms": "Terms",
@@ -252,7 +254,7 @@
     "backHome": "← Home"
   },
   "imageUpload": {
-    "altUploaded": "Uploaded image"
+    "altUploaded": "Uploaded photo for Pokemon lookalike test"
   },
   "pagination": {
     "ariaPrev": "Previous page",

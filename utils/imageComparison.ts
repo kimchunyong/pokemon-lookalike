@@ -74,10 +74,12 @@ function cosineSimilarity(a: number[], b: number[]): number {
  * CLIP에서 특정 포켓몬이 과도하게 상위에 나올 때 raw 유사도에 적용하는 계수.
  * 1보다 작을수록 순위가 내려감. (예: 남자 사진에서 피카츄가 자주 1위로 나오는 편향 완화)
  */
+/*
 const OVER_REPRESENTED_PENALTY: Record<number, number> = {
   25: 0.88,  // 피카츄: 남성 얼굴과 임베딩이 자주 비슷하게 나오는 경향 완화
   172: 0.88, // 피츄: 동일 계열이라 같은 편향 완화
 }
+*/
 
 /**
  * 전체 포켓몬 raw 유사도 분포를 기반으로 동적 스케일링.
@@ -153,8 +155,10 @@ export async function findSimilarPokemon(
         : 1.0
     raw *= emotionMult
     raw += (Math.random() - 0.5) * NOISE_SCALE
+    /*
     const penalty = OVER_REPRESENTED_PENALTY[pokemon.id]
     if (penalty != null && raw > -1) raw *= penalty
+    */
     return { ...pokemon, raw }
   })
 

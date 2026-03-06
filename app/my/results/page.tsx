@@ -272,7 +272,7 @@ export default function MyResultsPage() {
                 >
                   <img
                     src={ARTWORK_URL(r.pokemon_id)}
-                    alt={r.pokemon_name}
+                    alt={`포켓몬 닮은꼴 테스트 결과: ${r.pokemon_name}`}
                     width={56}
                     height={56}
                     style={{ objectFit: 'contain', flexShrink: 0 }}
@@ -315,7 +315,7 @@ export default function MyResultsPage() {
                     >
                       <img
                         src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_small.png"
-                        alt=""
+                        alt="카카오톡으로 공유하기"
                         width={14}
                         height={14}
                       />
