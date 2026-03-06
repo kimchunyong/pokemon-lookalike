@@ -45,8 +45,8 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: `${baseUrl}/images/pokemon_favicon.ico`, type: 'image/x-icon' },
-      { url: '/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
-      { url: '/favicon-16x16.png', type: 'image/png', sizes: '16x16' },
+      { url: `${baseUrl}/images/favicon-32x32.png`, type: 'image/png', sizes: '32x32' },
+      { url: `${baseUrl}/images/favicon-16x16.png`, type: 'image/png', sizes: '16x16' },
     ],
     apple: '/apple-touch-icon.png',
   },
