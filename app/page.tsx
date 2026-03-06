@@ -20,7 +20,7 @@ export default function HomePage() {
       <div className="home-page">
         <section
           className="home-seo-content"
-          aria-label="포켓몬 닮은꼴 찾기 소개"
+          aria-label="포켓몬 닮은꼴 테스트 소개"
           style={{
             marginTop: '2.5rem',
             padding: '1.5rem',
@@ -32,14 +32,14 @@ export default function HomePage() {
           }}
         >
           <h2 style={{ fontSize: '1.25rem', marginBottom: '0.75rem', color: 'rgba(255,255,255,0.95)' }}>
-            포켓몬 닮은꼴 찾기란?
+            포켓몬 닮은꼴 테스트란?
           </h2>
           <p>
-            포켓몬 닮은꼴 찾기는 사진 한 장으로 <strong>나와 닮은 포켓몬</strong>을 AI가 찾아주는 서비스입니다.
+            <strong>포켓몬 닮은꼴 테스트</strong>(포켓몬 닮은꼴 찾기)는 사진 한 장으로 <strong>나와 닮은 포켓몬</strong>을 AI가 찾아주는 서비스입니다.
             이미지를 업로드하면 1·2·3·4세대와 메가진화 포켓몬 중에서 얼굴 유사도가 높은 포켓몬을 순서대로 보여드립니다.
           </p>
           <p style={{ marginTop: '0.75rem' }}>
-            포켓몬 닮은꼴 찾기 결과를 바탕으로 <strong>포켓몬 도감</strong>에서 해당 포켓몬의 타입·능력치·진화 정보를 확인할 수 있고,
+            포켓몬 닮은꼴 테스트 결과를 바탕으로 <strong>포켓몬 도감</strong>에서 해당 포켓몬의 타입·능력치·진화 정보를 확인할 수 있고,
             로그인 후 <strong>닮은꼴 랭킹</strong>에 등록하거나 커뮤니티에서 다른 유저와 결과를 공유할 수 있습니다.
           </p>
           <p style={{ marginTop: '0.75rem' }}>

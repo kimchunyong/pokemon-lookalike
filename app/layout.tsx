@@ -10,12 +10,13 @@ const baseUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: '포켓몬 닮은꼴 찾기 | 나와 닮은 포켓몬 AI 매칭',
-    template: '%s | 포켓몬 닮은꼴 찾기',
+    default: '포켓몬 닮은꼴 테스트 | 나와 닮은 포켓몬 AI 매칭',
+    template: '%s | 포켓몬 닮은꼴 테스트',
   },
   description:
-    '포켓몬 닮은꼴 찾기로 나와 닮은 포켓몬을 AI로 확인하세요. 사진 한 장으로 닮은꼴 포켓몬을 찾고, 포켓몬 도감·닮은꼴 랭킹·커뮤니티까지. 무료·개인정보 미저장.',
+    '포켓몬 닮은꼴 테스트·포켓몬 닮은꼴 찾기로 나와 닮은 포켓몬을 AI로 확인하세요. 사진 한 장으로 닮은꼴 포켓몬을 찾고, 포켓몬 도감·닮은꼴 랭킹·커뮤니티까지. 무료·개인정보 미저장.',
   keywords: [
+    '포켓몬 닮은꼴 테스트',
     '포켓몬 닮은꼴 찾기',
     '나와 닮은 포켓몬',
     '포켓몬 유사도',
@@ -42,14 +43,14 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/images/favicon-16x16.png',
+    icon: '/images/favicon-32x32.png',
   },
   alternates: {
     canonical: baseUrl,
   },
   openGraph: {
-    title: '포켓몬 닮은꼴 찾기 | 나와 닮은 포켓몬 AI',
-    description: '사진 한 장으로 포켓몬 닮은꼴 찾기. AI가 나와 닮은 포켓몬을 찾아드려요. 무료·개인정보 미저장.',
+    title: '포켓몬 닮은꼴 테스트 | 포켓몬 닮은꼴 찾기 · 나와 닮은 포켓몬 AI',
+    description: '포켓몬 닮은꼴 테스트: 사진 한 장으로 나와 닮은 포켓몬을 AI가 찾아드려요. 무료·개인정보 미저장.',
     type: 'website',
     siteName: '포켓몬 닮은꼴 찾기',
     locale: 'ko_KR',
@@ -64,8 +65,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '포켓몬 닮은꼴 찾기 | 나와 닮은 포켓몬 AI',
-    description: '사진 한 장으로 포켓몬 닮은꼴 찾기. AI가 나와 닮은 포켓몬을 찾아드려요.',
+    title: '포켓몬 닮은꼴 테스트 | 포켓몬 닮은꼴 찾기 · 나와 닮은 포켓몬 AI',
+    description: '포켓몬 닮은꼴 테스트: 사진 한 장으로 나와 닮은 포켓몬을 AI가 찾아드려요.',
     images: ['/images/og.webp'],
   },
 }
@@ -74,15 +75,16 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: '포켓몬 닮은꼴 찾기',
-  alternateName: ['나와 닮은 포켓몬 찾기', 'Pocketmon Face'],
+  alternateName: ['포켓몬 닮은꼴 테스트', '나와 닮은 포켓몬 찾기', 'Pocketmon Face'],
   description:
-    '포켓몬 닮은꼴 찾기 서비스. 사진을 올리면 AI가 나와 닮은 포켓몬을 찾아줍니다. 포켓몬 도감, 닮은꼴 랭킹, 커뮤니티 제공. 무료이며 개인정보는 저장하지 않습니다.',
+    '포켓몬 닮은꼴 테스트·포켓몬 닮은꼴 찾기 서비스. 사진을 올리면 AI가 나와 닮은 포켓몬을 찾아줍니다. 포켓몬 도감, 닮은꼴 랭킹, 커뮤니티 제공. 무료이며 개인정보는 저장하지 않습니다.',
   url: baseUrl,
   applicationCategory: 'EntertainmentApplication',
   operatingSystem: 'Web',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'KRW' },
   inLanguage: 'ko',
   featureList: [
+    '포켓몬 닮은꼴 테스트 (이미지 업로드)',
     '포켓몬 닮은꼴 찾기 (이미지 업로드)',
     '나와 닮은 포켓몬 유사도 결과',
     '포켓몬 도감 (1·2·3·4세대 + 메가진화)',
