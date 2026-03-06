@@ -4,6 +4,11 @@ export const metadata: Metadata = {
   title: '포켓몬 도감',
   description:
     '포켓몬 닮은꼴 찾기와 함께 보는 포켓몬 도감. 1·2·3·4세대와 메가진화 검색·타입·능력치·진화 정보. 나와 닮은 포켓몬 결과 한줄 설명, 어떻게 닮은꼴을 찾는지 FAQ·AI 분석 원리 안내.',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
   keywords: [
     '포켓몬 도감',
     '포켓몬 닮은꼴',
