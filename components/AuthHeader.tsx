@@ -91,6 +91,9 @@ export default function AuthHeader() {
       <Link href="/ranking" className="header-nav-link" onClick={closeAll}>
         {t.header.navRanking}
       </Link>
+      <Link href="/faq" className="header-nav-link" onClick={closeAll}>
+        {t.header.navFaq}
+      </Link>
       {user && (
         <Link href="/my/results" className="header-nav-link" onClick={closeAll}>
           {t.header.navMyResults}

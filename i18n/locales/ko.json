@@ -87,6 +87,7 @@
     "navPokedex": "포켓몬 도감",
     "navBoard": "커뮤니티",
     "navRanking": "랭킹",
+    "navFaq": "자주 묻는 질문",
     "navMyResults": "내 결과",
     "login": "로그인",
     "loggedIn": "로그인됨",
@@ -99,6 +100,7 @@
   "footer": {
     "terms": "이용약관",
     "privacy": "개인정보처리방침",
+    "faq": "자주 묻는 질문",
     "contact": "문의하기",
     "navAria": "푸터 내비게이션"
   },

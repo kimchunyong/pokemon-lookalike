@@ -32,6 +32,10 @@ export default function Footer() {
           {t.footer.privacy}
         </Link>
         <span style={{ color: '#ddd' }}>|</span>
+        <Link href="/faq" style={{ color: '#fff', textDecoration: 'none' }}>
+          {t.footer.faq}
+        </Link>
+        <span style={{ color: '#ddd' }}>|</span>
         <Link href="/contact" style={{ color: '#fff', textDecoration: 'none' }}>
           {t.footer.contact}
         </Link>

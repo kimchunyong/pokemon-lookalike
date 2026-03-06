@@ -1034,6 +1034,77 @@ a:hover {
   line-height: 1.5;
 }
 
+/* FAQ 전용 페이지 */
+.faq-page {
+  max-width: 720px;
+  margin: 90px auto 0;
+  padding: 2rem 1.5rem;
+  min-height: calc(100vh - 201px);
+}
+
+.faq-page-inner {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.faq-page-title {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.faq-page-lead {
+  color: #aaa;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.faq-section {
+  margin-bottom: 2.5rem;
+}
+
+.faq-section h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: #ddd;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.faq-list {
+  margin: 0;
+}
+
+.faq-list dt {
+  font-weight: 600;
+  color: #e0e0e0;
+  margin-top: 1.25rem;
+}
+
+.faq-list dt:first-child {
+  margin-top: 0;
+}
+
+.faq-list dd {
+  margin: 0.25rem 0 0 0;
+  padding-left: 0;
+  color: #999;
+  line-height: 1.6;
+}
+
+.faq-list dd a {
+  color: #646cff;
+  text-decoration: underline;
+}
+
+.faq-list dd a:hover {
+  color: #8b92ff;
+}
+
+.faq-section-p {
+  color: #999;
+  line-height: 1.6;
+  margin: 0;
+}
+
 /* 포켓몬 상세: 960px 이하에서 이미지 위·정보 아래로 세로 배치 */
 @media (max-width: 960px) {
   .pokemon-detail-header {

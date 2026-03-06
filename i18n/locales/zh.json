@@ -87,6 +87,7 @@
     "navPokedex": "宝可梦图鉴",
     "navBoard": "社区",
     "navRanking": "排名",
+    "navFaq": "常见问题",
     "navMyResults": "我的结果",
     "login": "登录",
     "loggedIn": "已登录",
@@ -99,6 +100,7 @@
   "footer": {
     "terms": "使用条款",
     "privacy": "隐私政策",
+    "faq": "常见问题",
     "contact": "联系我们",
     "navAria": "页脚导航"
   },

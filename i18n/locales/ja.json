@@ -87,6 +87,7 @@
     "navPokedex": "ポケモン図鑑",
     "navBoard": "コミュニティ",
     "navRanking": "ランキング",
+    "navFaq": "よくある質問",
     "navMyResults": "マイ結果",
     "login": "ログイン",
     "loggedIn": "ログイン中",
@@ -99,6 +100,7 @@
   "footer": {
     "terms": "利用規約",
     "privacy": "プライバシー",
+    "faq": "よくある質問",
     "contact": "お問い合わせ",
     "navAria": "フッターナビゲーション"
   },
