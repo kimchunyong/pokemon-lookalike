@@ -5,14 +5,11 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 const PAGE_SIZE = 10
-const SORT_OPTIONS = [
-  { value: 'latest', label: '최신순' },
-  { value: 'likes', label: '좋아요순' },
-] as const
-
-type SortValue = (typeof SORT_OPTIONS)[number]['value']
+const SORT_VALUES = ['latest', 'likes'] as const
+type SortValue = (typeof SORT_VALUES)[number]
 
 type PostRow = {
   id: string
@@ -33,14 +30,31 @@ type UserRow = {
   raw_user_meta_data: { full_name?: string; name?: string } | null
 }
 
-function getAuthorDisplayName(u: UserRow): string {
+function getAuthorDisplayName(u: UserRow, unknownLabel: string): string {
   const nickname = (u.nickname ?? '').trim()
   if (nickname) return nickname
   const meta = u.raw_user_meta_data
-  return (meta?.full_name || meta?.name || u.email || '알 수 없음').trim() || '알 수 없음'
+  return (meta?.full_name || meta?.name || u.email || unknownLabel).trim() || unknownLabel
 }
 
-function formatRelativeOrDate(iso: string): string {
+const LOCALE_MAP: Record<string, string> = {
+  ko: 'ko-KR',
+  en: 'en-US',
+  ja: 'ja-JP',
+  zh: 'zh-CN',
+}
+
+function formatRelativeOrDate(
+  iso: string,
+  timeLabels: {
+    justNow: string
+    minutesAgo: string
+    hoursAgo: string
+    oneDayAgo: string
+    daysAgo: string
+  },
+  locale: string
+): string {
   const date = new Date(iso)
   const now = new Date()
   const diffMs = now.getTime() - date.getTime()
@@ -49,19 +63,24 @@ function formatRelativeOrDate(iso: string): string {
     const diffHours = Math.floor(diffMs / (60 * 60 * 1000))
     if (diffHours === 0) {
       const diffMins = Math.floor(diffMs / (60 * 1000))
-      if (diffMins < 1) return '방금 전'
-      return `${diffMins}분 전`
+      if (diffMins < 1) return timeLabels.justNow
+      return timeLabels.minutesAgo.replace('{{n}}', String(diffMins))
     }
-    return `${diffHours}시간 전`
+    return timeLabels.hoursAgo.replace('{{n}}', String(diffHours))
   }
-  if (diffDays === 1) return '1일 전'
-  if (diffDays < 7) return `${diffDays}일 전`
-  return date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' })
+  if (diffDays === 1) return timeLabels.oneDayAgo
+  if (diffDays < 7) return timeLabels.daysAgo.replace('{{n}}', String(diffDays))
+  return date.toLocaleDateString(LOCALE_MAP[locale] ?? 'en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
 }
 
 export default function BoardPage() {
   const router = useRouter()
   const { user, loading: authLoading } = useAuth()
+  const { t, locale } = useLanguage()
   const [posts, setPosts] = useState<PostRow[]>([])
   const [authorByUserId, setAuthorByUserId] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(true)
@@ -70,6 +89,18 @@ export default function BoardPage() {
   const [page, setPage] = useState(1)
   const [likedPostIds, setLikedPostIds] = useState<Set<string>>(new Set())
   const [togglingPostId, setTogglingPostId] = useState<string | null>(null)
+
+  const sortOptions = [
+    { value: 'latest' as const, label: t.board.sortLatest },
+    { value: 'likes' as const, label: t.board.sortLikes },
+  ]
+  const timeLabels = {
+    justNow: t.board.timeJustNow,
+    minutesAgo: t.board.timeMinutesAgo,
+    hoursAgo: t.board.timeHoursAgo,
+    oneDayAgo: t.board.timeOneDayAgo,
+    daysAgo: t.board.timeDaysAgo,
+  }
 
   useEffect(() => {
     if (!user) return
@@ -95,7 +126,7 @@ export default function BoardPage() {
           .in('id', userIds)
         const map: Record<string, string> = {}
         ;(usersData as UserRow[] | null)?.forEach((u) => {
-          map[u.id] = getAuthorDisplayName(u)
+          map[u.id] = getAuthorDisplayName(u, t.common.unknown)
         })
         setAuthorByUserId(map)
       }
@@ -185,7 +216,7 @@ export default function BoardPage() {
   if (authLoading) {
     return (
       <div style={{ padding: '1.5rem', textAlign: 'center' }}>
-        <p>불러오는 중...</p>
+        <p>{t.board.loading}</p>
       </div>
     )
   }
@@ -204,7 +235,7 @@ export default function BoardPage() {
           minHeight: 'calc(100vh - 201px)',
         }}
       >
-        <h1 style={{ marginBottom: '1rem' }}>커뮤니티</h1>
+        <h1 style={{ marginBottom: '1rem' }}>{t.board.title}</h1>
         <div
           style={{
             background: 'rgba(255,255,255,0.06)',
@@ -216,9 +247,9 @@ export default function BoardPage() {
           }}
         >
           <p style={{ marginBottom: '1.5rem', color: 'rgba(255,255,255,0.9)', lineHeight: 1.6 }}>
-            게시판을 이용하려면 로그인이 필요합니다.
+            {t.board.loginRequired}
             <br />
-            로그인 후 글을 읽고 작성할 수 있습니다.
+            {t.board.loginToReadWrite}
           </p>
           <Link
             href="/login"
@@ -233,7 +264,7 @@ export default function BoardPage() {
               fontSize: 15,
             }}
           >
-            로그인하기
+            {t.board.loginButton}
           </Link>
         </div>
       </div>
@@ -263,11 +294,11 @@ export default function BoardPage() {
         }}
       >
         <h1 style={{ fontSize: '1.5rem', fontWeight: 600 }}>
-          커뮤니티 
+          {t.board.title}{' '}
         </h1>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <select
-            aria-label="정렬 기준"
+            aria-label={t.board.ariaSort}
             value={sort}
             onChange={(e) => {
               setSort(e.target.value as SortValue)
@@ -282,7 +313,7 @@ export default function BoardPage() {
               fontSize: 14,
             }}
           >
-            {SORT_OPTIONS.map((opt) => (
+            {sortOptions.map((opt) => (
               <option key={opt.value} value={opt.value}>
                 {opt.label}
               </option>
@@ -291,8 +322,8 @@ export default function BoardPage() {
           <span style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
             <input
               type="search"
-              aria-label="게시글 검색"
-              placeholder="Search"
+              aria-label={t.board.ariaSearch}
+              placeholder={t.board.searchPlaceholder}
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value)
@@ -329,7 +360,10 @@ export default function BoardPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.2rem' }}>
         {!loading && filteredPosts.length > 0 && (
           <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', marginBottom: '0.5rem' }}>
-            총 {filteredPosts.length}건 · {currentPage} / {totalPages}페이지
+            {t.board.totalCount
+              .replace('{{count}}', String(filteredPosts.length))
+              .replace('{{current}}', String(currentPage))
+              .replace('{{total}}', String(totalPages))}
             {totalPages > 1 && ` (${startItem}-${endItem}번)`}
           </p>
         )}
@@ -356,16 +390,16 @@ export default function BoardPage() {
               fontWeight: 500,
             }}
           >
-            글쓰기
+            {t.board.write}
           </Link>
         </div>
       </div>
 
       {/* 테이블 목록 */}
       {loading ? (
-        <p>목록 불러오는 중...</p>
+        <p>{t.board.loadingList}</p>
       ) : filteredPosts.length === 0 ? (
-        <p style={{ color: 'rgba(255,255,255,0.6)', padding: '2rem 0' }}>글이 없습니다.</p>
+        <p style={{ color: 'rgba(255,255,255,0.6)', padding: '2rem 0' }}>{t.board.empty}</p>
       ) : (
         <div
           style={{
@@ -379,18 +413,18 @@ export default function BoardPage() {
             <thead>
               <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.06)' }}>
                 <th style={{ padding: '0.75rem 1rem', textAlign: 'left', fontWeight: 600, fontSize: 13 }}>No</th>
-                <th style={{ padding: '0.75rem 1rem', textAlign: 'left', fontWeight: 600, fontSize: 13 }}>제목</th>
-                <th style={{ padding: '0.75rem 1rem', textAlign: 'left', fontWeight: 600, fontSize: 13 }}>글쓴이</th>
-                <th style={{ padding: '0.75rem 1rem', textAlign: 'left', fontWeight: 600, fontSize: 13 }}>작성시간</th>
-                <th style={{ padding: '0.75rem 1rem', textAlign: 'center', fontWeight: 600, fontSize: 13 }}>조회수</th>
-                <th style={{ padding: '0.75rem 1rem', textAlign: 'center', fontWeight: 600, fontSize: 13 }}>댓글</th>
-                <th style={{ padding: '0.75rem 1rem', textAlign: 'center', fontWeight: 600, fontSize: 13 }}>좋아요</th>
+                <th style={{ padding: '0.75rem 1rem', textAlign: 'left', fontWeight: 600, fontSize: 13 }}>{t.board.headerTitle}</th>
+                <th style={{ padding: '0.75rem 1rem', textAlign: 'left', fontWeight: 600, fontSize: 13 }}>{t.board.headerAuthor}</th>
+                <th style={{ padding: '0.75rem 1rem', textAlign: 'left', fontWeight: 600, fontSize: 13 }}>{t.board.headerDate}</th>
+                <th style={{ padding: '0.75rem 1rem', textAlign: 'center', fontWeight: 600, fontSize: 13 }}>{t.board.headerViews}</th>
+                <th style={{ padding: '0.75rem 1rem', textAlign: 'center', fontWeight: 600, fontSize: 13 }}>{t.board.headerComments}</th>
+                <th style={{ padding: '0.75rem 1rem', textAlign: 'center', fontWeight: 600, fontSize: 13 }}>{t.board.headerLikes}</th>
               </tr>
             </thead>
             <tbody>
               {paginatedPosts.map((post, idx) => {
                 const no = filteredPosts.length - (currentPage - 1) * PAGE_SIZE - idx
-                const author = post.author_display_name ?? authorByUserId[post.user_id] ?? '알 수 없음'
+                const author = post.author_display_name ?? authorByUserId[post.user_id] ?? t.common.unknown
                 return (
                   <tr
                     key={post.id}
@@ -412,7 +446,7 @@ export default function BoardPage() {
                     <td style={{ padding: '0.75rem 1rem', fontWeight: 500 }}>{post.title}</td>
                     <td style={{ padding: '0.75rem 1rem', fontSize: 14, color: 'rgba(255,255,255,0.8)' }}>{author}</td>
                     <td style={{ padding: '0.75rem 1rem', fontSize: 14, color: 'rgba(255,255,255,0.6)' }}>
-                      {formatRelativeOrDate(post.created_at)}
+                      {formatRelativeOrDate(post.created_at, timeLabels, locale)}
                     </td>
                     <td style={{ padding: '0.75rem 1rem', fontSize: 14, textAlign: 'center', color: 'rgba(255,255,255,0.7)' }}>
                       {post.view_count ?? 0}
@@ -459,7 +493,7 @@ export default function BoardPage() {
       {totalPages >= 1 && filteredPosts.length > 0 && (
         <nav
           role="navigation"
-          aria-label="게시글 목록 페이지"
+          aria-label={t.board.ariaPagination}
           style={{
             display: 'flex',
             justifyContent: 'center',
@@ -473,7 +507,7 @@ export default function BoardPage() {
             type="button"
             onClick={() => goToPage(currentPage - 1)}
             disabled={currentPage <= 1}
-            aria-label="이전 페이지"
+            aria-label={t.board.ariaPrevPage}
             style={{
               padding: '0.35rem 0.5rem',
               border: '1px solid rgba(255,255,255,0.2)',
@@ -510,7 +544,7 @@ export default function BoardPage() {
               key={p}
               type="button"
               onClick={() => goToPage(p)}
-              aria-label={`${p}페이지`}
+              aria-label={t.board.ariaPage.replace('{{page}}', String(p))}
               aria-current={p === currentPage ? 'page' : undefined}
               style={{
                 padding: '0.35rem 0.6rem',
@@ -548,7 +582,7 @@ export default function BoardPage() {
             type="button"
             onClick={() => goToPage(currentPage + 1)}
             disabled={currentPage >= totalPages}
-            aria-label="다음 페이지"
+            aria-label={t.board.ariaNextPage}
             style={{
               padding: '0.35rem 0.5rem',
               border: '1px solid rgba(255,255,255,0.2)',

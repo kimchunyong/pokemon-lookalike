@@ -44,7 +44,7 @@ export default function KakaoShareButton({ pokemon }: KakaoShareButtonProps) {
     }
 
     if (!window.Kakao.isInitialized()) {
-      alert('카카오톡 SDK 초기화에 실패했습니다.')
+      alert(t.myResults.kakaoInitFail)
       return
     }
 
@@ -63,7 +63,7 @@ export default function KakaoShareButton({ pokemon }: KakaoShareButtonProps) {
       },
       buttons: [
         {
-          title: '결과 확인하기',
+          title: t.myResults.viewResult,
           link: {
             mobileWebUrl: currentUrl,
             webUrl: currentUrl,

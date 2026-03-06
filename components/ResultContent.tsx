@@ -106,7 +106,7 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
         const meta = (profile as { raw_user_meta_data?: { full_name?: string; name?: string } | null }).raw_user_meta_data
         const email = (profile as { email?: string | null }).email
         if (nickname) displayName = nickname
-        else displayName = (meta?.full_name || meta?.name || email || '알 수 없음').trim() || '알 수 없음'
+        else displayName = (meta?.full_name || meta?.name || email || t.common.unknown).trim() || t.common.unknown
       }
     } catch {
       // keep getAuthorDisplayNameFromUser fallback
@@ -133,7 +133,7 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
       { onConflict: 'user_id' }
     )
     setRankingStatus(error ? 'error' : 'registered')
-  }, [user, pokemon, similarity])
+  }, [user, pokemon, similarity, t])
 
   if (!pokemon) {
     return (
@@ -203,10 +203,10 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
                     fontSize: '0.9em',
                   }}
                 >
-                  {saveStatus === 'idle' && '내 결과 저장'}
-                  {saveStatus === 'saving' && '저장 중...'}
-                  {saveStatus === 'saved' && '저장 완료 ✓'}
-                  {saveStatus === 'error' && '저장 실패 (재시도)'}
+                  {saveStatus === 'idle' && t.resultContent.saveToMyResults}
+                  {saveStatus === 'saving' && t.resultContent.saving}
+                  {saveStatus === 'saved' && t.resultContent.saved}
+                  {saveStatus === 'error' && t.resultContent.saveError}
                 </button>
                 <button
                   type="button"
@@ -230,10 +230,10 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
                     fontSize: '0.9em',
                   }}
                 >
-                  {rankingStatus === 'idle' && '랭킹전 등록'}
-                  {rankingStatus === 'registering' && '등록 중...'}
-                  {rankingStatus === 'registered' && '랭킹 등록 완료 ✓'}
-                  {rankingStatus === 'error' && '등록 실패 (재시도)'}
+                  {rankingStatus === 'idle' && t.resultContent.registerRanking}
+                  {rankingStatus === 'registering' && t.resultContent.registering}
+                  {rankingStatus === 'registered' && t.resultContent.registeredDone}
+                  {rankingStatus === 'error' && t.resultContent.registerError}
                 </button>
               </>
             ) : (

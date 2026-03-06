@@ -3,9 +3,11 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useAuth } from '@/contexts/AuthContext'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function LoginPage() {
   const { signInWithGoogle } = useAuth()
+  const { t } = useLanguage()
   const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -23,8 +25,8 @@ export default function LoginPage() {
 
   return (
     <div style={{ padding: '2rem', maxWidth: 400, margin: '0 auto' }}>
-      <h1>로그인</h1>
-      <p style={{ color: '#666', marginBottom: '1.5rem' }}>Google 계정으로 로그인합니다.</p>
+      <h1>{t.login.title}</h1>
+      <p style={{ color: '#666', marginBottom: '1.5rem' }}>{t.login.description}</p>
 
       <button
         type="button"
@@ -63,7 +65,7 @@ export default function LoginPage() {
             d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
           />
         </svg>
-        {loading ? '이동 중...' : 'Google로 로그인'}
+        {loading ? t.login.buttonLoading : t.login.button}
       </button>
 
       {errorMessage && (
@@ -72,7 +74,7 @@ export default function LoginPage() {
 
       <p style={{ marginTop: '1.5rem', fontSize: 14 }}>
         <Link href="/" style={{ color: '#1976d2' }}>
-          ← 홈으로
+          {t.login.backHome}
         </Link>
       </p>
     </div>

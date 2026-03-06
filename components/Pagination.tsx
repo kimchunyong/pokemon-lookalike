@@ -1,5 +1,7 @@
 'use client'
 
+import { useLanguage } from '@/contexts/LanguageContext'
+
 interface PaginationProps {
   currentPage: number
   totalPages: number
@@ -7,6 +9,7 @@ interface PaginationProps {
 }
 
 export default function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+  const { t } = useLanguage()
   const getPageNumbers = () => {
     const pages: (number | string)[] = []
     const maxVisible = 5
@@ -53,7 +56,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className="pagination-button"
-        aria-label="이전 페이지"
+        aria-label={t.pagination.ariaPrev}
       >
         ‹
       </button>
@@ -72,7 +75,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
             key={page}
             onClick={() => onPageChange(page as number)}
             className={`pagination-button ${currentPage === page ? 'active' : ''}`}
-            aria-label={`페이지 ${page}`}
+            aria-label={t.pagination.ariaPage.replace('{{page}}', String(page))}
             aria-current={currentPage === page ? 'page' : undefined}
           >
             {page}
@@ -84,7 +87,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         className="pagination-button"
-        aria-label="다음 페이지"
+        aria-label={t.pagination.ariaNext}
       >
         ›
       </button>

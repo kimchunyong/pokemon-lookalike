@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { Suspense } from 'react'
 import { POKEMON_LIST } from '../../../data/pokemon'
 import ResultContent from '../../../components/ResultContent'
+import CommonLoadingFallback from '../../../components/CommonLoadingFallback'
 import { notFound } from 'next/navigation'
 
 interface Props {
@@ -54,7 +55,7 @@ export default async function ResultPage({ params }: Props) {
   }
 
   return (
-    <Suspense fallback={<div style={{ padding: '2rem', textAlign: 'center', marginTop: '90px' }}>불러오는 중...</div>}>
+    <Suspense fallback={<CommonLoadingFallback />}>
       <ResultContent pokemon={pokemon} />
     </Suspense>
   )

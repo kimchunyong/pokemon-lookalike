@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
+import { useLanguage } from '@/contexts/LanguageContext'
 import { uploadPostImage, deletePostImage } from '@/lib/supabase/uploadPostImage'
 import { getAuthorDisplayNameFromUser } from '@/lib/getAuthorDisplayName'
 
@@ -16,9 +17,14 @@ type Post = {
   image_url: string | null
 }
 
+function EditPostFallback() {
+  const { t } = useLanguage()
+  return <div style={{ padding: '2rem' }}>{t.common.loadingShort}</div>
+}
+
 export default function EditPostPage() {
   return (
-    <Suspense fallback={<div style={{ padding: '2rem' }}>불러오는 중...</div>}>
+    <Suspense fallback={<EditPostFallback />}>
       <EditPostContent />
     </Suspense>
   )
@@ -28,6 +34,7 @@ function EditPostContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const { user, loading: authLoading } = useAuth()
+  const { t } = useLanguage()
   const id = searchParams.get('id')
   const [post, setPost] = useState<Post | null>(null)
   const [title, setTitle] = useState('')
@@ -83,19 +90,19 @@ function EditPostContent() {
     const trimmedContent = content.trim()
 
     if (trimmedTitle.length < TITLE_MIN) {
-      setError('제목을 입력해 주세요.')
+      setError(t.board.errorTitleRequired)
       return
     }
     if (trimmedTitle.length > TITLE_MAX) {
-      setError(`제목은 ${TITLE_MAX}자 이하여야 합니다.`)
+      setError(t.board.errorTitleMax.replace('{{max}}', String(TITLE_MAX)))
       return
     }
     if (trimmedContent.length < CONTENT_MIN) {
-      setError('내용을 입력해 주세요.')
+      setError(t.board.errorContentRequired)
       return
     }
     if (trimmedContent.length > CONTENT_MAX) {
-      setError(`내용은 ${CONTENT_MAX.toLocaleString()}자 이하여야 합니다.`)
+      setError(t.board.errorContentMax.replace('{{max}}', String(CONTENT_MAX)))
       return
     }
 
@@ -144,16 +151,16 @@ function EditPostContent() {
     router.replace(`/board/detail?id=${id}`)
   }
 
-  if (loading) return <div style={{ padding: '2rem' }}>불러오는 중...</div>
-  if (!id || !post) return <div style={{ padding: '2rem' }}>글이 없습니다.</div>
+  if (loading) return <div style={{ padding: '2rem' }}>{t.common.loadingShort}</div>
+  if (!id || !post) return <div style={{ padding: '2rem' }}>{t.board.empty}</div>
   if (user && post.user_id !== user.id) return null
 
   return (
     <div style={{ padding: '1.5rem', maxWidth: 600, margin: '0 auto' }}>
-      <h1>글 수정</h1>
+      <h1>{t.board.editTitle}</h1>
       <form onSubmit={handleSubmit} style={{ marginTop: '1rem' }}>
         <label htmlFor="title" style={{ display: 'block', marginBottom: 4, fontWeight: 500 }}>
-          제목
+          {t.board.fieldTitle}
         </label>
         <input
           id="title"
@@ -173,13 +180,13 @@ function EditPostContent() {
           }}
         />
         <label style={{ display: 'block', marginBottom: 4, fontWeight: 500 }}>
-          대표 이미지 (1장)
+          {t.board.fieldImage}
         </label>
         {imageUrl && !removeImage && (
           <div style={{ marginBottom: '0.5rem' }}>
             <img
               src={imageUrl}
-              alt="대표 이미지"
+              alt=""
               style={{ maxWidth: 200, maxHeight: 200, objectFit: 'cover', borderRadius: 8 }}
             />
             <button
@@ -197,7 +204,7 @@ function EditPostContent() {
                 cursor: 'pointer',
               }}
             >
-              이미지 제거
+              {t.board.imageRemove}
             </button>
           </div>
         )}
@@ -221,18 +228,18 @@ function EditPostContent() {
                 disabled={submitting}
                 style={{ fontSize: 14, color: '#1976d2', background: 'none', border: 'none', cursor: 'pointer' }}
               >
-                취소 (원래 이미지 유지)
+                {t.board.imageKeep}
               </button>
             )}
           </>
         )}
         {imageFile && (
           <p style={{ fontSize: 14, color: '#666', marginBottom: '1rem' }}>
-            새로 선택됨: {imageFile.name}
+            {t.board.imageSelected.replace('{{name}}', imageFile.name)}
           </p>
         )}
         <label htmlFor="content" style={{ display: 'block', marginBottom: 4, fontWeight: 500 }}>
-          내용
+          {t.board.fieldContent}
         </label>
         <textarea
           id="content"
@@ -266,7 +273,7 @@ function EditPostContent() {
               cursor: submitting ? 'not-allowed' : 'pointer',
             }}
           >
-            {submitting ? '저장 중...' : '저장'}
+            {submitting ? t.board.saving : t.board.save}
           </button>
           <Link
             href={`/board/detail?id=${id}`}
@@ -278,13 +285,13 @@ function EditPostContent() {
               color: '#fff',
             }}
           >
-            취소
+            {t.board.cancel}
           </Link>
         </div>
       </form>
       <p style={{ marginTop: '1rem', fontSize: 14 }}>
         <Link href="/board" style={{ color: '#1976d2' }}>
-          ← 목록
+          {t.board.backToList}
         </Link>
       </p>
     </div>

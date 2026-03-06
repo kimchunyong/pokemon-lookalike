@@ -5,11 +5,13 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
+import { useLanguage } from '@/contexts/LanguageContext'
 import { uploadPostImage } from '@/lib/supabase/uploadPostImage'
 import { getAuthorDisplayNameFromUser } from '@/lib/getAuthorDisplayName'
 
 export default function NewPostPage() {
   const { user, loading: authLoading } = useAuth()
+  const { t } = useLanguage()
   const router = useRouter()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
@@ -52,19 +54,19 @@ export default function NewPostPage() {
     const trimmedContent = content.trim()
 
     if (trimmedTitle.length < TITLE_MIN) {
-      setError('제목을 입력해 주세요.')
+      setError(t.board.errorTitleRequired)
       return
     }
     if (trimmedTitle.length > TITLE_MAX) {
-      setError(`제목은 ${TITLE_MAX}자 이하여야 합니다.`)
+      setError(t.board.errorTitleMax.replace('{{max}}', String(TITLE_MAX)))
       return
     }
     if (trimmedContent.length < CONTENT_MIN) {
-      setError('내용을 입력해 주세요.')
+      setError(t.board.errorContentRequired)
       return
     }
     if (trimmedContent.length > CONTENT_MAX) {
-      setError(`내용은 ${CONTENT_MAX.toLocaleString()}자 이하여야 합니다.`)
+      setError(t.board.errorContentMax.replace('{{max}}', String(CONTENT_MAX)))
       return
     }
 
@@ -112,26 +114,26 @@ export default function NewPostPage() {
   if (authLoading || !user) {
     return (
       <div style={{ padding: '2rem', textAlign: 'center' }}>
-        <p>로그인이 필요합니다.</p>
+        <p>{t.profile.loginRequired}</p>
       </div>
     )
   }
 
   return (
     <div style={{ padding: '1.5rem', maxWidth: 600, margin: '0 auto' }}>
-      <h1>글쓰기</h1>
+      <h1>{t.board.newTitle}</h1>
       {authorPreview && (
         <p style={{ color: '#888', fontSize: 14, marginTop: '0.25rem', marginBottom: '1rem' }}>
-          작성자: <strong style={{ color: 'inherit' }}>{authorPreview}</strong>
+          {t.board.authorLabel} <strong style={{ color: 'inherit' }}>{authorPreview}</strong>
           {' · '}
           <Link href="/profile" style={{ color: '#1976d2', fontSize: 13 }}>
-            프로필에서 변경
+            {t.board.changeInProfile}
           </Link>
         </p>
       )}
       <form onSubmit={handleSubmit} style={{ marginTop: '1rem' }}>
         <label htmlFor="title" style={{ display: 'block', marginBottom: 4, fontWeight: 500 }}>
-          제목
+          {t.board.fieldTitle}
         </label>
         <input
           id="title"
@@ -151,7 +153,7 @@ export default function NewPostPage() {
           }}
         />
         <label style={{ display: 'block', marginBottom: 4, fontWeight: 500 }}>
-          대표 이미지 (1장, 선택)
+          {t.board.fieldImageOptional}
         </label>
         <input
           ref={fileInputRef}
@@ -163,11 +165,13 @@ export default function NewPostPage() {
         />
         {imageFile && (
           <p style={{ fontSize: 14, color: '#666', marginBottom: '1rem' }}>
-            선택됨: {imageFile.name} ({(imageFile.size / 1024).toFixed(1)} KB)
+            {t.board.imageChosen
+              .replace('{{name}}', imageFile.name)
+              .replace('{{size}}', (imageFile.size / 1024).toFixed(1))}
           </p>
         )}
         <label htmlFor="content" style={{ display: 'block', marginBottom: 4, fontWeight: 500 }}>
-          내용
+          {t.board.fieldContent}
         </label>
         <textarea
           id="content"
@@ -201,7 +205,7 @@ export default function NewPostPage() {
               cursor: submitting ? 'not-allowed' : 'pointer',
             }}
           >
-            {submitting ? '저장 중...' : '등록'}
+            {submitting ? t.board.submitting : t.board.submit}
           </button>
           <Link
             href="/board"
@@ -213,13 +217,13 @@ export default function NewPostPage() {
               color: '#fff',
             }}
           >
-            취소
+            {t.board.cancel}
           </Link>
         </div>
       </form>
       <p style={{ marginTop: '1rem', fontSize: 14 }}>
         <Link href="/board" style={{ color: '#1976d2' }}>
-          ← 목록
+          {t.board.backToList}
         </Link>
       </p>
     </div>

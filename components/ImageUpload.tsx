@@ -116,7 +116,7 @@ export default function ImageUpload({ onImageSelect }: ImageUploadProps) {
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
         >
-          <img src={preview} alt="업로드된 이미지" />
+          <img src={preview} alt={t.imageUpload.altUploaded} />
           <div className="preview-actions">
             <button type="button" onClick={handleClick}>
               {t.imageCompare.changeImage}

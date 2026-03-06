@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
+import { useLanguage } from '@/contexts/LanguageContext'
 import { POKEMON_LIST } from '@/data/pokemon'
 
 declare global {
@@ -31,19 +32,16 @@ interface GroupedResult {
 const ARTWORK_URL = (id: number) =>
   `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
 
-const emotionMap: Record<string, string> = {
-  happy: '행복',
-  sad: '슬픔',
-  angry: '분노',
-  surprised: '놀람',
-  disgusted: '혐오',
-  fearful: '공포',
-  neutral: '무표정',
+const LOCALE_MAP: Record<string, string> = {
+  ko: 'ko-KR',
+  en: 'en-US',
+  ja: 'ja-JP',
+  zh: 'zh-CN',
 }
 
-const formatDate = (iso: string) => {
+const formatDate = (iso: string, locale: string) => {
   const d = new Date(iso)
-  return d.toLocaleDateString('ko-KR', {
+  return d.toLocaleDateString(LOCALE_MAP[locale] ?? 'en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -52,10 +50,10 @@ const formatDate = (iso: string) => {
   })
 }
 
-const groupByDate = (rows: ResultRow[]): GroupedResult[] => {
+const groupByDate = (rows: ResultRow[], locale: string): GroupedResult[] => {
   const map = new Map<string, ResultRow[]>()
   rows.forEach((r) => {
-    const key = new Date(r.created_at).toLocaleDateString('ko-KR', {
+    const key = new Date(r.created_at).toLocaleDateString(LOCALE_MAP[locale] ?? 'en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -69,6 +67,7 @@ const groupByDate = (rows: ResultRow[]): GroupedResult[] => {
 
 export default function MyResultsPage() {
   const { user, loading: authLoading } = useAuth()
+  const { t, locale } = useLanguage()
   const router = useRouter()
   const [results, setResults] = useState<ResultRow[]>([])
   const [loading, setLoading] = useState(true)
@@ -119,7 +118,7 @@ export default function MyResultsPage() {
       if (key) window.Kakao.init(key)
     }
     if (!window.Kakao?.isInitialized()) {
-      alert('카카오톡 SDK 초기화에 실패했습니다.')
+      alert(t.myResults.kakaoInitFail)
       return
     }
 
@@ -137,12 +136,12 @@ export default function MyResultsPage() {
       },
       buttons: [
         {
-          title: '나도 해보기',
+          title: t.myResults.tryMe,
           link: { mobileWebUrl: `${origin}/image-compare`, webUrl: `${origin}/image-compare` },
         },
       ],
     })
-  }, [])
+  }, [t])
 
   const handleRankingRegister = useCallback(
     async (r: ResultRow) => {
@@ -177,15 +176,15 @@ export default function MyResultsPage() {
         { onConflict: 'user_id' }
       )
       if (error) {
-        alert('랭킹 등록에 실패했습니다.')
+        alert(t.myResults.rankingRegisterFail)
       } else {
         setCurrentRanking({ pokemon_id: r.pokemon_id, similarity: r.similarity })
-        alert('랭킹전에 등록되었습니다!')
+        alert(t.myResults.rankingRegisterSuccess)
         router.push('/ranking')
       }
       setRankingId(null)
     },
-    [user, router]
+    [user, router, t]
   )
 
   const isAlreadyRegistered = (r: ResultRow) =>
@@ -197,7 +196,7 @@ export default function MyResultsPage() {
     rankingId === r.id || isAlreadyRegistered(r)
 
   const handleDelete = async (id: string) => {
-    if (!confirm('이 결과를 삭제하시겠습니까?')) return
+    if (!confirm(t.myResults.deleteConfirm)) return
     setDeleting(id)
     const supabase = createClient()
     await supabase.from('user_results').delete().eq('id', id)
@@ -207,22 +206,33 @@ export default function MyResultsPage() {
 
   if (authLoading || loading) {
     return (
-      <div style={{ padding: '2rem', textAlign: 'center', marginTop: '90px' }}>불러오는 중...</div>
+      <div style={{ padding: '2rem', textAlign: 'center', marginTop: '90px' }}>
+        {t.common.loadingShort}
+      </div>
     )
   }
 
-  const grouped = groupByDate(results)
+  const grouped = groupByDate(results, locale)
+  const emotionMap: Record<string, string> = {
+    happy: t.myResults.emotion.happy,
+    sad: t.myResults.emotion.sad,
+    angry: t.myResults.emotion.angry,
+    surprised: t.myResults.emotion.surprised,
+    disgusted: t.myResults.emotion.disgusted,
+    fearful: t.myResults.emotion.fearful,
+    neutral: t.myResults.emotion.neutral,
+  }
 
   return (
     <main style={{ padding: '2rem', maxWidth: 700, margin: '90px auto 0' }}>
-      <h1 style={{ marginBottom: '0.5rem' }}>내 닮은꼴 히스토리</h1>
+      <h1 style={{ marginBottom: '0.5rem' }}>{t.myResults.title}</h1>
       <p style={{ color: '#888', fontSize: '0.9em', marginBottom: '1.5rem' }}>
-        최근 100건까지 표시됩니다.
+        {t.myResults.subtitle}
       </p>
 
       {results.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '3rem 0', color: '#999' }}>
-          <p style={{ fontSize: '1.1em', marginBottom: '1rem' }}>아직 저장된 결과가 없습니다.</p>
+          <p style={{ fontSize: '1.1em', marginBottom: '1rem' }}>{t.myResults.empty}</p>
           <Link
             href="/image-compare"
             style={{
@@ -230,7 +240,7 @@ export default function MyResultsPage() {
               textDecoration: 'underline',
             }}
           >
-            닮은꼴 분석하러 가기 →
+            {t.myResults.goAnalyze} →
           </Link>
         </div>
       ) : (
@@ -277,12 +287,12 @@ export default function MyResultsPage() {
                       {r.pokemon_name}
                     </div>
                     <div style={{ fontSize: '0.82em', color: '#888' }}>
-                      유사도 {(r.similarity * 100).toFixed(1)}%
+                      {t.myResults.similarityLabel} {(r.similarity * 100).toFixed(1)}%
                       {r.emotion_probability != null &&
-                        ` · 감정 확률 ${(r.emotion_probability * 100).toFixed(0)}%`}
+                        ` · ${t.myResults.emotionProbability} ${(r.emotion_probability * 100).toFixed(0)}%`}
                     </div>
                     <div style={{ fontSize: '0.75em', color: '#aaa' }}>
-                      {formatDate(r.created_at)}
+                      {formatDate(r.created_at, locale)}
                     </div>
                   </div>
                   <div style={{ display: 'flex', gap: '0.4rem', flexShrink: 0 }}>
@@ -309,7 +319,7 @@ export default function MyResultsPage() {
                         width={14}
                         height={14}
                       />
-                      공유
+                      {t.myResults.share}
                     </button>
                     <button
                       type="button"
@@ -326,7 +336,11 @@ export default function MyResultsPage() {
                         fontWeight: 600,
                       }}
                     >
-                      {rankingId === r.id ? '등록 중...' : isAlreadyRegistered(r) ? '등록 완료' : '랭킹 등록'}
+                      {rankingId === r.id
+                        ? t.myResults.registering
+                        : isAlreadyRegistered(r)
+                          ? t.myResults.registered
+                          : t.resultContent.registerRanking}
                     </button>
                     <button
                       type="button"
@@ -342,7 +356,7 @@ export default function MyResultsPage() {
                         color: '#c62828',
                       }}
                     >
-                      {deleting === r.id ? '...' : '삭제'}
+                      {deleting === r.id ? '...' : t.myResults.delete}
                     </button>
                   </div>
                 </div>

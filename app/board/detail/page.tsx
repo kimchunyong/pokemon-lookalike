@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
+import { useLanguage } from '@/contexts/LanguageContext'
 import { getAuthorDisplayNameFromUser, getAuthorDisplayNameFromUserRow } from '@/lib/getAuthorDisplayName'
 
 type Post = {
@@ -30,9 +31,14 @@ type Comment = {
   created_at: string
 }
 
+function BoardDetailFallback() {
+  const { t } = useLanguage()
+  return <div style={{ padding: '2rem' }}>{t.common.loadingShort}</div>
+}
+
 export default function PostDetailPage() {
   return (
-    <Suspense fallback={<div style={{ padding: '2rem' }}>불러오는 중...</div>}>
+    <Suspense fallback={<BoardDetailFallback />}>
       <PostDetailContent />
     </Suspense>
   )
@@ -42,6 +48,7 @@ function PostDetailContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const { user } = useAuth()
+  const { t } = useLanguage()
   const id = searchParams.get('id')
   const [post, setPost] = useState<Post | null>(null)
   const [authorDisplayName, setAuthorDisplayName] = useState<string | null>(null)
@@ -112,7 +119,7 @@ function PostDetailContent() {
           : (u?.raw_user_meta_data?.full_name ||
               u?.raw_user_meta_data?.name ||
               u?.email ||
-              '').trim() || '알 수 없음'
+              '').trim() || t.common.unknown
         setAuthorDisplayName(displayName)
       } else {
         setAuthorDisplayName(p.author_display_name)
@@ -130,10 +137,10 @@ function PostDetailContent() {
       fetchComments(id)
     }
     fetchPost()
-  }, [id, user, fetchComments])
+  }, [id, user, fetchComments, t])
 
   const handleDelete = async () => {
-    if (!id || !confirm('이 글을 삭제할까요?')) return
+    if (!id || !confirm(t.board.deletePostConfirm)) return
     setDeleting(true)
     const supabase = createClient()
     const { error } = await supabase.from('posts').delete().eq('id', id)
@@ -192,7 +199,7 @@ function PostDetailContent() {
   }
 
   const handleCommentDelete = async (commentId: string) => {
-    if (!id || !confirm('이 댓글을 삭제할까요?')) return
+    if (!id || !confirm(t.board.deleteCommentConfirm)) return
     setDeletingCommentId(commentId)
     const supabase = createClient()
     const { error } = await supabase.from('post_comments').delete().eq('id', commentId)
@@ -216,8 +223,8 @@ function PostDetailContent() {
 
   const isAuthor = user && post && post.user_id === user.id
 
-  if (loading) return <div style={{ padding: '2rem' }}>불러오는 중...</div>
-  if (!id || !post) return <div style={{ padding: '2rem' }}>글이 없습니다.</div>
+  if (loading) return <div style={{ padding: '2rem' }}>{t.common.loadingShort}</div>
+  if (!id || !post) return <div style={{ padding: '2rem' }}>{t.board.empty}</div>
 
   return (
     <main
@@ -233,10 +240,10 @@ function PostDetailContent() {
       <article>
       <h1 style={{ marginBottom: '0.5rem' }}>{post.title}</h1>
       <p style={{ color: '#666', fontSize: 14, marginBottom: '0.5rem' }}>
-        작성자: {post.author_display_name ?? authorDisplayName ?? '알 수 없음'}
+        {t.board.detailAuthor} {post.author_display_name ?? authorDisplayName ?? t.common.unknown}
         {' · '}
         {formatDate(post.updated_at !== post.created_at ? post.updated_at : post.created_at)}
-        {isAuthor && ' · 본인 글'}
+        {isAuthor && ` · ${t.board.myPost}`}
       </p>
       {user && (
         <div style={{ marginBottom: '1rem' }}>
@@ -259,7 +266,7 @@ function PostDetailContent() {
             }}
           >
             <span aria-hidden>{liked ? '♥' : '♡'}</span>
-            <span>좋아요 {post.like_count ?? 0}</span>
+            <span>{t.board.likes.replace('{{count}}', String(post.like_count ?? 0))}</span>
           </button>
         </div>
       )}
@@ -304,7 +311,7 @@ function PostDetailContent() {
               fontSize: 14,
             }}
           >
-            수정
+            {t.board.edit}
           </Link>
           <button
             type="button"
@@ -320,7 +327,7 @@ function PostDetailContent() {
               fontSize: 14,
             }}
           >
-            {deleting ? '삭제 중...' : '삭제'}
+            {deleting ? t.board.deleting : t.board.delete}
           </button>
         </div>
       )}
@@ -336,7 +343,7 @@ function PostDetailContent() {
         }}
       >
         <h2 style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '1rem' }}>
-          댓글 {comments.length > 0 && <span style={{ color: '#1976d2' }}>{comments.length}</span>}
+          {t.board.comments} {comments.length > 0 && <span style={{ color: '#1976d2' }}>{comments.length}</span>}
         </h2>
 
         {/* 댓글 작성 폼 */}
@@ -352,7 +359,7 @@ function PostDetailContent() {
             <textarea
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
-              placeholder="댓글을 입력하세요 (최대 1000자)"
+              placeholder={t.board.commentPlaceholder}
               maxLength={1000}
               rows={3}
               style={{
@@ -387,25 +394,25 @@ function PostDetailContent() {
                 height: 'fit-content',
               }}
             >
-              {commentSubmitting ? '등록 중...' : '등록'}
+              {commentSubmitting ? t.board.commentSubmitting : t.board.commentSubmit}
             </button>
           </div>
         ) : (
           <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', marginBottom: '1.5rem' }}>
-            댓글을 작성하려면{' '}
+            {t.board.commentLoginRequired}{' '}
             <Link href="/login" style={{ color: '#1976d2' }}>
-              로그인
+              {t.board.commentLoginLink}
             </Link>
-            이 필요합니다.
+            {t.board.commentLoginSuffix}
           </p>
         )}
 
         {/* 댓글 목록 */}
         {commentsLoading ? (
-          <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)' }}>댓글 불러오는 중...</p>
+          <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)' }}>{t.board.loadingComments}</p>
         ) : comments.length === 0 ? (
           <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)', padding: '1rem 0' }}>
-            아직 댓글이 없습니다. 첫 댓글을 남겨보세요!
+            {t.board.noComments}
           </p>
         ) : (
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -424,7 +431,7 @@ function PostDetailContent() {
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
                     <span style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.9)' }}>
-                      {comment.author_display_name ?? '알 수 없음'}
+                      {comment.author_display_name ?? t.common.unknown}
                     </span>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                       <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>
@@ -445,7 +452,7 @@ function PostDetailContent() {
                             cursor: isDeleting ? 'not-allowed' : 'pointer',
                           }}
                         >
-                          {isDeleting ? '삭제 중' : '삭제'}
+                          {isDeleting ? t.board.deleting : t.board.delete}
                         </button>
                       )}
                     </div>
@@ -462,7 +469,7 @@ function PostDetailContent() {
 
       <p style={{ fontSize: 14, marginTop: '1.5rem' }}>
         <Link href="/board" style={{ color: '#1976d2' }}>
-          ← 목록
+          {t.board.backToList}
         </Link>
       </p>
     </main>

@@ -1,11 +1,10 @@
-import Link from 'next/link'
+'use client'
 
-export const metadata = {
-  title: '문의하기',
-  description: 'Pocketmon Face 문의',
-}
+import Link from 'next/link'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function ContactPage() {
+  const { t } = useLanguage()
   return (
     <div
       style={{
@@ -15,9 +14,9 @@ export default function ContactPage() {
         minHeight: 'calc(100vh - 201px)',
       }}
     >
-      <h1 style={{ marginBottom: '1rem', fontSize: '1.5rem' }}>문의하기</h1>
+      <h1 style={{ marginBottom: '1rem', fontSize: '1.5rem' }}>{t.contact.title}</h1>
       <p style={{ lineHeight: 1.7, color: 'rgba(255,255,255,0.9)', marginBottom: '1rem' }}>
-        Pocketmon Face 서비스에 대한 문의가 있으시면 아래 이메일로 연락해 주세요.
+        {t.contact.description}
       </p>
       <div
         style={{
@@ -29,18 +28,18 @@ export default function ContactPage() {
         }}
       >
         <p style={{ margin: 0, color: 'rgba(255,255,255,0.9)' }}>
-          <strong>이메일</strong>:{' '}
+          <strong>{t.contact.email}</strong>:{' '}
           <a href="mailto:lovemy5853@gmail.com" style={{ color: '#1976d2' }}>
             lovemy5853@gmail.com
           </a>
         </p>
         <p style={{ margin: '0.5rem 0 0', fontSize: 14, color: 'rgba(255,255,255,0.7)' }}>
-          운영 시간 내 순차적으로 답변드리겠습니다.
+          {t.contact.replyNote}
         </p>
       </div>
       <p style={{ fontSize: 14 }}>
         <Link href="/" style={{ color: '#1976d2' }}>
-          ← 홈
+          {t.contact.backHome}
         </Link>
       </p>
     </div>

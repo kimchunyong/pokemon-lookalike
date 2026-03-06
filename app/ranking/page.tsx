@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 const ARTWORK_URL = (id: number) =>
   `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
@@ -30,7 +31,15 @@ const CARD_BORDER = [
   'rgba(205, 127, 50, 0.4)',
 ] as const
 
-function TopThreeCard({ row, rank }: { row: RankingRow; rank: number }) {
+function TopThreeCard({
+  row,
+  rank,
+  unknownLabel,
+}: {
+  row: RankingRow
+  rank: number
+  unknownLabel: string
+}) {
   const isFirst = rank === 0
   return (
     <div
@@ -89,7 +98,7 @@ function TopThreeCard({ row, rank }: { row: RankingRow; rank: number }) {
             marginBottom: 4,
           }}
         >
-          {row.display_name ?? '알 수 없음'}
+          {row.display_name ?? unknownLabel}
         </div>
         <div
           style={{
@@ -117,7 +126,15 @@ function TopThreeCard({ row, rank }: { row: RankingRow; rank: number }) {
   )
 }
 
-function RankingListItem({ row, rank }: { row: RankingRow; rank: number }) {
+function RankingListItem({
+  row,
+  rank,
+  unknownLabel,
+}: {
+  row: RankingRow
+  rank: number
+  unknownLabel: string
+}) {
   return (
     <div
       style={{
@@ -152,7 +169,7 @@ function RankingListItem({ row, rank }: { row: RankingRow; rank: number }) {
       />
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ fontWeight: 600, fontSize: '0.95em', color: '#fff' }}>
-          {row.display_name ?? '알 수 없음'}
+          {row.display_name ?? unknownLabel}
         </div>
         <div style={{ fontSize: '0.78em', color: '#777' }}>{row.pokemon_name}</div>
       </div>
@@ -171,6 +188,7 @@ function RankingListItem({ row, rank }: { row: RankingRow; rank: number }) {
 }
 
 export default function RankingPage() {
+  const { t } = useLanguage()
   const [list, setList] = useState<RankingRow[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -193,7 +211,7 @@ export default function RankingPage() {
   if (loading) {
     return (
       <main style={{ padding: '2rem', textAlign: 'center', marginTop: '90px' }}>
-        <p>랭킹을 불러오는 중...</p>
+        <p>{t.ranking.loading}</p>
       </main>
     )
   }
@@ -204,7 +222,7 @@ export default function RankingPage() {
   return (
     <main style={{ padding: '1.5rem', maxWidth: 520, margin: '90px auto 2rem', minHeight: 'calc(100vh - 314px)' }}>
       <h1 style={{ marginBottom: '0.25rem', color: '#fff', textAlign: 'center' }}>
-        닮은꼴 랭킹
+        {t.ranking.title}
       </h1>
       <p
         style={{
@@ -214,7 +232,7 @@ export default function RankingPage() {
           textAlign: 'center',
         }}
       >
-        유사도가 높은 순으로 정렬됩니다
+        {t.ranking.subtitle}
       </p>
 
       {list.length === 0 ? (
@@ -227,12 +245,12 @@ export default function RankingPage() {
             borderRadius: 12,
           }}
         >
-          <p style={{ fontSize: '1em', marginBottom: '0.5rem' }}>아직 등록된 기록이 없습니다.</p>
+          <p style={{ fontSize: '1em', marginBottom: '0.5rem' }}>{t.ranking.emptyTitle}</p>
           <p style={{ fontSize: '0.9em' }}>
             <Link href="/image-compare" style={{ color: '#646cff', textDecoration: 'underline' }}>
-              닮은꼴 분석하기
+              {t.ranking.emptyAction}
             </Link>
-            로 나와 닮은 포켓몬을 찾고, 결과에서 &quot;랭킹전 등록&quot;을 눌러 보세요.
+            {t.ranking.emptyHint}
           </p>
         </div>
       ) : (
@@ -249,7 +267,12 @@ export default function RankingPage() {
               }}
             >
               {top3.map((row, i) => (
-                <TopThreeCard key={row.id} row={row} rank={i} />
+                <TopThreeCard
+                  key={row.id}
+                  row={row}
+                  rank={i}
+                  unknownLabel={t.common.unknown}
+                />
               ))}
             </div>
           )}
@@ -263,7 +286,12 @@ export default function RankingPage() {
               }}
             >
               {rest.map((row, i) => (
-                <RankingListItem key={row.id} row={row} rank={i + 3} />
+                <RankingListItem
+                  key={row.id}
+                  row={row}
+                  rank={i + 3}
+                  unknownLabel={t.common.unknown}
+                />
               ))}
             </div>
           )}

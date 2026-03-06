@@ -16,7 +16,7 @@ const languageNames: Record<Locale, string> = {
 
 export default function AuthHeader() {
   const { user, loading, signOut } = useAuth()
-  const { locale, setLocale } = useLanguage()
+  const { locale, setLocale, t } = useLanguage()
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [userDropdownOpen, setUserDropdownOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -40,7 +40,11 @@ export default function AuthHeader() {
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      const langDropdowns = document.querySelectorAll('.header-lang-dropdown')
+      const insideLangDropdown = Array.from(langDropdowns).some((el) =>
+        el.contains(e.target as Node)
+      )
+      if (!insideLangDropdown) {
         setDropdownOpen(false)
       }
       if (userDropdownRef.current && !userDropdownRef.current.contains(e.target as Node)) {
@@ -73,23 +77,23 @@ export default function AuthHeader() {
   const navLinks = (
     <>
       <Link href="/" className="header-nav-link" onClick={closeAll}>
-        홈
+        {t.header.navHome}
       </Link>
       <Link href="/image-compare" className="header-nav-link" onClick={closeAll}>
-        이미지로 찾기
+        {t.header.navFindByImage}
       </Link>
       <Link href="/pokedex" className="header-nav-link" onClick={closeAll}>
-        포켓몬 도감
+        {t.header.navPokedex}
       </Link>
       <Link href="/board" className="header-nav-link" onClick={closeAll}>
-        커뮤니티
+        {t.header.navBoard}
       </Link>
       <Link href="/ranking" className="header-nav-link" onClick={closeAll}>
-        랭킹
+        {t.header.navRanking}
       </Link>
       {user && (
         <Link href="/my/results" className="header-nav-link" onClick={closeAll}>
-          내 결과
+          {t.header.navMyResults}
         </Link>
       )}
     </>
@@ -105,7 +109,7 @@ export default function AuthHeader() {
         aria-haspopup="menu"
         className="header-user-button"
       >
-        {user.email ?? '로그인됨'}
+        {user.email ?? t.header.loggedIn}
         <span style={{ fontSize: '0.65em', opacity: 0.8 }}>
           {userDropdownOpen ? ' ▲' : ' ▼'}
         </span>
@@ -118,7 +122,7 @@ export default function AuthHeader() {
             onClick={closeAll}
             className="header-dropdown-item"
           >
-            프로필 설정
+            {t.header.profileSettings}
           </Link>
           <button
             type="button"
@@ -129,24 +133,24 @@ export default function AuthHeader() {
             }}
             className="header-dropdown-item"
           >
-            로그아웃
+            {t.header.logout}
           </button>
         </div>
       )}
     </div>
   ) : (
     <Link href="/login" className="header-nav-link" onClick={closeAll}>
-      로그인
+      {t.header.login}
     </Link>
   )
 
   const langSelector = (
-    <div ref={dropdownRef} style={{ position: 'relative' }}>
+    <div ref={dropdownRef} className="header-lang-dropdown" style={{ position: 'relative' }}>
       <button
         type="button"
         onClick={() => setDropdownOpen((prev) => !prev)}
         className="header-lang-button"
-        title="언어 선택"
+        title={t.header.languageSelect}
         aria-expanded={dropdownOpen}
         aria-haspopup="listbox"
       >
@@ -185,7 +189,7 @@ export default function AuthHeader() {
     <header className={`site-header${isScrolled ? ' scrolled' : ''}`}>
       <h1 style={{ marginLeft: 20 }}>
         <Link href="/">
-          <Image src="/images/pokemon_logo.png" alt="나와 닮은 포켓몬 찾기" width={50} height={50} />
+          <Image src="/images/pokemon_logo.png" alt={t.header.siteTitleAlt} width={50} height={50} />
         </Link>
       </h1>
 
@@ -201,7 +205,7 @@ export default function AuthHeader() {
         type="button"
         className="header-hamburger"
         onClick={() => setMobileMenuOpen((prev) => !prev)}
-        aria-label="메뉴 열기"
+        aria-label={t.header.menuOpen}
         aria-expanded={mobileMenuOpen}
       >
         <span className={`hamburger-line ${mobileMenuOpen ? 'open' : ''}`} />

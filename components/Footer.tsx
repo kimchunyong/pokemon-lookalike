@@ -1,6 +1,10 @@
+'use client'
+
 import Link from 'next/link'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function Footer() {
+  const { t } = useLanguage()
   return (
     <footer
       style={{
@@ -12,7 +16,7 @@ export default function Footer() {
       }}
     >
       <nav
-        aria-label="푸터 내비게이션"
+        aria-label={t.footer.navAria}
         style={{
           display: 'flex',
           justifyContent: 'center',
@@ -21,15 +25,15 @@ export default function Footer() {
         }}
       >
         <Link href="/terms" style={{ color: '#fff', textDecoration: 'none' }}>
-          이용약관
+          {t.footer.terms}
         </Link>
         <span style={{ color: '#ddd' }}>|</span>
         <Link href="/privacy" style={{ color: '#fff', textDecoration: 'none' }}>
-          개인정보처리방침
+          {t.footer.privacy}
         </Link>
         <span style={{ color: '#ddd' }}>|</span>
         <Link href="/contact" style={{ color: '#fff', textDecoration: 'none' }}>
-          문의하기
+          {t.footer.contact}
         </Link>
       </nav>
       <p>&copy; {new Date().getFullYear()} Pocketmon Face. All rights reserved.</p>

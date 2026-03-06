@@ -5,11 +5,13 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 const NICKNAME_MAX = 30
 
 export default function ProfilePage() {
   const { user, loading: authLoading } = useAuth()
+  const { t } = useLanguage()
   const router = useRouter()
   const [nickname, setNickname] = useState('')
   const [saving, setSaving] = useState(false)
@@ -39,7 +41,7 @@ export default function ProfilePage() {
     if (!user) return
     const trimmed = nickname.trim()
     if (trimmed.length > NICKNAME_MAX) {
-      setError(`닉네임은 ${NICKNAME_MAX}자 이하여야 합니다.`)
+      setError(t.profile.errorMaxLength.replace('{{max}}', String(NICKNAME_MAX)))
       return
     }
     setSaving(true)
@@ -58,30 +60,26 @@ export default function ProfilePage() {
       setError(err.message)
       return
     }
-    setMessage(
-      trimmed
-        ? '닉네임이 저장되었습니다. 이제 글쓰기 시 작성자로 이 닉네임이 표시됩니다.'
-        : '닉네임이 해제되었습니다. 글쓰기 시 구글 이름 또는 이메일이 표시됩니다.'
-    )
+    setMessage(trimmed ? t.profile.messageSaved : t.profile.messageCleared)
   }
 
   if (authLoading || !user) {
     return (
       <div style={{ padding: '2rem', textAlign: 'center' }}>
-        <p>로그인이 필요합니다.</p>
+        <p>{t.profile.loginRequired}</p>
       </div>
     )
   }
 
   return (
     <div style={{ padding: '1.5rem', maxWidth: 480, margin: '0 auto' }}>
-      <h1>프로필</h1>
+      <h1>{t.profile.title}</h1>
       <p style={{ color: '#888', fontSize: 14, marginBottom: '1rem' }}>
-        여기서 저장한 닉네임이 <strong>글쓰기 시 작성자</strong>로 표시됩니다. 비우면 구글 이름 또는 이메일이 표시됩니다.
+        {t.profile.description}
       </p>
       <form onSubmit={handleSubmit} style={{ marginBottom: '1rem' }}>
         <label htmlFor="nickname" style={{ display: 'block', marginBottom: 4, fontWeight: 500 }}>
-          닉네임
+          {t.profile.nicknameLabel}
         </label>
         <input
           id="nickname"
@@ -89,7 +87,7 @@ export default function ProfilePage() {
           value={nickname}
           onChange={(e) => setNickname(e.target.value)}
           maxLength={NICKNAME_MAX}
-          placeholder="표시할 닉네임 입력"
+          placeholder={t.profile.nicknamePlaceholder}
           disabled={saving}
           style={{
             width: '100%',
@@ -119,12 +117,12 @@ export default function ProfilePage() {
             cursor: saving ? 'not-allowed' : 'pointer',
           }}
         >
-          {saving ? '저장 중...' : '저장'}
+          {saving ? t.profile.saving : t.profile.save}
         </button>
       </form>
       <p style={{ fontSize: 14 }}>
         <Link href="/board" style={{ color: '#1976d2' }}>
-          ← 커뮤니티
+          {t.common.back} {t.header.navBoard}
         </Link>
       </p>
     </div>
