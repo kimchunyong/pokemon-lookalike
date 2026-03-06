@@ -1,5 +1,5 @@
 /**
- * MobileNet v2로 포켓몬 1·2·3세대 386마리의 이미지 임베딩을 사전 계산하여 JSON으로 저장한다.
+ * MobileNet v2로 포켓몬 이미지 임베딩을 사전 계산하여 JSON으로 저장한다. (기본 1~386)
  * 클라이언트에서 사용하는 것과 동일한 모델/전처리를 사용하여 일관성을 보장한다.
  *
  * 사용법: node scripts/generate-mobilenet-embeddings.js

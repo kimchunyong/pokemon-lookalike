@@ -80,7 +80,7 @@ const OVER_REPRESENTED_PENALTY: Record<number, number> = {
 }
 
 /**
- * 386마리 전체의 raw 유사도 분포를 기반으로 동적 스케일링.
+ * 전체 포켓몬 raw 유사도 분포를 기반으로 동적 스케일링.
  * 매 비교마다 실제 min/max를 사용하므로 사진이 달라져도 항상 자연스러운 분포가 나온다.
  *
  * - 1위: 85~95% 범위

@@ -1,9 +1,10 @@
 /**
- * 포켓몬 1·2·3세대 386마리의 CLIP 이미지 임베딩을 사전 계산하여 JSON으로 저장한다.
+ * 포켓몬 CLIP 이미지 임베딩을 사전 계산하여 JSON으로 저장한다. (기본 1~386, 인자로 구간 지정 가능)
  *
  * 사용법:
  *   node scripts/generate-pokemon-embeddings.js           # 1~386 전체 생성
  *   node scripts/generate-pokemon-embeddings.js 252 386   # 252~386만 생성 후 기존 파일과 병합
+ *   node scripts/generate-pokemon-embeddings.js 387 493   # 4세대(387~493) 추가 후 병합
  *
  * 결과물: data/pokemon-embeddings.json
  *   { "1": [0.012, -0.034, ...], "2": [...], ... }
@@ -24,7 +25,8 @@ const IMG_URL = (id) =>
   `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
 
 const fromId = Math.max(1, parseInt(process.argv[2], 10) || 1)
-const toId = Math.min(TOTAL, parseInt(process.argv[3], 10) || TOTAL)
+const toIdArg = parseInt(process.argv[3], 10)
+const toId = Number.isFinite(toIdArg) ? Math.max(fromId, toIdArg) : TOTAL
 
 async function main() {
   let embeddings = {}

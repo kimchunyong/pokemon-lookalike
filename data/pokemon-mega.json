@@ -1,0 +1,674 @@
+[
+  {
+    "id": 10033,
+    "name": "메가이상해꽃",
+    "type": "풀/독",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10033.png",
+    "description": "메가진화한 이상해꽃의 형태입니다."
+  },
+  {
+    "id": 10034,
+    "name": "메가리자몽 X",
+    "type": "불꽃/드래곤",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10034.png",
+    "description": "메가진화한 리자몽의 형태입니다."
+  },
+  {
+    "id": 10035,
+    "name": "메가리자몽 Y",
+    "type": "불꽃/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10035.png",
+    "description": "메가진화한 리자몽의 형태입니다."
+  },
+  {
+    "id": 10036,
+    "name": "메가거북왕",
+    "type": "물",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10036.png",
+    "description": "메가진화한 거북왕의 형태입니다."
+  },
+  {
+    "id": 10037,
+    "name": "메가후딘",
+    "type": "에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10037.png",
+    "description": "메가진화한 후딘의 형태입니다."
+  },
+  {
+    "id": 10038,
+    "name": "메가팬텀",
+    "type": "고스트/독",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10038.png",
+    "description": "메가진화한 팬텀의 형태입니다."
+  },
+  {
+    "id": 10039,
+    "name": "메가캥카",
+    "type": "노말",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10039.png",
+    "description": "메가진화한 캥카의 형태입니다."
+  },
+  {
+    "id": 10040,
+    "name": "메가쁘사이저",
+    "type": "벌레/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10040.png",
+    "description": "메가진화한 쁘사이저의 형태입니다."
+  },
+  {
+    "id": 10041,
+    "name": "메가갸라도스",
+    "type": "물/악",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10041.png",
+    "description": "메가진화한 갸라도스의 형태입니다."
+  },
+  {
+    "id": 10042,
+    "name": "메가프테라",
+    "type": "바위/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10042.png",
+    "description": "메가진화한 프테라의 형태입니다."
+  },
+  {
+    "id": 10043,
+    "name": "메가뮤츠 X",
+    "type": "에스퍼/격투",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10043.png",
+    "description": "메가진화한 뮤츠의 형태입니다."
+  },
+  {
+    "id": 10044,
+    "name": "메가뮤츠 Y",
+    "type": "에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10044.png",
+    "description": "메가진화한 뮤츠의 형태입니다."
+  },
+  {
+    "id": 10045,
+    "name": "메가전룡",
+    "type": "전기/드래곤",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10045.png",
+    "description": "메가진화한 전룡의 형태입니다."
+  },
+  {
+    "id": 10046,
+    "name": "메가핫삼",
+    "type": "벌레/강철",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10046.png",
+    "description": "메가진화한 핫삼의 형태입니다."
+  },
+  {
+    "id": 10047,
+    "name": "메가헤라크로스",
+    "type": "벌레/격투",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10047.png",
+    "description": "메가진화한 헤라크로스의 형태입니다."
+  },
+  {
+    "id": 10048,
+    "name": "메가헬가",
+    "type": "악/불꽃",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10048.png",
+    "description": "메가진화한 헬가의 형태입니다."
+  },
+  {
+    "id": 10049,
+    "name": "메가마기라스",
+    "type": "바위/악",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10049.png",
+    "description": "메가진화한 마기라스의 형태입니다."
+  },
+  {
+    "id": 10050,
+    "name": "메가번치코",
+    "type": "불꽃/격투",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10050.png",
+    "description": "메가진화한 번치코의 형태입니다."
+  },
+  {
+    "id": 10051,
+    "name": "메가가디안",
+    "type": "에스퍼/페어리",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10051.png",
+    "description": "메가진화한 가디안의 형태입니다."
+  },
+  {
+    "id": 10052,
+    "name": "메가입치트",
+    "type": "강철/페어리",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10052.png",
+    "description": "메가진화한 입치트의 형태입니다."
+  },
+  {
+    "id": 10053,
+    "name": "메가보스로라",
+    "type": "강철",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10053.png",
+    "description": "메가진화한 보스로라의 형태입니다."
+  },
+  {
+    "id": 10054,
+    "name": "메가요가램",
+    "type": "격투/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10054.png",
+    "description": "메가진화한 요가램의 형태입니다."
+  },
+  {
+    "id": 10055,
+    "name": "메가썬더볼트",
+    "type": "전기",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10055.png",
+    "description": "메가진화한 썬더볼트의 형태입니다."
+  },
+  {
+    "id": 10056,
+    "name": "메가다크펫",
+    "type": "고스트",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10056.png",
+    "description": "메가진화한 다크펫의 형태입니다."
+  },
+  {
+    "id": 10057,
+    "name": "메가앱솔",
+    "type": "악",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10057.png",
+    "description": "메가진화한 앱솔의 형태입니다."
+  },
+  {
+    "id": 10058,
+    "name": "메가한카리아스",
+    "type": "드래곤/땅",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10058.png",
+    "description": "메가진화한 한카리아스의 형태입니다."
+  },
+  {
+    "id": 10059,
+    "name": "메가루카리오",
+    "type": "격투/강철",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10059.png",
+    "description": "메가진화한 루카리오의 형태입니다."
+  },
+  {
+    "id": 10060,
+    "name": "메가눈설왕",
+    "type": "풀/얼음",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10060.png",
+    "description": "메가진화한 눈설왕의 형태입니다."
+  },
+  {
+    "id": 10062,
+    "name": "메가라티아스",
+    "type": "드래곤/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10062.png",
+    "description": "메가진화한 라티아스의 형태입니다."
+  },
+  {
+    "id": 10063,
+    "name": "메가라티오스",
+    "type": "드래곤/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10063.png",
+    "description": "메가진화한 라티오스의 형태입니다."
+  },
+  {
+    "id": 10064,
+    "name": "메가대짱이",
+    "type": "물/땅",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10064.png",
+    "description": "메가진화한 대짱이의 형태입니다."
+  },
+  {
+    "id": 10065,
+    "name": "메가나무킹",
+    "type": "풀/드래곤",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10065.png",
+    "description": "메가진화한 나무킹의 형태입니다."
+  },
+  {
+    "id": 10066,
+    "name": "메가깜까미",
+    "type": "악/고스트",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10066.png",
+    "description": "메가진화한 깜까미의 형태입니다."
+  },
+  {
+    "id": 10067,
+    "name": "메가파비코리",
+    "type": "드래곤/페어리",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10067.png",
+    "description": "메가진화한 파비코리의 형태입니다."
+  },
+  {
+    "id": 10068,
+    "name": "메가엘레이드",
+    "type": "에스퍼/격투",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10068.png",
+    "description": "메가진화한 엘레이드의 형태입니다."
+  },
+  {
+    "id": 10069,
+    "name": "메가다부니",
+    "type": "노말/페어리",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10069.png",
+    "description": "메가진화한 다부니의 형태입니다."
+  },
+  {
+    "id": 10070,
+    "name": "메가샤크니아",
+    "type": "물/악",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10070.png",
+    "description": "메가진화한 샤크니아의 형태입니다."
+  },
+  {
+    "id": 10071,
+    "name": "메가야도란",
+    "type": "물/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10071.png",
+    "description": "메가진화한 야도란의 형태입니다."
+  },
+  {
+    "id": 10072,
+    "name": "메가강철톤",
+    "type": "강철/땅",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10072.png",
+    "description": "메가진화한 강철톤의 형태입니다."
+  },
+  {
+    "id": 10073,
+    "name": "메가피죤투",
+    "type": "노말/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10073.png",
+    "description": "메가진화한 피죤투의 형태입니다."
+  },
+  {
+    "id": 10074,
+    "name": "메가얼음귀신",
+    "type": "얼음",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10074.png",
+    "description": "메가진화한 얼음귀신의 형태입니다."
+  },
+  {
+    "id": 10075,
+    "name": "메가디안시",
+    "type": "바위/페어리",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10075.png",
+    "description": "메가진화한 디안시의 형태입니다."
+  },
+  {
+    "id": 10076,
+    "name": "메가메타그로스",
+    "type": "강철/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10076.png",
+    "description": "메가진화한 메타그로스의 형태입니다."
+  },
+  {
+    "id": 10079,
+    "name": "메가레쿠쟈",
+    "type": "드래곤/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10079.png",
+    "description": "메가진화한 레쿠쟈의 형태입니다."
+  },
+  {
+    "id": 10087,
+    "name": "메가폭타",
+    "type": "불꽃/땅",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10087.png",
+    "description": "메가진화한 폭타의 형태입니다."
+  },
+  {
+    "id": 10088,
+    "name": "메가이어롭",
+    "type": "노말/격투",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10088.png",
+    "description": "메가진화한 이어롭의 형태입니다."
+  },
+  {
+    "id": 10089,
+    "name": "메가보만다",
+    "type": "드래곤/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10089.png",
+    "description": "메가진화한 보만다의 형태입니다."
+  },
+  {
+    "id": 10090,
+    "name": "메가독침붕",
+    "type": "벌레/독",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10090.png",
+    "description": "메가진화한 독침붕의 형태입니다."
+  },
+  {
+    "id": 10278,
+    "name": "메가픽시",
+    "type": "페어리/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10278.png",
+    "description": "메가진화한 픽시의 형태입니다."
+  },
+  {
+    "id": 10279,
+    "name": "메가우츠보트",
+    "type": "풀/독",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10279.png",
+    "description": "메가진화한 우츠보트의 형태입니다."
+  },
+  {
+    "id": 10280,
+    "name": "메가아쿠스타",
+    "type": "물/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10280.png",
+    "description": "메가진화한 아쿠스타의 형태입니다."
+  },
+  {
+    "id": 10281,
+    "name": "메가망나뇽",
+    "type": "드래곤/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10281.png",
+    "description": "메가진화한 망나뇽의 형태입니다."
+  },
+  {
+    "id": 10282,
+    "name": "메가메가니움",
+    "type": "풀/페어리",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10282.png",
+    "description": "메가진화한 메가니움의 형태입니다."
+  },
+  {
+    "id": 10283,
+    "name": "메가장크로다일",
+    "type": "물/드래곤",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10283.png",
+    "description": "메가진화한 장크로다일의 형태입니다."
+  },
+  {
+    "id": 10284,
+    "name": "메가무장조",
+    "type": "강철/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10284.png",
+    "description": "메가진화한 무장조의 형태입니다."
+  },
+  {
+    "id": 10285,
+    "name": "메가눈여아",
+    "type": "얼음/고스트",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10285.png",
+    "description": "메가진화한 눈여아의 형태입니다."
+  },
+  {
+    "id": 10286,
+    "name": "메가염무왕",
+    "type": "불꽃/격투",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10286.png",
+    "description": "메가진화한 염무왕의 형태입니다."
+  },
+  {
+    "id": 10287,
+    "name": "메가몰드류",
+    "type": "땅/강철",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10287.png",
+    "description": "메가진화한 몰드류의 형태입니다."
+  },
+  {
+    "id": 10288,
+    "name": "메가펜드라",
+    "type": "벌레/독",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10288.png",
+    "description": "메가진화한 펜드라의 형태입니다."
+  },
+  {
+    "id": 10289,
+    "name": "메가곤율거니",
+    "type": "악/격투",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10289.png",
+    "description": "메가진화한 곤율거니의 형태입니다."
+  },
+  {
+    "id": 10290,
+    "name": "메가저리더프",
+    "type": "전기",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10290.png",
+    "description": "메가진화한 저리더프의 형태입니다."
+  },
+  {
+    "id": 10291,
+    "name": "메가샹델라",
+    "type": "고스트/불꽃",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10291.png",
+    "description": "메가진화한 샹델라의 형태입니다."
+  },
+  {
+    "id": 10292,
+    "name": "메가브리가론",
+    "type": "풀/격투",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10292.png",
+    "description": "메가진화한 브리가론의 형태입니다."
+  },
+  {
+    "id": 10293,
+    "name": "메가마폭시",
+    "type": "불꽃/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10293.png",
+    "description": "메가진화한 마폭시의 형태입니다."
+  },
+  {
+    "id": 10294,
+    "name": "메가개굴닌자",
+    "type": "물/악",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10294.png",
+    "description": "메가진화한 개굴닌자의 형태입니다."
+  },
+  {
+    "id": 10295,
+    "name": "메가화염레오",
+    "type": "불꽃/노말",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10295.png",
+    "description": "메가진화한 화염레오의 형태입니다."
+  },
+  {
+    "id": 10296,
+    "name": "메가플라엣테",
+    "type": "페어리",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10296.png",
+    "description": "메가진화한 플라엣테의 형태입니다."
+  },
+  {
+    "id": 10297,
+    "name": "메가칼라마네로",
+    "type": "악/에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10297.png",
+    "description": "메가진화한 칼라마네로의 형태입니다."
+  },
+  {
+    "id": 10298,
+    "name": "메가거북손데스",
+    "type": "바위/격투",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10298.png",
+    "description": "메가진화한 거북손데스의 형태입니다."
+  },
+  {
+    "id": 10299,
+    "name": "메가드래캄",
+    "type": "독/드래곤",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10299.png",
+    "description": "메가진화한 드래캄의 형태입니다."
+  },
+  {
+    "id": 10300,
+    "name": "메가루차불",
+    "type": "격투/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10300.png",
+    "description": "메가진화한 루차불의 형태입니다."
+  },
+  {
+    "id": 10301,
+    "name": "메가지가르데",
+    "type": "드래곤/땅",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10301.png",
+    "description": "메가진화한 지가르데의 형태입니다."
+  },
+  {
+    "id": 10302,
+    "name": "메가할비롱",
+    "type": "노말/드래곤",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10302.png",
+    "description": "메가진화한 할비롱의 형태입니다."
+  },
+  {
+    "id": 10303,
+    "name": "메가대여르",
+    "type": "격투",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10303.png",
+    "description": "메가진화한 대여르의 형태입니다."
+  },
+  {
+    "id": 10304,
+    "name": "메가라이츄 X",
+    "type": "전기",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10304.png",
+    "description": "메가진화한 라이츄의 형태입니다."
+  },
+  {
+    "id": 10305,
+    "name": "메가라이츄 Y",
+    "type": "전기",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10305.png",
+    "description": "메가진화한 라이츄의 형태입니다."
+  },
+  {
+    "id": 10306,
+    "name": "메가치렁",
+    "type": "에스퍼/강철",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10306.png",
+    "description": "메가진화한 치렁의 형태입니다."
+  },
+  {
+    "id": 10307,
+    "name": "메가앱솔 Z",
+    "type": "악/고스트",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10307.png",
+    "description": "메가진화한 앱솔의 형태입니다."
+  },
+  {
+    "id": 10308,
+    "name": "메가찌르호크",
+    "type": "격투/비행",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10308.png",
+    "description": "메가진화한 찌르호크의 형태입니다."
+  },
+  {
+    "id": 10309,
+    "name": "메가한카리아스 Z",
+    "type": "드래곤",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10309.png",
+    "description": "메가진화한 한카리아스의 형태입니다."
+  },
+  {
+    "id": 10310,
+    "name": "메가루카리오 Z",
+    "type": "격투/강철",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10310.png",
+    "description": "메가진화한 루카리오의 형태입니다."
+  },
+  {
+    "id": 10311,
+    "name": "메가히드런",
+    "type": "불꽃/강철",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10311.png",
+    "description": "메가진화한 히드런의 형태입니다."
+  },
+  {
+    "id": 10312,
+    "name": "메가다크라이",
+    "type": "악",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10312.png",
+    "description": "메가진화한 다크라이의 형태입니다."
+  },
+  {
+    "id": 10313,
+    "name": "메가골루그",
+    "type": "땅/고스트",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10313.png",
+    "description": "메가진화한 골루그의 형태입니다."
+  },
+  {
+    "id": 10314,
+    "name": "메가냐오닉스",
+    "type": "에스퍼",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10314.png",
+    "description": "메가진화한 냐오닉스의 형태입니다."
+  },
+  {
+    "id": 10315,
+    "name": "메가모단단게",
+    "type": "격투/얼음",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10315.png",
+    "description": "메가진화한 모단단게의 형태입니다."
+  },
+  {
+    "id": 10316,
+    "name": "메가갑주무사",
+    "type": "벌레/강철",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10316.png",
+    "description": "메가진화한 갑주무사의 형태입니다."
+  },
+  {
+    "id": 10317,
+    "name": "메가마기아나",
+    "type": "강철/페어리",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10317.png",
+    "description": "메가진화한 마기아나의 형태입니다."
+  },
+  {
+    "id": 10318,
+    "name": "메가마기아나",
+    "type": "강철/페어리",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10318.png",
+    "description": "메가진화한 마기아나의 형태입니다."
+  },
+  {
+    "id": 10319,
+    "name": "메가제라오라",
+    "type": "전기",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10319.png",
+    "description": "메가진화한 제라오라의 형태입니다."
+  },
+  {
+    "id": 10320,
+    "name": "메가스코빌런",
+    "type": "풀/불꽃",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10320.png",
+    "description": "메가진화한 스코빌런의 형태입니다."
+  },
+  {
+    "id": 10321,
+    "name": "메가킬라플로르",
+    "type": "바위/독",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10321.png",
+    "description": "메가진화한 킬라플로르의 형태입니다."
+  },
+  {
+    "id": 10322,
+    "name": "메가싸리용",
+    "type": "드래곤/물",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10322.png",
+    "description": "메가진화한 싸리용의 형태입니다."
+  },
+  {
+    "id": 10323,
+    "name": "메가싸리용",
+    "type": "드래곤/물",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10323.png",
+    "description": "메가진화한 싸리용의 형태입니다."
+  },
+  {
+    "id": 10324,
+    "name": "메가싸리용",
+    "type": "드래곤/물",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10324.png",
+    "description": "메가진화한 싸리용의 형태입니다."
+  },
+  {
+    "id": 10325,
+    "name": "메가드닐레이브",
+    "type": "드래곤/얼음",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10325.png",
+    "description": "메가진화한 드닐레이브의 형태입니다."
+  }
+]

@@ -1,5 +1,5 @@
 /**
- * 포켓몬 목록 데이터 (1·2·3세대 386마리)
+ * 포켓몬 목록 데이터 (1·2·3·4세대 493마리 + 메가진화)
  * 각 포켓몬: { id, name, type, imageUrl, description }
  * 이미지 URL은 PokeAPI의 공식 아트워크를 사용합니다.
  *
@@ -10,6 +10,8 @@
 
 import pokemonGen2Json from './pokemon-gen2.json'
 import pokemonGen3Json from './pokemon-gen3.json'
+import pokemonGen4Json from './pokemon-gen4.json'
+import pokemonMegaJson from './pokemon-mega.json'
 
 const IMG = (id: number) =>
   `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
@@ -178,5 +180,13 @@ const POKEMON_GEN1: PokemonEntry[] = [
 
 const POKEMON_GEN2 = pokemonGen2Json as PokemonEntry[]
 const POKEMON_GEN3 = pokemonGen3Json as PokemonEntry[]
+const POKEMON_GEN4 = pokemonGen4Json as PokemonEntry[]
+const POKEMON_MEGA = pokemonMegaJson as PokemonEntry[]
 
-export const POKEMON_LIST: PokemonEntry[] = [...POKEMON_GEN1, ...POKEMON_GEN2, ...POKEMON_GEN3]
+export const POKEMON_LIST: PokemonEntry[] = [
+  ...POKEMON_GEN1,
+  ...POKEMON_GEN2,
+  ...POKEMON_GEN3,
+  ...POKEMON_GEN4,
+  ...POKEMON_MEGA,
+]
