@@ -167,7 +167,12 @@
     "saveError": "Save failed (retry)",
     "registering": "Registering...",
     "registeredDone": "Registered ✓",
-    "registerError": "Register failed (retry)"
+    "registerError": "Register failed (retry)",
+    "saveImage": "Save result image",
+    "savingImage": "Saving...",
+    "savedImage": "Saved ✓",
+    "saveImageError": "Save failed",
+    "saveImageHint": "Share the saved image on Instagram from your gallery!"
   },
   "board": {
     "title": "Community",

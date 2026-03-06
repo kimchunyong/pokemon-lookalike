@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import PolicyNotice from './PolicyNotice'
 // import ShareButton from './ShareButton'
 import { useLanguage } from '../contexts/LanguageContext'
@@ -24,6 +24,8 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
   const [evolutionChain, setEvolutionChain] = useState<EvolutionStage[]>([])
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const [rankingStatus, setRankingStatus] = useState<'idle' | 'registering' | 'registered' | 'error'>('idle')
+  const [captureStatus, setCaptureStatus] = useState<'idle' | 'capturing' | 'done' | 'error'>('idle')
+  const resultCaptureRef = useRef<HTMLDivElement>(null)
   const { t } = useLanguage()
   const { user } = useAuth()
 
@@ -135,6 +137,31 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
     setRankingStatus(error ? 'error' : 'registered')
   }, [user, pokemon, similarity, t])
 
+  const handleSaveResultImage = useCallback(async () => {
+    const el = resultCaptureRef.current
+    if (!el) return
+    setCaptureStatus('capturing')
+    try {
+      const { default: html2canvas } = await import('html2canvas')
+      const canvas = await html2canvas(el, {
+        useCORS: true,
+        allowTaint: true,
+        scale: 2,
+        backgroundColor: '#1a1a1a',
+        logging: false,
+      })
+      const dataUrl = canvas.toDataURL('image/png')
+      const link = document.createElement('a')
+      link.download = `pokemon-lookalike-${pokemon.name}-${(similarity * 100).toFixed(0)}.png`
+      link.href = dataUrl
+      link.click()
+      setCaptureStatus('done')
+    } catch (err) {
+      console.error('Result image capture failed:', err)
+      setCaptureStatus('error')
+    }
+  }, [pokemon, similarity])
+
   if (!pokemon) {
     return (
       <main style={{ padding: '2rem', textAlign: 'center' }}>
@@ -145,11 +172,12 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
 
   return (
     <main className="image-compare-page" style={{ marginTop: '80px' }}>
-      <h1>{t.result.title}</h1>
-      <p style={{ fontSize: '0.9em', color: '#888', marginBottom: '1rem' }}>{t.result.found}</p>
+      <div ref={resultCaptureRef} className="result-capture-area">
+        <h1>{t.result.title}</h1>
+        <p style={{ fontSize: '0.9em', color: '#888', marginBottom: '1rem' }}>{t.result.found}</p>
 
-      <div className="pokemon-results" style={{ maxWidth: '500px', margin: '2rem auto' }}>
-        <div className="pokemon-card">
+        <div className="pokemon-results" style={{ maxWidth: '500px', margin: '2rem auto' }}>
+          <div className="pokemon-card">
           <div className="similarity-score">
             {t.imageCompare.similarity}: {similarity ? (similarity * 100).toFixed(1) : 'N/A'}%
           </div>
@@ -308,7 +336,27 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
               )}
             </p>
           )}
+          </div>
         </div>
+      </div>
+
+      <div className="result-save-image-row" style={{ maxWidth: '500px', margin: '0 auto 1rem', textAlign: 'center' }}>
+        <button
+          type="button"
+          onClick={handleSaveResultImage}
+          disabled={captureStatus === 'capturing'}
+          className="result-save-image-button"
+        >
+          {captureStatus === 'idle' && (t.resultContent.saveImage ?? '결과 이미지 저장')}
+          {captureStatus === 'capturing' && (t.resultContent.savingImage ?? '저장 중...')}
+          {captureStatus === 'done' && (t.resultContent.savedImage ?? '저장 완료 ✓')}
+          {captureStatus === 'error' && (t.resultContent.saveImageError ?? '저장 실패')}
+        </button>
+        {captureStatus === 'done' && (
+          <p className="result-save-image-hint" style={{ marginTop: '0.5rem', fontSize: '0.85em', color: '#888' }}>
+            {t.resultContent.saveImageHint ?? '저장된 이미지를 갤러리에서 인스타 스토리에 올려보세요!'}
+          </p>
+        )}
       </div>
 
       {evolutionChain.length > 1 && (

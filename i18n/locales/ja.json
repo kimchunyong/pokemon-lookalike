@@ -167,7 +167,12 @@
     "saveError": "保存失敗（再試行）",
     "registering": "登録中...",
     "registeredDone": "登録完了 ✓",
-    "registerError": "登録失敗（再試行）"
+    "registerError": "登録失敗（再試行）",
+    "saveImage": "結果画像を保存",
+    "savingImage": "保存中...",
+    "savedImage": "保存完了 ✓",
+    "saveImageError": "保存失敗",
+    "saveImageHint": "保存した画像をギャラリーからインスタのストーリーに投稿しよう！"
   },
   "board": {
     "title": "コミュニティ",

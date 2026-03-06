@@ -25,6 +25,7 @@
     "@tensorflow/tfjs": "^4.22.0",
     "@vladmandic/face-api": "^1.7.15",
     "eslint-config-next": "^16.1.6",
+    "html2canvas": "^1.4.1",
     "next": "^16.1.6"
   },
   "devDependencies": {

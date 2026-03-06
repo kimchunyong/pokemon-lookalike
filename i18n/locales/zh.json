@@ -167,7 +167,12 @@
     "saveError": "保存失败（重试）",
     "registering": "登记中...",
     "registeredDone": "已登记 ✓",
-    "registerError": "登记失败（重试）"
+    "registerError": "登记失败（重试）",
+    "saveImage": "保存结果图片",
+    "savingImage": "保存中...",
+    "savedImage": "已保存 ✓",
+    "saveImageError": "保存失败",
+    "saveImageHint": "将保存的图片从相册分享到Instagram快拍吧！"
   },
   "board": {
     "title": "社区",

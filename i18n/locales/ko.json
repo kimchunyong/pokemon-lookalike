@@ -167,7 +167,12 @@
     "saveError": "저장 실패 (재시도)",
     "registering": "등록 중...",
     "registeredDone": "랭킹 등록 완료 ✓",
-    "registerError": "등록 실패 (재시도)"
+    "registerError": "등록 실패 (재시도)",
+    "saveImage": "결과 이미지 저장",
+    "savingImage": "저장 중...",
+    "savedImage": "저장 완료 ✓",
+    "saveImageError": "저장 실패",
+    "saveImageHint": "저장된 이미지를 갤러리에서 인스타 스토리에 올려보세요!"
   },
   "board": {
     "title": "커뮤니티",

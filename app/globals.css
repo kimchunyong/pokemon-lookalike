@@ -659,6 +659,32 @@ a:hover {
   cursor: not-allowed;
 }
 
+.result-capture-area {
+  outline: none;
+}
+
+.result-save-image-button {
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid #e1306c;
+  background: rgba(225, 48, 108, 0.15);
+  color: #e1306c;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95em;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.result-save-image-button:hover:not(:disabled) {
+  background: rgba(225, 48, 108, 0.25);
+  border-color: #c13584;
+}
+
+.result-save-image-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 .share-menu {
   position: absolute;
   top: 100%;
