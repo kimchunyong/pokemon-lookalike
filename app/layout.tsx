@@ -48,7 +48,7 @@ export const metadata: Metadata = {
       { url: `${baseUrl}/images/favicon-32x32.png`, type: 'image/png', sizes: '32x32' },
       { url: `${baseUrl}/images/favicon-16x16.png`, type: 'image/png', sizes: '16x16' },
     ],
-    apple: '/apple-touch-icon.png',
+    apple: `${baseUrl}/images/apple-touch-icon.png`,
   },
   manifest: '/site.webmanifest',
   alternates: {
