@@ -81,29 +81,45 @@ const OVER_REPRESENTED_PENALTY: Record<number, number> = {
 }
 */
 
+/** 1위 최대 퍼센트 범위: raw가 높을수록 상한을 높게 (변동성) */
+const MAX_PERCENT_LOW = 0.86
+const MAX_PERCENT_HIGH = 0.99
+
 /**
  * 전체 포켓몬 raw 유사도 분포를 기반으로 동적 스케일링.
  * 매 비교마다 실제 min/max를 사용하므로 사진이 달라져도 항상 자연스러운 분포가 나온다.
+ * 1위 점수는 해당 회차 최고 raw에 비례해 86~99% 구간에서 변동되며, 소폭 랜덤이 더해진다.
  *
- * - 1위: 85~95% 범위
+ * - 1위: 86~99% 범위 (raw가 높을수록 상한 근처, 매 회차 소폭 랜덤)
  * - 하위권: 자연스럽게 낮아짐
- * - maxPercent: 1위에 부여할 최대 퍼센트 (기본 93%)
  * - minPercent: 꼴찌에 부여할 최소 퍼센트 (기본 15%)
  */
 function dynamicScale(
   rawScores: number[],
-  maxPercent = 0.93,
+  _maxPercent?: number,
   minPercent = 0.15,
   power = 1.3
 ): number[] {
-  const max = Math.max(...rawScores)
-  const min = Math.min(...rawScores)
-  const range = max - min
+  const maxRaw = Math.max(...rawScores)
+  const minRaw = Math.min(...rawScores)
+  const range = maxRaw - minRaw
 
-  if (range < 1e-6) return rawScores.map(() => maxPercent)
+  if (range < 1e-6) {
+    const varied = MAX_PERCENT_LOW + (Math.random() - 0.5) * 0.04
+    return rawScores.map(() => Math.min(0.99, Math.max(0.86, varied)))
+  }
+
+  // 1위에 줄 최대치: 1위 raw 절대값이 높을수록 상한 근처(86~99%). ±2% 랜덤으로 매 회차 변동
+  const rawNormalized = Math.max(0, Math.min(1, maxRaw))
+  const baseMax =
+    MAX_PERCENT_LOW + (MAX_PERCENT_HIGH - MAX_PERCENT_LOW) * rawNormalized
+  const maxPercent = Math.min(
+    MAX_PERCENT_HIGH,
+    Math.max(MAX_PERCENT_LOW, baseMax + (Math.random() - 0.5) * 0.04)
+  )
 
   return rawScores.map((raw) => {
-    const normalized = (raw - min) / range
+    const normalized = (raw - minRaw) / range
     const curved = Math.pow(normalized, power)
     return minPercent + (maxPercent - minPercent) * curved
   })
