@@ -29,7 +29,7 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
   const [captureStatus, setCaptureStatus] = useState<'idle' | 'capturing' | 'done' | 'error'>('idle')
   const resultCaptureRef = useRef<HTMLDivElement>(null)
   const { t } = useLanguage()
-  const { user } = useAuth()
+  const { user, loading: authLoading } = useAuth()
 
   const similarityParam = searchParams.get('similarity')
   const similarity = similarityParam ? parseFloat(similarityParam) : 0
@@ -151,7 +151,7 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
   )
 
   useEffect(() => {
-    if (!user || intentExecutedRef.current || !pokemon) return
+    if (authLoading || !user || intentExecutedRef.current || !pokemon) return
     const intent = searchParams.get('intent')
     if (intent !== 'saveResult' && intent !== 'registerRanking') return
     intentExecutedRef.current = true
@@ -165,7 +165,7 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
     const nextSearch = next.toString()
     const cleanPath = pathname + (nextSearch ? `?${nextSearch}` : '')
     router.replace(cleanPath)
-  }, [user, pokemon, searchParams, pathname, router, handleSave, handleRankingRegister])
+  }, [authLoading, user, pokemon, searchParams, pathname, router, handleSave, handleRankingRegister])
 
   const handleSaveResultImage = useCallback(async () => {
     const el = resultCaptureRef.current
