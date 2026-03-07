@@ -162,6 +162,8 @@
     "delete": "削除"
   },
   "resultContent": {
+    "loginAndSaveResult": "ログインして結果を保存",
+    "loginAndRegisterRanking": "ログインしてランキング登録",
     "saveToMyResults": "マイ結果に保存",
     "registerRanking": "ランキング登録",
     "saving": "保存中...",

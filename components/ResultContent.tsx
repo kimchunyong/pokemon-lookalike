@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { useEffect, useState, useCallback, useRef } from 'react'
 import PolicyNotice from './PolicyNotice'
 // import ShareButton from './ShareButton'
@@ -19,8 +19,10 @@ interface ResultContentProps {
 
 export default function ResultContent({ pokemon }: ResultContentProps) {
   const router = useRouter()
+  const pathname = usePathname()
   const searchParams = useSearchParams()
   const [userImage, setUserImage] = useState<string | null>(null)
+  const intentExecutedRef = useRef(false)
   const [evolutionChain, setEvolutionChain] = useState<EvolutionStage[]>([])
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const [rankingStatus, setRankingStatus] = useState<'idle' | 'registering' | 'registered' | 'error'>('idle')
@@ -137,6 +139,34 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
     setRankingStatus(error ? 'error' : 'registered')
   }, [user, pokemon, similarity, t])
 
+  const goToLoginWithIntent = useCallback(
+    (intent: 'saveResult' | 'registerRanking') => {
+      if (typeof window === 'undefined') return
+      const returnPath = pathname + window.location.search
+      sessionStorage.setItem('authReturnPath', returnPath)
+      sessionStorage.setItem('authIntent', intent)
+      router.push('/login')
+    },
+    [pathname, router]
+  )
+
+  useEffect(() => {
+    if (!user || intentExecutedRef.current || !pokemon) return
+    const intent = searchParams.get('intent')
+    if (intent !== 'saveResult' && intent !== 'registerRanking') return
+    intentExecutedRef.current = true
+    if (intent === 'saveResult') {
+      handleSave()
+    } else {
+      handleRankingRegister()
+    }
+    const next = new URLSearchParams(searchParams.toString())
+    next.delete('intent')
+    const nextSearch = next.toString()
+    const cleanPath = pathname + (nextSearch ? `?${nextSearch}` : '')
+    router.replace(cleanPath)
+  }, [user, pokemon, searchParams, pathname, router, handleSave, handleRankingRegister])
+
   const handleSaveResultImage = useCallback(async () => {
     const el = resultCaptureRef.current
     if (!el) return
@@ -210,7 +240,6 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
               flexWrap: 'wrap',
             }}
           >
-            <KakaoShareButton pokemon={pokemon} />
             {user ? (
               <>
                 <button
@@ -268,7 +297,7 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
               <>
                 <button
                   type="button"
-                  onClick={() => router.push('/login')}
+                  onClick={() => goToLoginWithIntent('saveResult')}
                   style={{
                     padding: '0.6rem 1.2rem',
                     borderRadius: 8,
@@ -279,11 +308,11 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
                     fontSize: '0.9em',
                   }}
                 >
-                  로그인하고 결과 저장
+                  {t.resultContent.loginAndSaveResult}
                 </button>
                 <button
                   type="button"
-                  onClick={() => router.push('/login')}
+                  onClick={() => goToLoginWithIntent('registerRanking')}
                   style={{
                     padding: '0.6rem 1.2rem',
                     borderRadius: 8,
@@ -294,7 +323,7 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
                     fontSize: '0.9em',
                   }}
                 >
-                  로그인하고 랭킹전 등록
+                  {t.resultContent.loginAndRegisterRanking}
                 </button>
               </>
             )}
@@ -340,7 +369,8 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
         </div>
       </div>
 
-      <div className="result-save-image-row" style={{ maxWidth: '500px', margin: '0 auto 1rem', textAlign: 'center' }}>
+      <div className="result-save-image-row">
+        <KakaoShareButton pokemon={pokemon} />
         <button
           type="button"
           onClick={handleSaveResultImage}

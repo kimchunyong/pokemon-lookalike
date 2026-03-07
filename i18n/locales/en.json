@@ -162,6 +162,8 @@
     "delete": "Delete"
   },
   "resultContent": {
+    "loginAndSaveResult": "Login and save result",
+    "loginAndRegisterRanking": "Login and register to ranking",
     "saveToMyResults": "Save to My Results",
     "registerRanking": "Register to Ranking",
     "saving": "Saving...",

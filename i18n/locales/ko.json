@@ -10,7 +10,7 @@
     "loadingShort": "불러오는 중..."
   },
   "home": {
-    "title": "나와 닮은 포켓몬 찾기",
+    "title": "포켓몬 닮은꼴 찾기",
     "subtitle": "AI 기술을 활용하여 나와 닮은 포켓몬을 찾아보세요!",
     "disclaimer": "재미 목적으로만 제공되며, 개인정보는 저장되지 않습니다.",
     "findByImage": "📷 이미지로 찾기"
@@ -162,6 +162,8 @@
     "delete": "삭제"
   },
   "resultContent": {
+    "loginAndSaveResult": "로그인하고 결과 저장",
+    "loginAndRegisterRanking": "로그인하고 랭킹전 등록",
     "saveToMyResults": "내 결과 저장",
     "registerRanking": "랭킹전 등록",
     "saving": "저장 중...",

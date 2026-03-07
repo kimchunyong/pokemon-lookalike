@@ -161,6 +161,17 @@ a:hover {
   z-index: 1001;
 }
 
+.header-dropdown-menu-portal {
+  z-index: 9999;
+}
+
+.header-dropdown-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: transparent;
+}
+
 .header-dropdown-item {
   display: block;
   width: 100%;
@@ -661,6 +672,17 @@ a:hover {
 
 .result-capture-area {
   outline: none;
+}
+
+.result-save-image-row{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  max-width: 500px;
+  margin: 0 auto 1rem;
+  text-align: center;
 }
 
 .result-save-image-button {

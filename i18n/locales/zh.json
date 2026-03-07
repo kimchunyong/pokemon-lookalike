@@ -162,6 +162,8 @@
     "delete": "删除"
   },
   "resultContent": {
+    "loginAndSaveResult": "登录并保存结果",
+    "loginAndRegisterRanking": "登录并登记排名",
     "saveToMyResults": "保存到我的结果",
     "registerRanking": "登记排名",
     "saving": "保存中...",

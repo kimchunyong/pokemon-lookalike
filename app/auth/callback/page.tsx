@@ -29,23 +29,38 @@ export default function AuthCallbackPage() {
 
     const supabase = createClient()
 
+    const redirectAfterLogin = () => {
+      if (typeof window === 'undefined') return
+      const returnPath = sessionStorage.getItem('authReturnPath')
+      const intent = sessionStorage.getItem('authIntent')
+      if (returnPath) {
+        sessionStorage.removeItem('authReturnPath')
+        sessionStorage.removeItem('authIntent')
+        const separator = returnPath.includes('?') ? '&' : '?'
+        const url = intent ? `${returnPath}${separator}intent=${intent}` : returnPath
+        router.replace(url)
+        return
+      }
+      router.replace('/')
+    }
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN' && session) {
-        router.replace('/')
+        redirectAfterLogin()
       }
     })
 
     const checkExistingSession = async () => {
       const { data: { session } } = await supabase.auth.getSession()
       if (session) {
-        router.replace('/')
+        redirectAfterLogin()
         return
       }
 
       setTimeout(async () => {
         const { data: { session: retrySession } } = await supabase.auth.getSession()
         if (retrySession) {
-          router.replace('/')
+          redirectAfterLogin()
         } else {
           setIsError(true)
           setMessage('로그인 세션을 확인할 수 없습니다. 다시 시도해 주세요.')
