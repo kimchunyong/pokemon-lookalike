@@ -1,9 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { createPortal } from 'react-dom'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { locales, type Locale } from '@/i18n'
@@ -17,7 +15,6 @@ const languageNames: Record<Locale, string> = {
 }
 
 export default function AuthHeader() {
-  const router = useRouter()
   const { user, loading, signOut } = useAuth()
   const { locale, setLocale, t } = useLanguage()
   const [dropdownOpen, setDropdownOpen] = useState(false)
@@ -25,14 +22,8 @@ export default function AuthHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
-  const langDropdownButtonRef = useRef<HTMLButtonElement>(null)
-  const langDropdownMenuRef = useRef<HTMLDivElement>(null)
-  const [langMenuPosition, setLangMenuPosition] = useState<{ top: number; left: number } | null>(null)
   const userDropdownRef = useRef<HTMLDivElement>(null)
-  const userDropdownButtonRef = useRef<HTMLButtonElement>(null)
-  const userDropdownMenuRef = useRef<HTMLDivElement>(null)
   const mobileMenuRef = useRef<HTMLDivElement>(null)
-  const [userMenuPosition, setUserMenuPosition] = useState<{ top: number; left: number } | null>(null)
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10)
@@ -50,12 +41,27 @@ export default function AuthHeader() {
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as Node
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(target)) {
+      const insideLangDropdown = Array.from(document.querySelectorAll('.header-lang-dropdown')).some(
+        (el) => el.contains(target)
+      )
+      if (!insideLangDropdown) {
+        setDropdownOpen(false)
+      }
+      const insideUserDropdown = Array.from(document.querySelectorAll('.header-user-dropdown')).some(
+        (el) => el.contains(target)
+      )
+      if (!insideUserDropdown) {
+        setUserDropdownOpen(false)
+      }
+      const insideMobileMenu = Array.from(document.querySelectorAll('.header-mobile-menu')).some(
+        (el) => el.contains(target)
+      )
+      if (!insideMobileMenu) {
         setMobileMenuOpen(false)
       }
     }
-    document.addEventListener('click', handleClickOutside)
-    return () => document.removeEventListener('click', handleClickOutside)
+    document.addEventListener('click', handleClickOutside, true)
+    return () => document.removeEventListener('click', handleClickOutside, true)
   }, [])
 
   useEffect(() => {
@@ -68,46 +74,6 @@ export default function AuthHeader() {
       document.body.style.overflow = ''
     }
   }, [mobileMenuOpen])
-
-  useEffect(() => {
-    if (!dropdownOpen || !langDropdownButtonRef.current) {
-      setLangMenuPosition(null)
-      return
-    }
-    const updatePosition = () => {
-      if (langDropdownButtonRef.current) {
-        const rect = langDropdownButtonRef.current.getBoundingClientRect()
-        setLangMenuPosition({ top: rect.bottom + 4, left: rect.right })
-      }
-    }
-    updatePosition()
-    window.addEventListener('scroll', updatePosition, true)
-    window.addEventListener('resize', updatePosition)
-    return () => {
-      window.removeEventListener('scroll', updatePosition, true)
-      window.removeEventListener('resize', updatePosition)
-    }
-  }, [dropdownOpen])
-
-  useEffect(() => {
-    if (!userDropdownOpen || !userDropdownButtonRef.current) {
-      setUserMenuPosition(null)
-      return
-    }
-    const updatePosition = () => {
-      if (userDropdownButtonRef.current) {
-        const rect = userDropdownButtonRef.current.getBoundingClientRect()
-        setUserMenuPosition({ top: rect.bottom + 4, left: rect.right })
-      }
-    }
-    updatePosition()
-    window.addEventListener('scroll', updatePosition, true)
-    window.addEventListener('resize', updatePosition)
-    return () => {
-      window.removeEventListener('scroll', updatePosition, true)
-      window.removeEventListener('resize', updatePosition)
-    }
-  }, [userDropdownOpen])
 
   if (loading) return null
 
@@ -139,68 +105,11 @@ export default function AuthHeader() {
     </>
   )
 
-  const userDropdownMenu =
-    userDropdownOpen &&
-    userMenuPosition &&
-    typeof document !== 'undefined'
-      ? createPortal(
-          <>
-            <div
-              className="header-dropdown-backdrop"
-              aria-hidden
-              onClick={() => setUserDropdownOpen(false)}
-            />
-            <div
-              ref={userDropdownMenuRef}
-              role="menu"
-              className="header-dropdown-menu header-dropdown-menu-portal"
-              style={{
-                position: 'fixed',
-                top: userMenuPosition.top,
-                left: userMenuPosition.left,
-                transform: 'translateX(-100%)',
-                marginTop: 0,
-              }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <a
-                href="/profile"
-                role="menuitem"
-                className="header-dropdown-item"
-                onClick={(e) => {
-                  e.preventDefault()
-                  closeAll()
-                  router.push('/profile')
-                }}
-              >
-                {t.header.profileSettings}
-              </a>
-              <button
-                type="button"
-                role="menuitem"
-                className="header-dropdown-item"
-                onClick={() => {
-                  closeAll()
-                  signOut()
-                }}
-              >
-                {t.header.logout}
-              </button>
-            </div>
-          </>,
-          document.body
-        )
-      : null
-
   const authSection = user ? (
-    <div ref={userDropdownRef} style={{ position: 'relative', zIndex: 1002 }}>
+    <div ref={userDropdownRef} className="header-user-dropdown" style={{ position: 'relative' }}>
       <button
-        ref={userDropdownButtonRef}
         type="button"
-        onClick={(e) => {
-          e.stopPropagation()
-          setUserDropdownOpen((prev) => !prev)
-        }}
+        onClick={() => setUserDropdownOpen((prev) => !prev)}
         title={user.email ?? undefined}
         aria-expanded={userDropdownOpen}
         aria-haspopup="menu"
@@ -211,7 +120,24 @@ export default function AuthHeader() {
           {userDropdownOpen ? ' ▲' : ' ▼'}
         </span>
       </button>
-      {userDropdownMenu}
+      {userDropdownOpen && (
+        <div role="menu" className="header-dropdown-menu" onMouseDown={(e) => e.stopPropagation()}>
+          <Link href="/profile" role="menuitem" onClick={closeAll} className="header-dropdown-item">
+            {t.header.profileSettings}
+          </Link>
+          <button
+            type="button"
+            role="menuitem"
+            onClick={() => {
+              closeAll()
+              signOut()
+            }}
+            className="header-dropdown-item"
+          >
+            {t.header.logout}
+          </button>
+        </div>
+      )}
     </div>
   ) : (
     <Link href="/login" className="header-nav-link" onClick={closeAll}>
@@ -219,63 +145,11 @@ export default function AuthHeader() {
     </Link>
   )
 
-  const langDropdownMenu =
-    dropdownOpen &&
-    langMenuPosition &&
-    typeof document !== 'undefined'
-      ? createPortal(
-          <>
-            <div
-              className="header-dropdown-backdrop"
-              aria-hidden
-              onClick={() => setDropdownOpen(false)}
-            />
-            <div
-              ref={langDropdownMenuRef}
-              role="listbox"
-              className="header-dropdown-menu header-dropdown-menu-portal"
-              style={{
-                position: 'fixed',
-                top: langMenuPosition.top,
-                left: langMenuPosition.left,
-                transform: 'translateX(-100%)',
-                marginTop: 0,
-              }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              {locales.map((loc) => (
-                <button
-                  key={loc}
-                  type="button"
-                  role="option"
-                  aria-selected={locale === loc}
-                  onClick={() => {
-                    setLocale(loc)
-                    setDropdownOpen(false)
-                  }}
-                  className="header-dropdown-item"
-                  style={{
-                    background: locale === loc ? '#646cff' : 'transparent',
-                    color: locale === loc ? '#fff' : 'inherit',
-                    fontWeight: locale === loc ? 'bold' : 'normal',
-                  }}
-                >
-                  {languageNames[loc]}
-                </button>
-              ))}
-            </div>
-          </>,
-          document.body
-        )
-      : null
-
   const langSelector = (
     <div ref={dropdownRef} className="header-lang-dropdown" style={{ position: 'relative' }}>
       <button
-        ref={langDropdownButtonRef}
         type="button"
-        onClick={(e) => {
-          e.stopPropagation()
+        onClick={() => {
           setDropdownOpen((prev) => !prev)
         }}
         className="header-lang-button"
@@ -286,7 +160,30 @@ export default function AuthHeader() {
         {languageNames[locale]}
         <span style={{ fontSize: '0.6em', opacity: 0.8 }}>{dropdownOpen ? ' ▲' : ' ▼'}</span>
       </button>
-      {langDropdownMenu}
+      {dropdownOpen && (
+        <div role="listbox" className="header-dropdown-menu">
+          {locales.map((loc) => (
+            <button
+              key={loc}
+              type="button"
+              role="option"
+              aria-selected={locale === loc}
+              onClick={() => {
+                setLocale(loc)
+                setDropdownOpen(false)
+              }}
+              className="header-dropdown-item"
+              style={{
+                background: locale === loc ? '#646cff' : 'transparent',
+                color: locale === loc ? '#fff' : 'inherit',
+                fontWeight: locale === loc ? 'bold' : 'normal',
+              }}
+            >
+              {languageNames[loc]}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   )
 
