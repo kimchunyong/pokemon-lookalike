@@ -38,7 +38,10 @@ export default function AuthCallbackPage() {
         sessionStorage.removeItem('authIntent')
         const separator = returnPath.includes('?') ? '&' : '?'
         const url = intent ? `${returnPath}${separator}intent=${intent}` : returnPath
-        router.replace(url)
+        // Full page redirect so result page loads with session from localStorage and intent runs
+        setTimeout(() => {
+          window.location.href = url
+        }, 0)
         return
       }
       router.replace('/')
