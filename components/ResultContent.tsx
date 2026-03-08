@@ -115,16 +115,7 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
     } catch {
       // keep getAuthorDisplayNameFromUser fallback
     }
-    const { data: existing } = await supabase
-      .from('lookalike_ranking')
-      .select('similarity')
-      .eq('user_id', user.id)
-      .single()
-    const existingSim = (existing as { similarity: number } | null)?.similarity ?? -1
-    if (similarity <= existingSim) {
-      setRankingStatus('registered')
-      return
-    }
+    // 유저당 1건만 유지: upsert로 기존 행이 있으면 현재 결과로 갱신, 없으면 삽입
     const { error } = await supabase.from('lookalike_ranking').upsert(
       {
         user_id: user.id,
