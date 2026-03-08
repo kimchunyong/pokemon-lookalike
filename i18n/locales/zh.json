@@ -108,7 +108,7 @@
   },
   "ranking": {
     "title": "相似度排名",
-    "subtitle": "按相似度从高到低排序",
+    "subtitle": "按相似度从高到低排序。每个账户只能登记1条。",
     "loading": "正在加载排名...",
     "emptyTitle": "暂无记录。",
     "emptyAction": "查找相似宝可梦",

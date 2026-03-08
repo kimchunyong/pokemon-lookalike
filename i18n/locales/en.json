@@ -108,7 +108,7 @@
   },
   "ranking": {
     "title": "Lookalike Ranking",
-    "subtitle": "Sorted by similarity (highest first)",
+    "subtitle": "Sorted by similarity (highest first). One entry per account.",
     "loading": "Loading ranking...",
     "emptyTitle": "No entries yet.",
     "emptyAction": "Find your lookalike",
