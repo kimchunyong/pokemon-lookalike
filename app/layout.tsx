@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import './globals.css'
 import Providers from '../components/Providers'
@@ -6,6 +6,10 @@ import Providers from '../components/Providers'
 const baseUrl =
   process.env.NEXT_PUBLIC_APP_URL ??
   (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
+
+export const viewport: Viewport = {
+  themeColor: '#242424',
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),

@@ -13,6 +13,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* 네이버/인앱 브라우저 등 WebView에서 배경색이 적용되도록 html, body에 명시 */
+html {
+  background-color: #242424;
+  min-height: 100%;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -23,6 +29,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #242424;
 }
 
 h1 {
