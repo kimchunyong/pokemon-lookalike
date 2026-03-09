@@ -81,7 +81,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: '포켓몬 닮은꼴 찾기',
-  alternateName: ['포켓몬 닮은꼴 테스트', '나와 닮은 포켓몬 찾기', 'Pocketmon Face'],
+  alternateName: ['포켓몬 닮은꼴 테스트', '나와 닮은 포켓몬 찾기', 'Pocketmon Face', '포켓몬 닮은꼴 찾기'],
   description:
     '포켓몬 닮은꼴 테스트·포켓몬 닮은꼴 찾기 서비스. 사진을 올리면 AI가 나와 닮은 포켓몬을 찾아줍니다. 포켓몬 도감, 닮은꼴 랭킹, 커뮤니티 제공. 무료이며 개인정보는 저장하지 않습니다.',
   url: baseUrl,
