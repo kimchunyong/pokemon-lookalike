@@ -11,7 +11,7 @@ export default function HomePage() {
   return (
     <main className="home-page-wrapper">
       <div className="home-page-video-backdrop" aria-hidden>
-        <video className="home-page-video" autoPlay loop muted playsInline>
+        <video className="home-page-video" ria-label="포켓몬 닮은꼴 찾기 영상" autoPlay loop muted playsInline>
           <source src="/video/pokemon_main_video.mp4" type="video/mp4" />
         </video>
         <div className="home-page-video-overlay" />
