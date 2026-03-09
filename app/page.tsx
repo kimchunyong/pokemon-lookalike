@@ -11,19 +11,38 @@ export default function HomePage() {
   return (
     <main className="home-page-wrapper">
       <div className="home-page-video-backdrop" aria-hidden>
-        <video className="home-page-video" ria-label="포켓몬 닮은꼴 찾기 영상" autoPlay loop muted playsInline>
+        <video className="home-page-video" autoPlay loop muted playsInline preload="none">
           <source src="/video/pokemon_main_video.mp4" type="video/mp4" />
         </video>
         <div className="home-page-video-overlay" />
       </div>
 
-
       <div className="home-page">
+        <section className="home-hero-content" aria-label="포켓몬 닮은꼴 테스트 시작">
+          <h1>{t.home.title}</h1>
+          <p>{t.home.subtitle}</p>
+          <p style={{ fontSize: '0.9em', color: 'rgba(255,255,255,0.85)', marginTop: '0.5rem' }}>
+            {t.home.disclaimer}
+          </p>
+
+          <div className="option-buttons">
+            <Link
+              href="/image-compare"
+              onClick={() => {
+                trackEvent({ label: 'Main Page Image Search Button' })
+              }}
+            >
+              <button type="button" className="primary-button">
+                {t.home.findByImage}
+              </button>
+            </Link>
+          </div>
+        </section>
+
         <section
           className="home-seo-content"
           aria-label="포켓몬 닮은꼴 테스트 소개"
           style={{
-            marginTop: '2.5rem',
             padding: '1.5rem',
             maxWidth: 640,
             textAlign: 'left',
@@ -49,25 +68,6 @@ export default function HomePage() {
             같은 사진이라도 표정에 따라 3위 이후 순위가 달라질 수 있어 더 다양한 포켓몬을 만나볼 수 있습니다.
           </p>
         </section>
-
-        <h1>{t.home.title}</h1>
-        <p>{t.home.subtitle}</p>
-        <p style={{ fontSize: '0.9em', color: 'rgba(255,255,255,0.85)', marginTop: '0.5rem' }}>
-          {t.home.disclaimer}
-        </p>
-
-        <div className="option-buttons">
-          <Link
-            href="/image-compare"
-            onClick={() => {
-              trackEvent({ label: 'Main Page Image Search Button' })
-            }}
-          >
-            <button type="button" className="primary-button">
-              {t.home.findByImage}
-            </button>
-          </Link>
-        </div>
       </div>
     </main>
   )

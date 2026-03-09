@@ -8,6 +8,8 @@ export default function Footer() {
   return (
     <footer
       style={{
+        position: 'relative',
+        zIndex: 5,
         padding: '1.5rem 1rem',
         marginTop: '3rem',
         textAlign: 'center',

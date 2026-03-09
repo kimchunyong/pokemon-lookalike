@@ -327,6 +327,10 @@ a:hover {
   height: 100%;
   overflow: hidden;
   z-index: 0;
+  background:
+    radial-gradient(circle at top, rgba(100, 108, 255, 0.28), transparent 45%),
+    linear-gradient(180deg, #11131f 0%, #242424 100%);
+  pointer-events: none;
 }
 
 .home-page-video {
@@ -358,11 +362,26 @@ a:hover {
   z-index: 5;
 }
 
+.home-hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 720px;
+  gap: 0.75rem;
+}
+
 .option-buttons {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.home-seo-content {
+  width: 100%;
+  content-visibility: auto;
+  contain-intrinsic-size: 520px;
 }
 
 .primary-button,
@@ -406,6 +425,22 @@ a:hover {
   max-height: 400px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px), (prefers-reduced-motion: reduce) {
+  .home-page-video {
+    display: none;
+  }
+
+  .home-page-video-overlay {
+    background: rgba(0, 0, 0, 0.18);
+  }
+
+  .home-page {
+    gap: 1.5rem;
+    padding: 1.5rem 1rem 2rem;
+    margin-top: 88px;
+  }
 }
 
 .preview-actions {

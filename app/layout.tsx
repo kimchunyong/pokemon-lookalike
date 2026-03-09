@@ -115,11 +115,6 @@ export default function RootLayout({
         <meta name="naver-site-verification" content="f6404166a2442d36a296a6c879f0317b1d126e72" />
         <meta name="google-adsense-account" content="ca-pub-9163702166115880" />
         <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9163702166115880"
-          crossOrigin="anonymous"
-        />
-        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
           suppressHydrationWarning
@@ -127,6 +122,11 @@ export default function RootLayout({
       </head>
       <body>
         <Providers>{children}</Providers>
+        <Script
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9163702166115880"
+          strategy="lazyOnload"
+          crossOrigin="anonymous"
+        />
         <Script
           src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"
           strategy="lazyOnload"
