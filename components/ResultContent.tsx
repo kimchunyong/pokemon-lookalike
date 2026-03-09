@@ -1,7 +1,7 @@
 'use client'
 
-import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import { useEffect, useState, useCallback, useRef } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
+import { useEffect, useState, useCallback, useRef, useMemo } from 'react'
 import PolicyNotice from './PolicyNotice'
 // import ShareButton from './ShareButton'
 import { useLanguage } from '../contexts/LanguageContext'
@@ -21,8 +21,8 @@ interface ResultContentProps {
 export default function ResultContent({ pokemon }: ResultContentProps) {
   const router = useRouter()
   const pathname = usePathname()
-  const searchParams = useSearchParams()
   const [userImage, setUserImage] = useState<string | null>(null)
+  const [locationSearch, setLocationSearch] = useState('')
   const intentExecutedRef = useRef(false)
   const [evolutionChain, setEvolutionChain] = useState<EvolutionStage[]>([])
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
@@ -32,6 +32,12 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
   const { t } = useLanguage()
   const { user, loading: authLoading } = useAuth()
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    setLocationSearch(window.location.search)
+  }, [pathname])
+
+  const searchParams = useMemo(() => new URLSearchParams(locationSearch), [locationSearch])
   const similarityParam = searchParams.get('similarity')
   const similarity = similarityParam ? parseFloat(similarityParam) : 0
 
@@ -156,6 +162,7 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
     next.delete('intent')
     const nextSearch = next.toString()
     const cleanPath = pathname + (nextSearch ? `?${nextSearch}` : '')
+    setLocationSearch(nextSearch ? `?${nextSearch}` : '')
     router.replace(cleanPath)
   }, [authLoading, user, pokemon, searchParams, pathname, router, handleSave, handleRankingRegister])
 

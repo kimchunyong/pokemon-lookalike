@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect } from 'react'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import ReactGA from 'react-ga4'
 
 const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim()
@@ -11,8 +11,7 @@ let lastTrackedPage = ''
 
 export default function GoogleAnalytics() {
   const pathname = usePathname()
-  const searchParams = useSearchParams()
-  const search = searchParams.toString()
+  const [locationSearch, setLocationSearch] = useState('')
 
   useEffect(() => {
     if (!measurementId || hasInitialized) {
@@ -24,6 +23,14 @@ export default function GoogleAnalytics() {
   }, [])
 
   useEffect(() => {
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    setLocationSearch(window.location.search)
+  }, [pathname])
+
+  useEffect(() => {
     if (!measurementId || !pathname) {
       return
     }
@@ -33,7 +40,7 @@ export default function GoogleAnalytics() {
       hasInitialized = true
     }
 
-    const page = search ? `${pathname}?${search}` : pathname
+    const page = locationSearch ? `${pathname}${locationSearch}` : pathname
 
     if (page === lastTrackedPage) {
       return
@@ -46,7 +53,7 @@ export default function GoogleAnalytics() {
     })
 
     lastTrackedPage = page
-  }, [pathname, search])
+  }, [pathname, locationSearch])
 
   return null
 }
