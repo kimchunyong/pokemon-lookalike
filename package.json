@@ -26,7 +26,8 @@
     "@vladmandic/face-api": "^1.7.15",
     "eslint-config-next": "^16.1.6",
     "html2canvas": "^1.4.1",
-    "next": "^16.1.6"
+    "next": "^16.1.6",
+    "react-ga4": "^2.1.0"
   },
   "devDependencies": {
     "@types/node": "^25.2.0",

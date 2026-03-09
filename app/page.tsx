@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import PolicyNotice from '../components/PolicyNotice'
 import { useLanguage } from '../contexts/LanguageContext'
+import { trackEvent } from '@/lib/ga'
 
 export default function HomePage() {
   const { t } = useLanguage()
@@ -56,7 +57,12 @@ export default function HomePage() {
         </p>
 
         <div className="option-buttons">
-          <Link href="/image-compare">
+          <Link
+            href="/image-compare"
+            onClick={() => {
+              trackEvent({ label: 'Main Page Image Search Button' })
+            }}
+          >
             <button type="button" className="primary-button">
               {t.home.findByImage}
             </button>

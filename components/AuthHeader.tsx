@@ -6,6 +6,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { locales, type Locale } from '@/i18n'
 import Image from 'next/image'
+import { trackEvent } from '@/lib/ga'
 
 const languageNames: Record<Locale, string> = {
   ko: '한국어',
@@ -82,7 +83,14 @@ export default function AuthHeader() {
       <Link href="/" className="header-nav-link" onClick={closeAll}>
         {t.header.navHome}
       </Link>
-      <Link href="/image-compare" className="header-nav-link" onClick={closeAll}>
+      <Link
+        href="/image-compare"
+        className="header-nav-link"
+        onClick={() => {
+          trackEvent({ label: 'Header Image Search Button' })
+          closeAll()
+        }}
+      >
         {t.header.navFindByImage}
       </Link>
       <Link href="/pokedex" className="header-nav-link" onClick={closeAll}>

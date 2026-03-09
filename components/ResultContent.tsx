@@ -12,6 +12,7 @@ import KakaoShareButton from './KakaoShareButton'
 import { getEvolutionChain, EvolutionStage } from '../utils/evolutionChain'
 import { getPokemonWithKoreanName } from '../utils/pokeapi'
 import { getEmotionKorean } from '../utils/emotionAnalysis'
+import { trackEvent } from '@/lib/ga'
 
 interface ResultContentProps {
   pokemon: any
@@ -161,6 +162,8 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
   const handleSaveResultImage = useCallback(async () => {
     const el = resultCaptureRef.current
     if (!el) return
+
+    trackEvent({ label: 'Result Save Image Button' })
     setCaptureStatus('capturing')
     try {
       const { default: html2canvas } = await import('html2canvas')

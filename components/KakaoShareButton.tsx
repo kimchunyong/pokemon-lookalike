@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { useLanguage } from '../contexts/LanguageContext'
+import { trackEvent } from '@/lib/ga'
 
 interface KakaoShareButtonProps {
   pokemon: any
@@ -31,6 +32,8 @@ export default function KakaoShareButton({ pokemon }: KakaoShareButtonProps) {
   }, [])
 
   const handleShare = () => {
+    trackEvent({ label: 'Kakao Share Button' })
+
     if (!window.Kakao) {
       alert('카카오톡 SDK가 로드되지 않았습니다.')
       return

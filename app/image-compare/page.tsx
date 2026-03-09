@@ -9,6 +9,7 @@ import { POKEMON_LIST } from '../../data/pokemon'
 import PolicyNotice from '../../components/PolicyNotice'
 // import ShareButton from '../../components/ShareButton'
 import { useLanguage } from '../../contexts/LanguageContext'
+import { trackEvent } from '@/lib/ga'
 
 export default function ImageComparePage() {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null)
@@ -32,6 +33,7 @@ export default function ImageComparePage() {
       return
     }
 
+    trackEvent({ label: 'Image Compare Find Pokemon Button' })
     setIsProcessing(true)
     setError(null)
 
@@ -62,6 +64,10 @@ export default function ImageComparePage() {
   }
 
   const handleViewResult = (pokemon: any) => {
+    trackEvent({
+      label: `Result Pokemon Click - ${pokemon.name}`,
+    })
+
     if (uploadedImage) {
       sessionStorage.setItem('userImage', uploadedImage)
     }
