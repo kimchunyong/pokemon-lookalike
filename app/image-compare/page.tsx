@@ -7,6 +7,7 @@ import { findSimilarPokemon } from '../../utils/imageComparison'
 import { analyzeEmotionAndGetFaceCrop, getEmotionKorean } from '../../utils/emotionAnalysis'
 import { POKEMON_LIST } from '../../data/pokemon'
 import PolicyNotice from '../../components/PolicyNotice'
+import AdSenseUnit from '../../components/AdSenseUnit'
 // import ShareButton from '../../components/ShareButton'
 import { useLanguage } from '../../contexts/LanguageContext'
 import { trackEvent } from '@/lib/ga'
@@ -240,6 +241,10 @@ export default function ImageComparePage() {
           </div>
         </div>
       )}
+
+      <aside className="image-compare-ad-wrap" aria-label="광고" style={{ margin: '1.5rem auto', maxWidth: 640, minHeight: 90 }}>
+        <AdSenseUnit slot="7390261701" format="horizontal" />
+      </aside>
 
       <PolicyNotice />
     </main>

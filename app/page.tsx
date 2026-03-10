@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import PolicyNotice from '../components/PolicyNotice'
+import AdSenseUnit from '../components/AdSenseUnit'
 import { useLanguage } from '../contexts/LanguageContext'
 import { trackEvent } from '@/lib/ga'
 
@@ -74,6 +75,9 @@ export default function HomePage() {
             &quot;환상의 짝꿍&quot; 관상까지 확인할 수 있으며, 나와 잘 맞는 친구에게 카카오톡으로 공유할 수 있습니다. (참고용·성격 검사 아님)
           </p>
         </section>
+        <aside className="home-ad-wrap" aria-label="광고">
+          <AdSenseUnit slot="7390261701" format="horizontal" style={{ display: 'block', margin: '1rem auto', textAlign: 'center' }} />
+        </aside>
       </div>
     </main>
   )
