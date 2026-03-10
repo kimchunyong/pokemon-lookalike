@@ -13,6 +13,24 @@ import { getEvolutionChain, EvolutionStage } from '../utils/evolutionChain'
 import { getPokemonWithKoreanName } from '../utils/pokeapi'
 import { getEmotionKorean } from '../utils/emotionAnalysis'
 import { trackEvent } from '@/lib/ga'
+import { inferMbtiCode } from '@/utils/mbti'
+import type { MbtiTypeRow } from '@/utils/mbti'
+import { POKEMON_LIST } from '@/data/pokemon'
+import MbtiPentagonChart from './MbtiPentagonChart'
+
+const ARTWORK_URL = (id: number) =>
+  `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
+
+const MBTI_ANALYSIS_STEPS = [
+  '얼굴형에서 외향성 수치 추출 중...',
+  '눈매로 보는 고집 지수 측정 중...',
+  '인상 기반 감성 지표 분석 중...',
+  '포켓몬 타입과 성향 매칭 중...',
+  '감정 데이터와 판단 축 교차 분석 중...',
+  '최종 MBTI 유형 조합 중...',
+]
+
+const MBTI_ANALYSIS_STEP_MS = 650
 
 interface ResultContentProps {
   pokemon: any
@@ -28,6 +46,12 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const [rankingStatus, setRankingStatus] = useState<'idle' | 'registering' | 'registered' | 'error'>('idle')
   const [captureStatus, setCaptureStatus] = useState<'idle' | 'capturing' | 'done' | 'error'>('idle')
+  const [mbtiExpanded, setMbtiExpanded] = useState(false)
+  const [mbtiData, setMbtiData] = useState<MbtiTypeRow | null>(null)
+  const [mbtiLoading, setMbtiLoading] = useState(false)
+  const [mbtiAnalysisPhase, setMbtiAnalysisPhase] = useState<'idle' | 'analyzing' | 'done'>('idle')
+  const [mbtiAnalysisStep, setMbtiAnalysisStep] = useState(0)
+  const mbtiHasShownResultRef = useRef(false)
   const resultCaptureRef = useRef<HTMLDivElement>(null)
   const { t } = useLanguage()
   const { user, loading: authLoading } = useAuth()
@@ -85,6 +109,45 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
     }
     fetchEvolution()
   }, [pokemon])
+
+  useEffect(() => {
+    if (!pokemon?.id) return
+    const code = inferMbtiCode(pokemon, emotionParam ?? null)
+    setMbtiLoading(true)
+    void createClient()
+      .from('mbti_types')
+      .select('code, name_ko, description, color_hex, good_match_pokemon_ids, bad_match_pokemon_ids, sort_order, personality_stats, fantasy_match_pokemon_id')
+      .eq('code', code)
+      .single()
+      .then(({ data, error }) => {
+        if (!error && data) setMbtiData(data as MbtiTypeRow)
+      })
+      .then(() => setMbtiLoading(false), () => setMbtiLoading(false))
+  }, [pokemon?.id, emotionParam])
+
+  const mbtiAnalysisTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    if (!mbtiExpanded || mbtiAnalysisPhase !== 'analyzing') return
+    const totalSteps = MBTI_ANALYSIS_STEPS.length
+    if (mbtiAnalysisStep >= totalSteps) {
+      mbtiHasShownResultRef.current = true
+      setMbtiAnalysisPhase('done')
+      return
+    }
+    mbtiAnalysisTimerRef.current = setTimeout(() => {
+      setMbtiAnalysisStep((s) => {
+        if (s + 1 >= totalSteps) {
+          mbtiHasShownResultRef.current = true
+          setMbtiAnalysisPhase('done')
+        }
+        return Math.min(s + 1, totalSteps)
+      })
+    }, MBTI_ANALYSIS_STEP_MS)
+    return () => {
+      if (mbtiAnalysisTimerRef.current) clearTimeout(mbtiAnalysisTimerRef.current)
+    }
+  }, [mbtiExpanded, mbtiAnalysisPhase, mbtiAnalysisStep])
 
   const handleSave = useCallback(async () => {
     if (!user || !pokemon) return
@@ -370,8 +433,266 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
         </div>
       </div>
 
+      <div
+        className="mbti-section"
+        style={{
+          maxWidth: '600px',
+          margin: '2rem auto',
+          background: 'rgba(255,255,255,0.05)',
+          borderRadius: 12,
+          overflow: 'hidden',
+          border: '1px solid rgba(255,255,255,0.1)',
+        }}
+      >
+        <button
+          type="button"
+          onClick={() => {
+            if (!mbtiExpanded) {
+              trackEvent({ label: 'Result MBTI Expand' })
+              if (mbtiHasShownResultRef.current && mbtiData) {
+                setMbtiAnalysisPhase('done')
+                setMbtiAnalysisStep(MBTI_ANALYSIS_STEPS.length)
+              } else {
+                setMbtiAnalysisPhase('analyzing')
+                setMbtiAnalysisStep(0)
+              }
+            } else {
+              setMbtiAnalysisPhase('idle')
+              setMbtiAnalysisStep(0)
+            }
+            setMbtiExpanded((v) => !v)
+          }}
+          style={{
+            width: '100%',
+            padding: '1rem 1.25rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            background: 'none',
+            border: 'none',
+            color: '#fff',
+            fontSize: '1em',
+            cursor: 'pointer',
+            textAlign: 'left',
+          }}
+        >
+          <span style={{margin: '0.5rem 0'}}>{(t.resultContent as Record<string, string>).mbtiSectionTitle ?? '내 얼굴에서 이런 성격이 나온다고?'}</span>
+          <span style={{ transform: mbtiExpanded ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>▼</span>
+        </button>
+        {mbtiExpanded && (
+          <div style={{ marginTop: '0.5rem', padding: '0 1.25rem 1.25rem' }}>
+            {mbtiAnalysisPhase === 'analyzing' && (
+              <div
+                style={{
+                  padding: '1.5rem 0',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '1rem',
+                }}
+              >
+                <div
+                  style={{
+                    width: 40,
+                    height: 40,
+                    border: '3px solid rgba(100, 108, 255, 0.3)',
+                    borderTopColor: '#646cff',
+                    borderRadius: '50%',
+                    animation: 'mbti-spin 0.8s linear infinite',
+                  }}
+                />
+                <p
+                  style={{
+                    color: 'rgba(255,255,255,0.9)',
+                    margin: 0,
+                    fontSize: '0.95em',
+                    textAlign: 'center',
+                    minHeight: '1.5em',
+                  }}
+                >
+                  {MBTI_ANALYSIS_STEPS[mbtiAnalysisStep]}
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      width: '1em',
+                      animation: 'mbti-blink 1s steps(2) infinite',
+                    }}
+                  >
+                    _
+                  </span>
+                </p>
+                <p style={{ margin: 0, fontSize: '0.75em', color: '#666' }}>
+                  {mbtiAnalysisStep + 1} / {MBTI_ANALYSIS_STEPS.length}
+                </p>
+              </div>
+            )}
+            {mbtiAnalysisPhase === 'done' && (
+              <>
+            {mbtiLoading && (
+              <p style={{ color: '#888', margin: '1rem 0' }}>{t.common.loading}</p>
+            )}
+            {!mbtiLoading && !mbtiData && (
+              <p style={{ color: '#888', margin: '1rem 0' }}>MBTI 유형 정보를 불러올 수 없습니다.</p>
+            )}
+            {!mbtiLoading && mbtiData && (
+              <>
+              <div
+                style={{
+                  padding: '1rem',
+                  borderRadius: 8,
+                  background: `${mbtiData.color_hex}22`,
+                  border: `1px solid ${mbtiData.color_hex}`,
+                  marginBottom: '1rem',
+                }}
+              >
+                <p style={{ margin: 0, fontSize: '1.1em', fontWeight: 700, color: mbtiData.color_hex }}>
+                  {mbtiData.code} · {mbtiData.name_ko}
+                </p>
+                <p style={{ margin: '0.5rem 0 0', fontSize: '0.95em', color: 'rgba(255,255,255,0.9)', lineHeight: 1.5 }}>
+                  {mbtiData.description}
+                </p>
+              </div>
+              <p style={{ fontSize: '0.8em', color: '#888', marginBottom: '1rem' }}>
+                {(t.resultContent as Record<string, string>).mbtiDisclaimer ?? '재미로만 참고해 주세요. 성격 검사 결과가 아닙니다.'}
+              </p>
+              {mbtiData.personality_stats && (
+                <div style={{ marginBottom: '1rem' }}>
+                  <h4 style={{ fontSize: '0.9em', color: 'rgba(255,255,255,0.9)', marginBottom: '0.5rem' }}>
+                    {(t.resultContent as Record<string, string>).mbtiPersonalityChart ?? '성격 능력치'}
+                  </h4>
+                  <MbtiPentagonChart stats={mbtiData.personality_stats} />
+                </div>
+              )}
+              {(() => {
+                const fantasyId = mbtiData.fantasy_match_pokemon_id ?? mbtiData.good_match_pokemon_ids?.[0]
+                const fantasyPokemon = fantasyId != null ? POKEMON_LIST.find((p) => p.id === fantasyId) : null
+                const fantasyName = fantasyPokemon?.name ?? ''
+                const tpl = (t.resultContent as Record<string, string>).mbtiFantasyMatch ?? "당신({{pokemonName}})과 잘 맞는 관상은 '{{matchName}}' 관상입니다."
+                const sentence = tpl.replace('{{pokemonName}}', pokemon.name).replace('{{matchName}}', fantasyName)
+                return fantasyName ? (
+                  <p style={{ fontSize: '0.95em', color: '#8bc34a', marginBottom: '1rem', lineHeight: 1.5 }}>
+                    {sentence}
+                  </p>
+                ) : null
+              })()}
+              {(mbtiData.good_match_pokemon_ids?.length ?? 0) > 0 && (
+                <div style={{ marginBottom: '1rem' }}>
+                  <h4 style={{ fontSize: '0.9em', color: '#8bc34a', marginBottom: '0.5rem' }}>
+                    {(t.resultContent as Record<string, string>).mbtiGoodMatch ?? '궁합 좋은 포켓몬'}
+                  </h4>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+                    {mbtiData.good_match_pokemon_ids
+                      .map((id) => POKEMON_LIST.find((p) => p.id === id))
+                      .filter(Boolean)
+                      .map((p) => (
+                        <a
+                          key={p!.id}
+                          href={`/result/${p!.id}`}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            router.push(`/result/${p!.id}`)
+                          }}
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: '0.25rem',
+                            padding: '0.5rem',
+                            background: 'rgba(255,255,255,0.06)',
+                            borderRadius: 8,
+                            color: '#fff',
+                            textDecoration: 'none',
+                            fontSize: '0.85em',
+                          }}
+                        >
+                          <img
+                            src={p!.imageUrl}
+                            alt={p!.name}
+                            width={48}
+                            height={48}
+                            style={{ objectFit: 'contain' }}
+                          />
+                          <span>{p!.name}</span>
+                        </a>
+                      ))}
+                  </div>
+                </div>
+              )}
+              {(mbtiData.bad_match_pokemon_ids?.length ?? 0) > 0 && (
+                <div style={{ marginBottom: '0.5rem' }}>
+                  <h4 style={{ fontSize: '0.9em', color: '#f44336', marginBottom: '0.5rem' }}>
+                    {(t.resultContent as Record<string, string>).mbtiBadMatch ?? '궁합 나쁜 포켓몬'}
+                  </h4>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+                    {mbtiData.bad_match_pokemon_ids
+                      .map((id) => POKEMON_LIST.find((p) => p.id === id))
+                      .filter(Boolean)
+                      .map((p) => (
+                        <a
+                          key={p!.id}
+                          href={`/result/${p!.id}`}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            router.push(`/result/${p!.id}`)
+                          }}
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: '0.25rem',
+                            padding: '0.5rem',
+                            background: 'rgba(255,255,255,0.06)',
+                            borderRadius: 8,
+                            color: '#fff',
+                            textDecoration: 'none',
+                            fontSize: '0.85em',
+                          }}
+                        >
+                          <img
+                            src={p!.imageUrl}
+                            alt={p!.name}
+                            width={48}
+                            height={48}
+                            style={{ objectFit: 'contain' }}
+                          />
+                          <span>{p!.name}</span>
+                        </a>
+                      ))}
+                  </div>
+                </div>
+              )}
+              <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1rem', flexWrap: 'wrap' }}>
+                <button
+                  type="button"
+                  onClick={() => router.push('/pokedex')}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    fontSize: '0.85em',
+                    background: 'rgba(100,108,255,0.2)',
+                    border: '1px solid #646cff',
+                    color: '#646cff',
+                    borderRadius: 8,
+                    cursor: 'pointer',
+                  }}
+                >
+                  {(t.resultContent as Record<string, string>).mbtiViewPokedex ?? '도감에서 보기'}
+                </button>
+                <KakaoShareButton
+                  pokemon={pokemon}
+                  mbtiCode={mbtiData?.code ?? null}
+                  variant="secondary"
+                />
+              </div>
+              </>
+            )}
+              </>
+            )}
+          </div>
+        )}
+      </div>
+
       <div className="result-save-image-row">
-        <KakaoShareButton pokemon={pokemon} />
+        <KakaoShareButton pokemon={pokemon} mbtiCode={mbtiData?.code ?? null} />
         <button
           type="button"
           onClick={handleSaveResultImage}

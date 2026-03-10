@@ -162,6 +162,15 @@
     "delete": "Delete"
   },
   "resultContent": {
+    "mbtiSectionTitle": "See my Pokémon MBTI guess",
+    "mbtiDisclaimer": "For fun only. This is not a personality test result.",
+    "mbtiGoodMatch": "Good match Pokémon",
+    "mbtiBadMatch": "Bad match Pokémon",
+    "mbtiViewPokedex": "View in Pokédex",
+    "mbtiFindAgain": "Try with a friend",
+    "mbtiPersonalityChart": "Personality stats",
+    "mbtiFantasyMatch": "The face that matches you ({{pokemonName}}) best is '{{matchName}}'.",
+    "mbtiShareToMatchingFriend": "Share with a friend who matches you",
     "loginAndSaveResult": "Login and save result",
     "loginAndRegisterRanking": "Login and register to ranking",
     "saveToMyResults": "Save to My Results",

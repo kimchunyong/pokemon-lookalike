@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import ImageUpload from '../../components/ImageUpload'
 import { findSimilarPokemon } from '../../utils/imageComparison'
@@ -11,20 +11,64 @@ import PolicyNotice from '../../components/PolicyNotice'
 import { useLanguage } from '../../contexts/LanguageContext'
 import { trackEvent } from '@/lib/ga'
 
+const IMAGE_COMPARE_STORAGE_KEY = 'imageCompareState'
+
+type StoredCompareState = {
+  uploadedImage: string | null
+  results: Array<{ id: number; name: string; similarity: number; type?: string; description?: string; imageUrl?: string }>
+  detectedEmotion: { expression: string; probability: number } | null
+}
+
+function loadCompareState(): Partial<StoredCompareState> | null {
+  if (typeof window === 'undefined') return null
+  try {
+    const raw = sessionStorage.getItem(IMAGE_COMPARE_STORAGE_KEY)
+    if (!raw) return null
+    return JSON.parse(raw) as Partial<StoredCompareState>
+  } catch {
+    return null
+  }
+}
+
+function saveCompareState(state: StoredCompareState) {
+  if (typeof window === 'undefined') return
+  try {
+    sessionStorage.setItem(IMAGE_COMPARE_STORAGE_KEY, JSON.stringify(state))
+  } catch {
+    // ignore quota etc.
+  }
+}
+
+function clearCompareState() {
+  if (typeof window === 'undefined') return
+  sessionStorage.removeItem(IMAGE_COMPARE_STORAGE_KEY)
+}
+
 export default function ImageComparePage() {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null)
   const [isProcessing, setIsProcessing] = useState(false)
   const [results, setResults] = useState<Array<any>>([])
   const [error, setError] = useState<string | null>(null)
   const [detectedEmotion, setDetectedEmotion] = useState<{ expression: string; probability: number } | null>(null)
+  const [hasRestored, setHasRestored] = useState(false)
   const router = useRouter()
   const { t } = useLanguage()
+
+  useEffect(() => {
+    const stored = loadCompareState()
+    if (!stored || hasRestored) return
+    if (stored.uploadedImage != null) setUploadedImage(stored.uploadedImage)
+    if (stored.results?.length) setResults(stored.results)
+    if (stored.detectedEmotion) setDetectedEmotion(stored.detectedEmotion)
+    setHasRestored(true)
+  }, [hasRestored])
 
   const handleImageSelect = (imageUrl: string | null) => {
     setUploadedImage(imageUrl)
     setResults([])
     setError(null)
     setDetectedEmotion(null)
+    clearCompareState()
   }
 
   const handleCompare = async () => {
@@ -71,6 +115,12 @@ export default function ImageComparePage() {
     if (uploadedImage) {
       sessionStorage.setItem('userImage', uploadedImage)
     }
+
+    saveCompareState({
+      uploadedImage,
+      results,
+      detectedEmotion,
+    })
     
     let url = `/result/${pokemon.id}?similarity=${pokemon.similarity}`
     if (detectedEmotion) {

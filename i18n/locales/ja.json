@@ -162,6 +162,15 @@
     "delete": "削除"
   },
   "resultContent": {
+    "mbtiSectionTitle": "私のポケモンMBTI診断を見る",
+    "mbtiDisclaimer": "お楽しみ用です。性格検査の結果ではありません。",
+    "mbtiGoodMatch": "相性の良いポケモン",
+    "mbtiBadMatch": "相性の悪いポケモン",
+    "mbtiViewPokedex": "図鑑で見る",
+    "mbtiFindAgain": "友達も試してみる",
+    "mbtiPersonalityChart": "性格ステータス",
+    "mbtiFantasyMatch": "あなた({{pokemonName}})と相性の良い顔は『{{matchName}}』の顔です。",
+    "mbtiShareToMatchingFriend": "相性の良い友達にシェア",
     "loginAndSaveResult": "ログインして結果を保存",
     "loginAndRegisterRanking": "ログインしてランキング登録",
     "saveToMyResults": "マイ結果に保存",

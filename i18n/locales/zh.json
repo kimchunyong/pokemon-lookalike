@@ -162,6 +162,15 @@
     "delete": "删除"
   },
   "resultContent": {
+    "mbtiSectionTitle": "查看我的宝可梦MBTI推测",
+    "mbtiDisclaimer": "仅供娱乐，非性格测试结果。",
+    "mbtiGoodMatch": "契合的宝可梦",
+    "mbtiBadMatch": "不契合的宝可梦",
+    "mbtiViewPokedex": "在图鉴中查看",
+    "mbtiFindAgain": "让朋友也试试",
+    "mbtiPersonalityChart": "性格能力值",
+    "mbtiFantasyMatch": "与您({{pokemonName}})最配的观相是「{{matchName}}」观相。",
+    "mbtiShareToMatchingFriend": "分享给与我相配的朋友",
     "loginAndSaveResult": "登录并保存结果",
     "loginAndRegisterRanking": "登录并登记排名",
     "saveToMyResults": "保存到我的结果",

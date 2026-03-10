@@ -610,6 +610,15 @@ a:hover {
   100% { transform: translateX(-100%); }
 }
 
+@keyframes mbti-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes mbti-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
 .results-section {
   margin-top: 3rem;
 }

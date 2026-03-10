@@ -162,6 +162,15 @@
     "delete": "삭제"
   },
   "resultContent": {
+    "mbtiSectionTitle": "내 얼굴에서 이런 MBTI가 나온다고?",
+    "mbtiDisclaimer": "재미로만 참고해 주세요. 성격 검사 결과가 아닙니다.",
+    "mbtiGoodMatch": "궁합 좋은 포켓몬",
+    "mbtiBadMatch": "궁합 나쁜 포켓몬",
+    "mbtiViewPokedex": "도감에서 보기",
+    "mbtiFindAgain": "친구도 테스트해 보기",
+    "mbtiPersonalityChart": "성격 능력치",
+    "mbtiFantasyMatch": "당신({{pokemonName}})과 잘 맞는 관상은 '{{matchName}}' 관상입니다.",
+    "mbtiShareToMatchingFriend": "나와 잘 맞는 친구에게 공유",
     "loginAndSaveResult": "로그인하고 결과 저장",
     "loginAndRegisterRanking": "로그인하고 랭킹전 등록",
     "saveToMyResults": "내 결과 저장",

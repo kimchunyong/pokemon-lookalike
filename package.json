@@ -7,6 +7,7 @@
     "dev": "rm -rf .next && next dev",
     "dev:fast": "next dev",
     "build": "next build && node scripts/move-to-dist.js",
+    "test": "node --test functions/_lib/*.test.js",
     "data:gen2": "node scripts/fetch-gen2-pokemon.js",
     "embeddings": "node scripts/generate-pokemon-embeddings.js",
     "embeddings:gen2": "node scripts/generate-pokemon-embeddings.js 152 251",
@@ -16,7 +17,7 @@
     "start": "next start",
     "clean": "rm -rf .next out dist",
     "lint": "next lint",
-    "deploy": "npm run build && npx wrangler pages deploy dist --project-name=pokemon-lookalike"
+    "deploy": "npm run build && npx wrangler pages deploy"
   },
   "dependencies": {
     "@huggingface/transformers": "^3.8.1",

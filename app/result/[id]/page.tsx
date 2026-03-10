@@ -26,19 +26,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
-  const description = `포켓몬 닮은꼴 찾기 결과: 나와 닮은 포켓몬 ${pokemon.name}. ${pokemon.description} 포켓몬 닮은꼴 찾기 서비스에서 확인하세요.`
+  const description = `포켓몬 닮은꼴 테스트·포켓몬 닮은꼴 찾기 결과: 나와 닮은 포켓몬 ${pokemon.name}. MBTI 유추(16유형)·성격 능력치·환상의 짝꿍. ${pokemon.description} 무료 포켓몬 닮은꼴 찾기.`
   return {
-    title: `나는 ${pokemon.name}를 닮았어요! | 포켓몬 닮은꼴 찾기`,
+    title: `나는 ${pokemon.name}를 닮았어요! | 포켓몬 닮은꼴 테스트`,
     description,
     openGraph: {
-      title: `나와 닮은 포켓몬 ${pokemon.name} | 포켓몬 닮은꼴 찾기`,
-      description: `포켓몬 닮은꼴 찾기 결과 - ${pokemon.name}. ${pokemon.description}`,
+      title: `나와 닮은 포켓몬 ${pokemon.name} | 포켓몬 닮은꼴 테스트 · 포켓몬 닮은꼴 찾기`,
+      description: `포켓몬 닮은꼴 테스트·포켓몬 닮은꼴 찾기 결과 - ${pokemon.name}. MBTI 유추·성격 능력치·환상의 짝꿍. ${pokemon.description}`,
       images: [
         {
           url: pokemon.imageUrl,
           width: 800,
           height: 800,
-          alt: `${pokemon.name} - 포켓몬 닮은꼴 찾기`,
+          alt: `${pokemon.name} - 포켓몬 닮은꼴 테스트, 포켓몬 닮은꼴 찾기`,
         },
       ],
     },
