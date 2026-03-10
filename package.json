@@ -17,7 +17,7 @@
     "start": "next start",
     "clean": "rm -rf .next out dist",
     "lint": "next lint",
-    "deploy": "npm run build && npx wrangler pages deploy"
+    "deploy": "npm run build && npx wrangler pages deploy dist"
   },
   "dependencies": {
     "@huggingface/transformers": "^3.8.1",
