@@ -35,6 +35,7 @@
     "similarity": "相似度",
     "type": "类型",
     "viewDetails": "查看详情",
+    "detailHint": "类型与说明在详情中查看！",
     "uploadError": "请上传图片。",
     "compareError": "图片比较时发生错误，请重试。",
     "imageReadError": "读取图片时发生错误。",

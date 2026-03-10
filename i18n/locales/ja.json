@@ -35,6 +35,7 @@
     "similarity": "類似度",
     "type": "タイプ",
     "viewDetails": "詳細を見る",
+    "detailHint": "タイプ・説明は詳細で！",
     "uploadError": "画像をアップロードしてください。",
     "compareError": "画像の比較中にエラーが発生しました。もう一度お試しください。",
     "imageReadError": "画像の読み込み中にエラーが発生しました。",

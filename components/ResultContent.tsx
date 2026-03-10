@@ -17,7 +17,7 @@ import { inferMbtiCode } from '@/utils/mbti'
 import type { MbtiTypeRow } from '@/utils/mbti'
 import { POKEMON_LIST } from '@/data/pokemon'
 import MbtiPentagonChart from './MbtiPentagonChart'
-import AdSenseUnit from './AdSenseUnit'
+import AdSenseSlot from './AdSenseSlot'
 
 const ARTWORK_URL = (id: number) =>
   `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
@@ -693,7 +693,7 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
       </div>
 
       <aside aria-label="광고" style={{ margin: '1.5rem auto', maxWidth: 640, minHeight: 90, display: 'flex', justifyContent: 'center' }}>
-        <AdSenseUnit slot="7390261701" format="horizontal" />
+        <AdSenseSlot slot="7390261701" format="horizontal" />
       </aside>
 
       <div className="result-save-image-row">

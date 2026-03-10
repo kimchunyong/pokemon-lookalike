@@ -7,7 +7,7 @@ import { findSimilarPokemon } from '../../utils/imageComparison'
 import { analyzeEmotionAndGetFaceCrop, getEmotionKorean } from '../../utils/emotionAnalysis'
 import { POKEMON_LIST } from '../../data/pokemon'
 import PolicyNotice from '../../components/PolicyNotice'
-import AdSenseUnit from '../../components/AdSenseUnit'
+import AdSenseSlot from '../../components/AdSenseSlot'
 // import ShareButton from '../../components/ShareButton'
 import { useLanguage } from '../../contexts/LanguageContext'
 import { trackEvent } from '@/lib/ga'
@@ -214,19 +214,19 @@ export default function ImageComparePage() {
                   {t.imageCompare.similarity}: {(pokemon.similarity * 100).toFixed(1)}%
                 </div>
                 {pokemon.imageUrl && (
-                  <img
-                    src={pokemon.imageUrl}
-                    alt={`포켓몬 닮은꼴 테스트 결과: ${pokemon.name}`}
-                    className="pokemon-image"
-                  />
+                  <div className="pokemon-card-silhouette">
+                    <img
+                      src={pokemon.imageUrl}
+                      alt=""
+                      className="pokemon-image"
+                      aria-hidden
+                    />
+                  </div>
                 )}
-                <h3>{detectedEmotion ? <span style={{ color: '#646cff', fontWeight: 'bold' }}>{getEmotionKorean(detectedEmotion.expression)}</span> : ''} {pokemon.name}</h3>
-                {pokemon.type && (
-                  <p className="pokemon-type">{t.imageCompare.type}: {pokemon.type}</p>
-                )}
-                {pokemon.description && (
-                  <p className="pokemon-description">{pokemon.description}</p>
-                )}
+                <h3>{detectedEmotion ? <span style={{ color: '#646cff', fontWeight: 'bold' }}>{getEmotionKorean(detectedEmotion.expression)}</span> : ''} ?</h3>
+                <p className="pokemon-card-hint" style={{ fontSize: '0.85em', color: '#888', margin: '0.5rem 0' }}>
+                  {(t.imageCompare as Record<string, string>).detailHint ?? '타입·설명은 자세히 보기에서!'}
+                </p>
                 <div className="pokemon-card-actions">
                   <button
                     type="button"
@@ -243,7 +243,7 @@ export default function ImageComparePage() {
       )}
 
       <aside className="image-compare-ad-wrap" aria-label="광고" style={{ margin: '1.5rem auto', maxWidth: 640, minHeight: 90 }}>
-        <AdSenseUnit slot="7390261701" format="horizontal" />
+        <AdSenseSlot slot="7390261701" format="horizontal" />
       </aside>
 
       <PolicyNotice />

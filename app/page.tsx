@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import PolicyNotice from '../components/PolicyNotice'
-import AdSenseUnit from '../components/AdSenseUnit'
+import AdSenseSlot from '../components/AdSenseSlot'
 import { useLanguage } from '../contexts/LanguageContext'
 import { trackEvent } from '@/lib/ga'
 
@@ -76,7 +76,7 @@ export default function HomePage() {
           </p>
         </section>
         <aside className="home-ad-wrap" aria-label="광고">
-          <AdSenseUnit slot="7390261701" format="horizontal" style={{ display: 'block', margin: '1rem auto', textAlign: 'center' }} />
+          <AdSenseSlot slot="7390261701" format="horizontal" style={{ display: 'block', margin: '1rem auto', textAlign: 'center' }} />
         </aside>
       </div>
     </main>

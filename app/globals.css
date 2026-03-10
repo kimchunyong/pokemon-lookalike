@@ -659,6 +659,16 @@ a:hover {
   margin: 1rem 0;
 }
 
+/* 이미지 비교 결과 목록: 실루엣만 표시 (자세히 보기에서 전체 공개) */
+.pokemon-card-silhouette {
+  display: inline-block;
+  margin: 1rem 0;
+}
+.pokemon-card-silhouette .pokemon-image {
+  filter: brightness(0);
+  opacity: 0.85;
+}
+
 .pokemon-type {
   color: #888;
   margin: 0.5rem 0;

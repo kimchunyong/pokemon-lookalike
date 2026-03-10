@@ -11,7 +11,7 @@ declare global {
   }
 }
 
-type AdSenseUnitProps = {
+export type AdSenseUnitProps = {
   /** 광고 단위 ID (숫자). 미설정 시 NEXT_PUBLIC_ADSENSE_AD_SLOT 사용 */
   slot?: string
   /** 광고 형식: auto | rectangle | horizontal | vertical */

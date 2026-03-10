@@ -35,6 +35,7 @@
     "similarity": "Similarity",
     "type": "Type",
     "viewDetails": "View Details",
+    "detailHint": "See type & description in details!",
     "uploadError": "Please upload an image.",
     "compareError": "An error occurred while comparing images. Please try again.",
     "imageReadError": "An error occurred while reading the image.",
