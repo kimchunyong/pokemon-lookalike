@@ -269,7 +269,10 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
     <main className="image-compare-page" style={{ marginTop: '80px' }}>
       <div ref={resultCaptureRef} className="result-capture-area">
         <h1>{t.result.title}</h1>
-        <p style={{ fontSize: '0.9em', color: '#888', marginBottom: '1rem' }}>{t.result.found}</p>
+        <p style={{ fontSize: '0.9em', color: '#888', marginBottom: '0.5rem' }}>{t.result.found}</p>
+        <p style={{ fontSize: '0.85em', color: '#666', marginBottom: '1rem', maxWidth: 480, marginLeft: 'auto', marginRight: 'auto' }}>
+          {t.result.reference}
+        </p>
 
         <div className="pokemon-results" style={{ maxWidth: '500px', margin: '2rem auto' }}>
           <div className="pokemon-card">

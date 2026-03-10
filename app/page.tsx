@@ -74,6 +74,10 @@ export default function HomePage() {
             <strong> 16가지 MBTI 유형</strong> 중 하나를 재미로 유추해 드립니다. 성격 능력치(귀여움·공격력·친화력·지능·게으름) 오각형 차트와
             &quot;환상의 짝꿍&quot; 관상까지 확인할 수 있으며, 나와 잘 맞는 친구에게 카카오톡으로 공유할 수 있습니다. (참고용·성격 검사 아님)
           </p>
+          <p style={{ marginTop: '0.75rem' }}>
+            모든 분석은 브라우저에서만 이루어지며, 업로드한 사진은 서버로 전송되거나 저장되지 않습니다.
+            포켓몬 닮은꼴 테스트는 1·2·3·4세대 및 메가진화 포켓몬 약 200종 이상과 비교하여 가장 닮은 순서로 결과를 보여줍니다.
+          </p>
         </section>
         <aside className="home-ad-wrap" aria-label="광고">
           <AdSenseSlot slot="7390261701" format="horizontal" style={{ display: 'block', margin: '1rem auto', textAlign: 'center' }} />

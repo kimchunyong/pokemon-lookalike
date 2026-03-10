@@ -169,6 +169,10 @@ export default function ImageComparePage() {
           저장한 이미지는 갤러리(사진 앱)에서 인스타그램 스토리·게시물이나 카카오톡 등에 그대로 공유할 수 있습니다.
           결과 페이지의 카카오톡 공유 버튼으로 링크를 보내서 친구가 같은 테스트를 해볼 수 있게 할 수도 있습니다.
         </p>
+        <p style={{ marginTop: '0.75rem' }}>
+          <strong style={{ color: 'rgba(255,255,255,0.95)' }}>개인정보</strong>
+          — 업로드한 이미지는 서버로 전송되지 않으며, 브라우저에서만 AI 분석이 이루어집니다. 포켓몬 닮은꼴 찾기 결과는 유사도·감정 데이터를 바탕으로 한 참고용이며, 재미 목적으로 이용해 주세요.
+        </p>
       </section>
       
       <div className="upload-section">
@@ -242,9 +246,12 @@ export default function ImageComparePage() {
         </div>
       )}
 
-      <aside className="image-compare-ad-wrap" aria-label="광고" style={{ margin: '1.5rem auto', maxWidth: 640, minHeight: 90 }}>
-        <AdSenseSlot slot="7390261701" format="horizontal" />
-      </aside>
+      {/* 광고: 게시자 콘텐츠가 있는 화면에서만 노출(AdSense 정책). 결과가 있을 때만 표시 */}
+      {results && results.length > 0 && (
+        <aside className="image-compare-ad-wrap" aria-label="광고" style={{ margin: '1.5rem auto', maxWidth: 640, minHeight: 90 }}>
+          <AdSenseSlot slot="7390261701" format="horizontal" />
+        </aside>
+      )}
 
       <PolicyNotice />
     </main>
