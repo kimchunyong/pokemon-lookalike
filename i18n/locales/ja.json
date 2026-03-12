@@ -81,7 +81,8 @@
     "error": "画像の生成に失敗しました。",
     "shareTitle": "似ているポケモン",
     "shareText": "類似度",
-    "kakaoAlt": "カカオトークで共有"
+    "kakaoAlt": "カカオトークで共有",
+    "nativeShareLabel": "共有"
   },
   "header": {
     "navHome": "ホーム",

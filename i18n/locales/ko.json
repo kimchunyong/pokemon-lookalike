@@ -81,7 +81,8 @@
     "error": "이미지 생성에 실패했습니다.",
     "shareTitle": "나와 닮은 포켓몬",
     "shareText": "유사도",
-    "kakaoAlt": "카카오톡으로 공유하기"
+    "kakaoAlt": "카카오톡으로 공유하기",
+    "nativeShareLabel": "공유"
   },
   "header": {
     "navHome": "홈",

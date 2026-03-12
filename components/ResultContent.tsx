@@ -9,6 +9,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { createClient } from '@/lib/supabase/client'
 import { getAuthorDisplayNameFromUser } from '@/lib/getAuthorDisplayName'
 import KakaoShareButton from './KakaoShareButton'
+import NativeShareButton from './NativeShareButton'
 import { getEvolutionChain, EvolutionStage } from '../utils/evolutionChain'
 import { getPokemonWithKoreanName } from '../utils/pokeapi'
 import { getEmotionKorean } from '../utils/emotionAnalysis'
@@ -681,11 +682,18 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
                 >
                   {(t.resultContent as Record<string, string>).mbtiViewPokedex ?? '도감에서 보기'}
                 </button>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
                 <KakaoShareButton
                   pokemon={pokemon}
                   mbtiCode={mbtiData?.code ?? null}
                   variant="secondary"
                 />
+                <NativeShareButton
+                  pokemon={pokemon}
+                  mbtiCode={mbtiData?.code ?? null}
+                  variant="secondary"
+                />
+              </div>
               </div>
               </>
             )}
@@ -700,7 +708,10 @@ export default function ResultContent({ pokemon }: ResultContentProps) {
       </aside>
 
       <div className="result-save-image-row">
-        <KakaoShareButton pokemon={pokemon} mbtiCode={mbtiData?.code ?? null} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+          <KakaoShareButton pokemon={pokemon} mbtiCode={mbtiData?.code ?? null} />
+          <NativeShareButton pokemon={pokemon} mbtiCode={mbtiData?.code ?? null} />
+        </div>
         <button
           type="button"
           onClick={handleSaveResultImage}

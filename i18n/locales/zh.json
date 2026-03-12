@@ -81,7 +81,8 @@
     "error": "图片生成失败。",
     "shareTitle": "与我相似的宝可梦",
     "shareText": "相似度",
-    "kakaoAlt": "通过 KakaoTalk 分享"
+    "kakaoAlt": "通过 KakaoTalk 分享",
+    "nativeShareLabel": "分享"
   },
   "header": {
     "navHome": "首页",

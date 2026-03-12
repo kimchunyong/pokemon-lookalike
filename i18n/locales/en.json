@@ -81,7 +81,8 @@
     "error": "Failed to generate image.",
     "shareTitle": "My Pokemon Lookalike",
     "shareText": "Similarity",
-    "kakaoAlt": "Share via KakaoTalk"
+    "kakaoAlt": "Share via KakaoTalk",
+    "nativeShareLabel": "Share"
   },
   "header": {
     "navHome": "Home",
