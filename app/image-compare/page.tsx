@@ -7,7 +7,6 @@ import { findSimilarPokemon } from '../../utils/imageComparison'
 import { analyzeEmotionAndGetFaceCrop, getEmotionKorean } from '../../utils/emotionAnalysis'
 import { POKEMON_LIST } from '../../data/pokemon'
 import PolicyNotice from '../../components/PolicyNotice'
-import AdSenseSlot from '../../components/AdSenseSlot'
 // import ShareButton from '../../components/ShareButton'
 import { useLanguage } from '../../contexts/LanguageContext'
 import { trackEvent } from '@/lib/ga'
@@ -244,13 +243,6 @@ export default function ImageComparePage() {
             ))}
           </div>
         </div>
-      )}
-
-      {/* 광고: 게시자 콘텐츠가 있는 화면에서만 노출(AdSense 정책). 결과가 있을 때만 표시 */}
-      {results && results.length > 0 && (
-        <aside className="image-compare-ad-wrap" aria-label="광고" style={{ margin: '1.5rem auto', maxWidth: 640, minHeight: 90 }}>
-          <AdSenseSlot slot="7390261701" format="horizontal" />
-        </aside>
       )}
 
       <PolicyNotice />

@@ -1,8 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import PolicyNotice from '../components/PolicyNotice'
-import AdSenseSlot from '../components/AdSenseSlot'
 import { useLanguage } from '../contexts/LanguageContext'
 import { trackEvent } from '@/lib/ga'
 
@@ -79,9 +77,6 @@ export default function HomePage() {
             포켓몬 닮은꼴 테스트는 1·2·3·4세대 및 메가진화 포켓몬 약 200종 이상과 비교하여 가장 닮은 순서로 결과를 보여줍니다.
           </p>
         </section>
-        <aside className="home-ad-wrap" aria-label="광고">
-          <AdSenseSlot slot="7390261701" format="horizontal" style={{ display: 'block', margin: '1rem auto', textAlign: 'center' }} />
-        </aside>
       </div>
     </main>
   )
