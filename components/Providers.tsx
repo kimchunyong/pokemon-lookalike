@@ -8,6 +8,7 @@ import AuthHeader from './AuthHeader'
 import Footer from './Footer'
 import GoogleAnalytics from './GoogleAnalytics'
 import CompareDataClearer from './CompareDataClearer'
+import AdSenseRouteScript from './AdSenseRouteScript'
 
 export default function Providers({ children }: { children: ReactNode }) {
   return (
@@ -20,6 +21,7 @@ export default function Providers({ children }: { children: ReactNode }) {
         <AuthHeader />
         {children}
         <Footer />
+        <AdSenseRouteScript />
       </AuthProvider>
     </LanguageProvider>
   )
