@@ -233,6 +233,18 @@ export default function MyResultsPage() {
       {results.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '3rem 0', color: '#999' }}>
           <p style={{ fontSize: '1.1em', marginBottom: '1rem' }}>{t.myResults.empty}</p>
+          <p
+            style={{
+              fontSize: '0.92em',
+              lineHeight: 1.65,
+              color: 'rgba(255,255,255,0.65)',
+              maxWidth: 420,
+              margin: '0 auto 1.25rem',
+              textAlign: 'left',
+            }}
+          >
+            {t.myResults.emptyHint}
+          </p>
           <Link
             href="/image-compare"
             style={{

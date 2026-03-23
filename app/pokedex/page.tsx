@@ -21,6 +21,7 @@ export default function PokedexPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [isSearching, setIsSearching] = useState(false)
   const { t } = useLanguage()
+  const pd = t.pokedexPage as Record<string, string>
 
   // 포켓몬 목록 가져오기
   const fetchPokemonList = useCallback(async (page: number) => {
@@ -44,11 +45,11 @@ export default function PokedexPage() {
       setPokemonList(pokemonData)
     } catch (err) {
       console.error('Failed to fetch Pokemon list:', err)
-      setError('포켓몬 목록을 불러오는데 실패했습니다.')
+      setError(pd.loadListError)
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [pd.loadListError])
 
   // 검색 실행 (한국어 이름 우선, 없으면 영어로 PokeAPI 검색)
   const handleSearch = useCallback(
@@ -82,12 +83,12 @@ export default function PokedexPage() {
         setTotalPages(1)
       } catch (err) {
         console.error('Search failed:', err)
-        setError('검색 중 오류가 발생했습니다.')
+        setError(pd.searchError)
       } finally {
         setLoading(false)
       }
     },
-    [currentPage, fetchPokemonList]
+    [currentPage, fetchPokemonList, pd.searchError]
   )
 
   // 페이지 변경
@@ -129,15 +130,39 @@ export default function PokedexPage() {
         </button>
       </div>
 
+      <section
+        className="pokedex-intro-section"
+        aria-labelledby="pokedex-intro-heading"
+        style={{
+          maxWidth: 720,
+          margin: '0 auto 1.25rem',
+          padding: '1rem 1.15rem',
+          background: 'rgba(255,255,255,0.04)',
+          border: '1px solid rgba(255,255,255,0.1)',
+          borderRadius: 12,
+          fontSize: '0.9em',
+          lineHeight: 1.65,
+          color: 'rgba(255,255,255,0.82)',
+        }}
+      >
+        <h2 id="pokedex-intro-heading" style={{ fontSize: '1.05rem', marginBottom: '0.5rem', color: 'rgba(255,255,255,0.95)' }}>
+          {pd.introTitle}
+        </h2>
+        <p style={{ margin: '0 0 0.6rem' }}>{pd.introP1}</p>
+        <p style={{ margin: 0 }}>{pd.introP2}</p>
+      </section>
+
       <div className="pokedex-header">
-        <h1>포켓몬 도감</h1>
-        <p className="pokedex-subtitle">총 {totalCount.toLocaleString()}마리의 포켓몬</p>
+        <h1>{pd.title}</h1>
+        <p className="pokedex-subtitle">
+          {pd.subtitle.replace('{{count}}', totalCount.toLocaleString())}
+        </p>
       </div>
 
       <div className="pokedex-search">
         <input
           type="text"
-          placeholder="포켓몬 이름으로 검색 (한국어·영어)"
+          placeholder={pd.searchPlaceholder}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="pokedex-search-input"
@@ -149,7 +174,7 @@ export default function PokedexPage() {
               setIsSearching(false)
             }}
             className="pokedex-search-clear"
-            aria-label="검색어 지우기"
+            aria-label={pd.searchClearAria}
           >
             ✕
           </button>
@@ -186,45 +211,34 @@ export default function PokedexPage() {
 
               {isSearching && (
                 <div className="search-results-info">
-                  <p>검색 결과: {pokemonList.length}마리</p>
+                  <p>{pd.searchResults.replace('{{count}}', String(pokemonList.length))}</p>
                 </div>
               )}
             </>
           ) : (
             <div className="no-results">
-              <p>검색 결과가 없습니다.</p>
+              <p>{pd.noResults}</p>
             </div>
           )}
         </>
       )}
 
       <section className="pokedex-faq-section" aria-labelledby="pokedex-faq-heading">
-        <h2 id="pokedex-faq-heading">어떻게 나의 닮은꼴 포켓몬을 찾나요?</h2>
-        <p className="pokedex-faq-lead">
-          포켓몬 닮은꼴 테스트는 사진 한 장으로 AI가 나와 닮은 포켓몬을 찾아드립니다. 위 도감에서 결과로 나온 포켓몬의 타입·능력치·진화 정보를 확인할 수 있어요.
-        </p>
+        <h2 id="pokedex-faq-heading">{pd.bottomTitle}</h2>
+        <p className="pokedex-faq-lead">{pd.bottomLead}</p>
 
-        <h3>자주 묻는 질문</h3>
+        <h3>{pd.bottomFaqTitle}</h3>
         <dl className="pokedex-faq-list">
-          <dt>닮은꼴은 어떻게 정해지나요?</dt>
-          <dd>
-            업로드한 사진을 AI가 분석해, 1·2·3·4세대와 메가진화 포켓몬 공식 이미지와 비교합니다. 얼굴·인상·색감 등이 비슷한 순서대로 유사도(%)로 보여줍니다.
-          </dd>
-          <dt>사진은 어디에 저장되나요?</dt>
-          <dd>
-            개인정보를 저장하지 않습니다. 분석은 브라우저와 서버에서 처리되며, 원하시면 결과만 저장할 수 있습니다.
-          </dd>
-          <dt>도감과 닮은꼴 테스트의 관계는?</dt>
-          <dd>
-            테스트 결과로 나온 포켓몬을 이 도감에서 검색해 타입, 키, 몸무게, 진화 정보, 닮은꼴 한줄 설명까지 확인할 수 있습니다.
-          </dd>
+          <dt>{pd.bottomQ1}</dt>
+          <dd>{pd.bottomA1}</dd>
+          <dt>{pd.bottomQ2}</dt>
+          <dd>{pd.bottomA2}</dd>
+          <dt>{pd.bottomQ3}</dt>
+          <dd>{pd.bottomA3}</dd>
         </dl>
 
-        <h3>AI 분석 원리 (쉽게 설명)</h3>
-        <p>
-          이미지 인식 AI가 사진에서 특징을 추출한 뒤, 각 포켓몬 이미지의 특징과 비교해 &quot;얼마나 비슷한지&quot; 점수를 냅니다. 
-          전기 타입·불꽃 타입 같은 분위기와 색감도 반영해, 단순한 얼굴 형태가 아니라 전체적인 인상으로 매칭합니다.
-        </p>
+        <h3>{pd.bottomAiTitle}</h3>
+        <p>{pd.bottomAiP}</p>
       </section>
     </main>
   )

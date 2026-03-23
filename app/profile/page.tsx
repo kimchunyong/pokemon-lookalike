@@ -74,8 +74,18 @@ export default function ProfilePage() {
   return (
     <div style={{ padding: '1.5rem', maxWidth: 480, margin: '0 auto' }}>
       <h1>{t.profile.title}</h1>
-      <p style={{ color: '#888', fontSize: 14, marginBottom: '1rem' }}>
+      <p style={{ color: '#888', fontSize: 14, marginBottom: '0.75rem' }}>
         {t.profile.description}
+      </p>
+      <p
+        style={{
+          color: 'rgba(255,255,255,0.7)',
+          fontSize: 13,
+          lineHeight: 1.6,
+          marginBottom: '1rem',
+        }}
+      >
+        {(t.profile as Record<string, string>).visibilityHint}
       </p>
       <form onSubmit={handleSubmit} style={{ marginBottom: '1rem' }}>
         <label htmlFor="nickname" style={{ display: 'block', marginBottom: 4, fontWeight: 500 }}>

@@ -282,6 +282,25 @@ export default function BoardPage() {
         minHeight: 'calc(100vh - 201px)',
       }}
     >
+      <section
+        aria-labelledby="board-guidelines-heading"
+        style={{
+          marginBottom: '1.25rem',
+          padding: '1rem 1.15rem',
+          background: 'rgba(255,255,255,0.04)',
+          border: '1px solid rgba(255,255,255,0.1)',
+          borderRadius: 12,
+          fontSize: '0.88em',
+          lineHeight: 1.65,
+          color: 'rgba(255,255,255,0.82)',
+        }}
+      >
+        <h2 id="board-guidelines-heading" style={{ fontSize: '1rem', marginBottom: '0.5rem', color: '#fff' }}>
+          {(t.board as Record<string, string>).guidelinesTitle}
+        </h2>
+        <p style={{ margin: '0 0 0.5rem' }}>{(t.board as Record<string, string>).guidelinesP1}</p>
+        <p style={{ margin: 0 }}>{(t.board as Record<string, string>).guidelinesP2}</p>
+      </section>
       {/* 상단: 게시판 제목 + 검색 */}
       <div
         style={{

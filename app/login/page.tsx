@@ -26,7 +26,20 @@ export default function LoginPage() {
   return (
     <div style={{ padding: '2rem', maxWidth: 400, margin: '0 auto' }}>
       <h1>{t.login.title}</h1>
-      <p style={{ color: '#666', marginBottom: '1.5rem' }}>{t.login.description}</p>
+      <p style={{ color: '#666', marginBottom: '1rem' }}>{t.login.description}</p>
+      <p
+        style={{
+          color: 'rgba(255,255,255,0.75)',
+          fontSize: 14,
+          lineHeight: 1.65,
+          marginBottom: '1.25rem',
+        }}
+      >
+        {(t.login as Record<string, string>).hint}{' '}
+        <Link href="/faq" style={{ color: '#646cff' }}>
+          {(t.login as Record<string, string>).faqLink}
+        </Link>
+      </p>
 
       <button
         type="button"

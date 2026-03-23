@@ -228,12 +228,41 @@ export default function RankingPage() {
         style={{
           color: '#888',
           fontSize: '0.85em',
-          marginBottom: '1.8rem',
+          marginBottom: '1.25rem',
           textAlign: 'center',
         }}
       >
         {t.ranking.subtitle}
       </p>
+
+      <section
+        aria-labelledby="ranking-intro"
+        style={{
+          marginBottom: '1.75rem',
+          padding: '1rem 1.15rem',
+          background: 'rgba(255,255,255,0.04)',
+          border: '1px solid rgba(255,255,255,0.1)',
+          borderRadius: 12,
+          fontSize: '0.88em',
+          lineHeight: 1.65,
+          color: 'rgba(255,255,255,0.82)',
+        }}
+      >
+        <h2 id="ranking-intro" style={{ fontSize: '0.95rem', marginBottom: '0.6rem', color: '#fff' }}>
+          {(t.ranking as Record<string, string>).introTitle}
+        </h2>
+        <ol style={{ margin: '0 0 0.75rem 1.1rem', padding: 0 }}>
+          <li style={{ marginBottom: '0.35rem' }}>{(t.ranking as Record<string, string>).introStep1}</li>
+          <li style={{ marginBottom: '0.35rem' }}>{(t.ranking as Record<string, string>).introStep2}</li>
+          <li>{(t.ranking as Record<string, string>).introStep3}</li>
+        </ol>
+        <p style={{ margin: '0 0 0.5rem' }}>{(t.ranking as Record<string, string>).introNote}</p>
+        <p style={{ margin: 0 }}>
+          <Link href="/faq" style={{ color: '#646cff' }}>
+            {(t.ranking as Record<string, string>).introFaq}
+          </Link>
+        </p>
+      </section>
 
       {list.length === 0 ? (
         <div

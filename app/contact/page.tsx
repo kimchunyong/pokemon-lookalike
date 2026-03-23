@@ -18,6 +18,45 @@ export default function ContactPage() {
       <p style={{ lineHeight: 1.7, color: 'rgba(255,255,255,0.9)', marginBottom: '1rem' }}>
         {t.contact.description}
       </p>
+      <section
+        style={{
+          marginBottom: '1.25rem',
+          padding: '1rem 1.15rem',
+          background: 'rgba(255,255,255,0.04)',
+          border: '1px solid rgba(255,255,255,0.1)',
+          borderRadius: 12,
+        }}
+        aria-labelledby="contact-scope"
+      >
+        <h2 id="contact-scope" style={{ fontSize: '1.05rem', marginBottom: '0.5rem' }}>
+          {(t.contact as Record<string, string>).scopeTitle}
+        </h2>
+        <p style={{ lineHeight: 1.7, color: 'rgba(255,255,255,0.85)', margin: 0, fontSize: '0.95em' }}>
+          {(t.contact as Record<string, string>).scopeP1}
+        </p>
+      </section>
+      <section
+        style={{
+          marginBottom: '1.25rem',
+          padding: '1rem 1.15rem',
+          background: 'rgba(255,255,255,0.04)',
+          border: '1px solid rgba(255,255,255,0.1)',
+          borderRadius: 12,
+        }}
+        aria-labelledby="contact-response"
+      >
+        <h2 id="contact-response" style={{ fontSize: '1.05rem', marginBottom: '0.5rem' }}>
+          {(t.contact as Record<string, string>).responseTitle}
+        </h2>
+        <p style={{ lineHeight: 1.7, color: 'rgba(255,255,255,0.85)', margin: 0, fontSize: '0.95em' }}>
+          {(t.contact as Record<string, string>).responseP1}
+        </p>
+      </section>
+      <p style={{ marginBottom: '1rem', fontSize: '0.95em' }}>
+        <Link href="/faq" style={{ color: '#646cff' }}>
+          {(t.contact as Record<string, string>).faqLink}
+        </Link>
+      </p>
       <div
         style={{
           background: 'rgba(255,255,255,0.06)',
