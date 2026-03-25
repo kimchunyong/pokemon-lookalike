@@ -8,8 +8,8 @@ const ADSENSE_SRC =
   'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9163702166115880'
 
 /**
- * 전역 adsbygoogle.js는 자동 광고(계정 설정 시)가 모든 URL에 삽입될 수 있습니다.
- * 콘텐츠가 충분한 경로에서만 로드합니다.
+ * adsbygoogle.js는 **홈(`/`)에서만** 로드합니다. 다른 URL에서는 스크립트가 없어
+ * 자동 광고·수동 단위가 그 페이지에서 동작하지 않습니다.
  */
 export default function AdSenseRouteScript() {
   const pathname = usePathname()
