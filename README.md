@@ -2,6 +2,8 @@
 
 AI 기술을 활용하여 나와 닮은 포켓몬을 찾아보는 재미있는 웹 서비스입니다.
 
+**배포 서버:** [http://pokemon-lookalike.shop/](http://pokemon-lookalike.shop/)
+
 ## ⚠️ 중요 안내사항
 
 ### 구글 애드센스 정책 준수
@@ -82,8 +84,6 @@ npm run dev
 npm run build
 npm start
 ```
-
-## 배포
 
 ### Vercel (권장)
 
